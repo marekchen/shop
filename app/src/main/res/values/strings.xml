@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">shop</string>
+
+    <string name="activity_main_search_hint">搜索商品</string>
+</resources>
