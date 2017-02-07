@@ -1,5 +1,6 @@
 package com.droi.shop.model;
 
+import com.droi.sdk.core.DroiExpose;
 import com.droi.sdk.core.DroiObject;
 
 /**
@@ -7,4 +8,12 @@ import com.droi.sdk.core.DroiObject;
  */
 
 public class Item extends DroiObject {
+    @DroiExpose
+    String name;
+    @DroiExpose
+    String[] images;
+    @DroiExpose
+    float price;
+    @DroiExpose
+    String description;
 }

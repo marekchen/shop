@@ -21,6 +21,9 @@ android {
 
 repositories {
     mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
     maven {
         url "https://github.com/DroiBaaS/DroiBaaS-SDK-Android/raw/master/"
     }
@@ -43,6 +46,8 @@ dependencies {
     compile 'com.android.support:support-v4:25.1.0'
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support:design:25.1.0'
+    compile 'com.beardedhen:androidbootstrap:2.3.1'
+    compile(name: 'rollviewpager-release', ext: 'aar')
 //    compile 'io.reactivex:rxandroid:1.2.1'
 //    compile 'io.reactivex:rxjava:1.2.5'
 //    compile 'com.squareup.retrofit2:retrofit:2.1.0'

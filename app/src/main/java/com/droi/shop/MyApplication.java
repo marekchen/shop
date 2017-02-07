@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.beardedhen.androidbootstrap.TypefaceProvider;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.analytics.SendPolicy;
@@ -31,17 +32,11 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Log.i(TAG, "Core");
+        TypefaceProvider.registerDefaultIconSets();
         mContext = this;
-        //初始化
+       /* //初始化
         Core.initialize(this);
         //注册DroiObject
-/*        DroiObject.registerCustomClass(AppInfo.class);
-        DroiObject.registerCustomClass(AppType.class);
-        DroiObject.registerCustomClass(MyUser.class);
-        DroiObject.registerCustomClass(Banner.class);
-        DroiObject.registerCustomClass(Add.Request.class);
-        DroiObject.registerCustomClass(Add.Response.class);*/
-
         Log.i(TAG, "DroiPush");
         //初始化
         DroiPush.initialize(this);
@@ -117,6 +112,6 @@ public class MyApplication extends Application {
         // 设置默认权限为所有用户可读不可写
         permission.setPublicReadPermission(true);
         permission.setPublicWritePermission(true);
-        DroiPermission.setDefaultPermission(permission);
+        DroiPermission.setDefaultPermission(permission);*/
     }
 }

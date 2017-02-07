@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.droi.sdk.selfupdate.DroiUpdate;
 import com.droi.sdk.selfupdate.DroiUpdateListener;
 import com.droi.sdk.selfupdate.DroiUpdateResponse;
+import com.droi.shop.fragment.MainFragment;
 
 public class MainActivity extends FragmentActivity {
     public static final String MAIN_TAB_INDEX = "index";
@@ -67,9 +68,9 @@ public class MainActivity extends FragmentActivity {
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
         mTabHost.getTabWidget().setDividerDrawable(null);
-       /* mTabHost.addTab(mTabHost.newTabSpec("mainTab").setIndicator(getTabView(R.drawable.btn_home, R.string.activity_main_tab_home)),
+        mTabHost.addTab(mTabHost.newTabSpec("mainTab").setIndicator(getTabView(R.drawable.btn_home, R.string.activity_main_tab_home)),
                 MainFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("appsTab").setIndicator(getTabView(R.drawable.btn_shop, R.string.activity_main_tab_shop)),
+       /* mTabHost.addTab(mTabHost.newTabSpec("appsTab").setIndicator(getTabView(R.drawable.btn_shop, R.string.activity_main_tab_shop)),
                 AppFragment.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("gamesTab").setIndicator(getTabView(R.drawable.btn_shop, R.string.activity_main_tab_game)),
                 GameFragment.class, null);
