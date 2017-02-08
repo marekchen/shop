@@ -25,10 +25,24 @@
                 app:rollviewpager_play_delay="3000" />
 
             <TextView
-                android:id="@+id/text"
+                android:id="@+id/name_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="name" />
+
+            <TextView
+                android:id="@+id/desc_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark"
                 android:text="description" />
+
+            <TextView
+                android:id="@+id/price_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark"
+                android:text="￥60.00" />
 
             <com.droi.shop.view.UWebView
                 android:id="@+id/webview"

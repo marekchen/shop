@@ -43,6 +43,7 @@ dependencies {
     compile 'com.droi.sdk:push:+'
     compile 'com.droi.sdk:Utility:+'
     compile 'com.droi.sdk:oauth:+'
+    compile 'com.jakewharton:butterknife:8.2.1'
     compile 'com.android.support:support-v4:25.1.0'
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support:design:25.1.0'
