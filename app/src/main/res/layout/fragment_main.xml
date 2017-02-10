@@ -7,7 +7,26 @@
     <include
         android:id="@+id/toolbar"
         layout="@layout/view_toolbar_main" />
-
+    <Button
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="login"/>
+    <Button
+        android:id="@+id/login2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="login2"/>
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="logout"/>
+    <Button
+        android:id="@+id/call"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="call"/>
     <ListView
         android:id="@+id/fragment_main_list_view"
         android:layout_width="match_parent"

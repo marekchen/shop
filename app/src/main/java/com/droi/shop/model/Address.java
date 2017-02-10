@@ -9,11 +9,21 @@ import com.droi.sdk.core.DroiObject;
 
 public class Address extends DroiObject {
     @DroiExpose
+    String userId;
+    @DroiExpose
     String name;
     @DroiExpose
     String phoneNum;
     @DroiExpose
     String location;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getAddress() {
         return address;

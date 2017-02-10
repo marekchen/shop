@@ -1,32 +1,36 @@
 package com.droi.shop.fragment;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.droi.sdk.DroiError;
 import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiQuery;
 import com.droi.shop.R;
+import com.droi.shop.activity.VideoActivity;
 import com.droi.shop.model.Item;
+/*import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMCallStateChangeListener;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.EMNoActiveCallException;
+import com.hyphenate.exceptions.EMServiceNotReadyException;*/
 
 import java.util.ArrayList;
 import java.util.List;
 
-//import rx.Observable;
-//import rx.Observer;
-//import rx.Subscriber;
-//import rx.Subscription;
-//import rx.android.schedulers.AndroidSchedulers;
-//import rx.functions.Action1;
-//import rx.schedulers.Schedulers;
 
 /**
  * Created by chenpei on 2016/5/11.
@@ -46,12 +50,162 @@ public class MainFragment extends Fragment implements
     private int indexNum = 0;
     private boolean refreshing = false;
 
+   /* private class CallReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // 拨打方username
+            String from = intent.getStringExtra("from");
+            // call type
+            String type = intent.getStringExtra("type");
+            //跳转到通话页面
+            try {
+                EMClient.getInstance().callManager().answerCall();
+            } catch (EMNoActiveCallException e) {
+                e.printStackTrace();
+            }
+            Intent intent1 = new Intent(getActivity(), VideoActivity.class);
+            startActivity(intent1);
+        }
+    }*/
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mContext = getActivity();
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         //initToolBar(view);
         initListView(view);
+        /*IntentFilter callFilter = new IntentFilter(EMClient.getInstance().callManager().getIncomingCallBroadcastAction());
+        getActivity().registerReceiver(new CallReceiver(), callFilter);
+
+        Button login = (Button) view.findViewById(R.id.login);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EMClient.getInstance().login("marekchen", "6608432", new EMCallBack() {//回调
+                    @Override
+                    public void onSuccess() {
+                        EMClient.getInstance().groupManager().loadAllGroups();
+                        EMClient.getInstance().chatManager().loadAllConversations();
+                        Log.d("main", "登录聊天服务器成功！");
+                    }
+
+                    @Override
+                    public void onProgress(int progress, String status) {
+
+                    }
+
+                    @Override
+                    public void onError(int code, String message) {
+                        Log.d("main", "登录聊天服务器失败！");
+                    }
+                });
+            }
+        });
+
+        Button login2 = (Button) view.findViewById(R.id.login2);
+        login2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EMClient.getInstance().login("marekchenpei", "6608432", new EMCallBack() {//回调
+                    @Override
+                    public void onSuccess() {
+                        EMClient.getInstance().groupManager().loadAllGroups();
+                        EMClient.getInstance().chatManager().loadAllConversations();
+                        Log.d("main", "登录聊天服务器成功！");
+                    }
+
+                    @Override
+                    public void onProgress(int progress, String status) {
+
+                    }
+
+                    @Override
+                    public void onError(int code, String message) {
+                        Log.d("main", "登录聊天服务器失败！");
+                    }
+                });
+            }
+        });
+
+        Button logout = (Button) view.findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EMClient.getInstance().logout(true, new EMCallBack() {
+
+                    @Override
+                    public void onSuccess() {
+                        Log.d("main", "logout聊天服务器成功！");
+                    }
+
+                    @Override
+                    public void onProgress(int progress, String status) {
+                        // TODO Auto-generated method stub
+
+                    }
+
+                    @Override
+                    public void onError(int code, String message) {
+                        Log.d("main", "logout聊天服务器成功！");
+                    }
+                });
+            }
+        });
+
+        Button call = (Button) view.findViewById(R.id.call);
+        call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {//单参数
+                    EMClient.getInstance().callManager().makeVideoCall("marekchenpei");
+                } catch (EMServiceNotReadyException e) {
+                    e.printStackTrace();
+                }
+
+                *//*try {//多参数
+                    EMClient.getInstance().callManager().makeVideoCall("marek", "ext 扩展内容");
+                } catch (EMServiceNotReadyException e) {
+                    e.printStackTrace();
+                }*//*
+                //获取扩展内容
+                String callExt = EMClient.getInstance().callManager().getCurrentCallSession().getExt();
+                EMClient.getInstance().callManager().addCallStateChangeListener(new EMCallStateChangeListener() {
+                    @Override
+                    public void onCallStateChanged(CallState callState, CallError error) {
+                        switch (callState) {
+                            case CONNECTING: // 正在连接对方
+
+                                break;
+                            case CONNECTED: // 双方已经建立连接
+                                Intent intent1 = new Intent(getActivity(), VideoActivity.class);
+                                startActivity(intent1);
+                                break;
+
+                            case ACCEPTED: // 电话接通成功
+
+                                break;
+                            case DISCONNECTED: // 电话断了
+
+                                break;
+                            case NETWORK_UNSTABLE: //网络不稳定
+                                if (error == CallError.ERROR_NO_DATA) {
+                                    //无通话数据
+                                } else {
+                                }
+                                break;
+                            case NETWORK_NORMAL: //网络恢复正常
+
+                                break;
+                            default:
+                                break;
+                        }
+
+                    }
+                });
+            }
+        });*/
+
         return view;
     }
 
@@ -59,6 +213,7 @@ public class MainFragment extends Fragment implements
     public void onResume() {
         super.onResume();
         DroiAnalytics.onFragmentStart(getActivity(), "MainFragment");
+
     }
 
     @Override

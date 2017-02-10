@@ -8,4 +8,7 @@
     <dimen name="top_bar_back_arrow_width">50dp</dimen>
     <dimen name="top_bar_title_size">23sp</dimen>
 
+    <dimen name="head_icon_size">80dp</dimen>
+    <dimen name="app_icon_size">100dip</dimen>
+
 </resources>

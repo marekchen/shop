@@ -4,4 +4,66 @@
     <string name="activity_main_search_hint">搜索商品</string>
 
     <string name="activity_main_tab_home">首页</string>
+    <string name="activity_main_tab_mine">我的</string>
+
+    <!--address相关-->
+    <string name="address_name">收货人:</string>
+    <string name="address_phone">手机号码:</string>
+    <string name="address_location">所在地区:</string>
+    <string name="address_address">详细地址:</string>
+    <string name="address_save"> 保存收货地址 </string>
+    <string name="address_default">默认地址</string>
+    <string name="address_set">设为默认</string>
+    <string name="address_delete">删除</string>
+    <string name="address_edit">编辑</string>
+
+    <!-- Mine Fragment -->
+    <string name="fragment_mine_title">我的</string>
+    <string name="fragment_mine_login">点击头像登陆</string>
+    <string name="fragment_mine_info">查看或编辑个人资料</string>
+    <string name="fragment_mine_follow">我的关注</string>
+    <string name="fragment_mine_favorite">我的收藏</string>
+    <string name="fragment_mine_answer">我的回答</string>
+    <string name="fragment_mine_question">我的提问</string>
+    <string name="fragment_mine_updating">检查更新</string>
+    <string name="fragment_mine_feedback">意见反馈</string>
+    <string name="fragment_mine_push">推送设置</string>
+    <string name="fragment_mine_about_us">关于我们</string>
+
+    <!-- profile 相关 -->
+    <string name="profile">个人信息</string>
+    <string name="head_icon">头像</string>
+    <string name="username">昵称</string>
+    <string name="password">密码</string>
+    <string name="change">修改</string>
+    <string name="mobile_num">手机</string>
+    <string name="mobile_bind">手机号绑定</string>
+    <string name="bind">绑定</string>
+    <string name="email">邮箱</string>
+    <string name="email_bind">邮箱绑定</string>
+    <string name="email_text">请填写邮箱地址</string>
+    <string name="old_password">原密码</string>
+    <string name="new_password">新密码</string>
+    <string name="retype_new_password">再输入</string>
+    <string name="change_password">修改密码</string>
+    <string name="change_password_success">修改密码成功</string>
+    <string name="change_password_failed">修改密码失败</string>
+    <string name="phone_86">+86</string>
+    <string name="phone">请填写手机号码</string>
+    <string name="ping_code">请输入验证码</string>
+    <string name="top_bar_save">保存</string>
+    <string name="top_bar_confirm">确认</string>
+    <string name="logout">退出登陆</string>
+    <string name="logout_success">登出成功</string>
+    <string name="logout_failed">登出成功</string>
+    <string name="login_first">请先登录</string>
+    <string name="confirm">确定</string>
+    <string name="next_step">下一步</string>
+    <string name="verified">已验证</string>
+    <string name="not_verified">未验证</string>
+
+    <!-- 拍照上传部分 -->
+    <string name="dialog_photo_take_pic">拍照</string>
+    <string name="dialog_photo_pick_pic">从手机相册选择</string>
+    <string name="dialog_cancel">取消</string>
 </resources>
