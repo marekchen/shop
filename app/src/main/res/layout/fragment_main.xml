@@ -8,25 +8,25 @@
         android:id="@+id/toolbar"
         layout="@layout/view_toolbar_main" />
     <Button
-        android:id="@+id/login"
+        android:id="@+id/button1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="login"/>
+        android:text="button1"/>
     <Button
-        android:id="@+id/login2"
+        android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="login2"/>
+        android:text="button2"/>
     <Button
-        android:id="@+id/logout"
+        android:id="@+id/button3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="logout"/>
+        android:text="button3"/>
     <Button
-        android:id="@+id/call"
+        android:id="@+id/button4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="call"/>
+        android:text="button4"/>
     <ListView
         android:id="@+id/fragment_main_list_view"
         android:layout_width="match_parent"

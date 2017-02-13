@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="120dp"
-    android:paddingBottom="9.0dip">
+    android:background="@drawable/touch_bg">
 
     <ImageView
-        android:id="@+id/app_icon"
+        android:id="@+id/item_image"
         android:layout_width="@dimen/app_icon_size"
         android:layout_height="@dimen/app_icon_size"
         android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:src="@mipmap/def_item" />
@@ -19,28 +20,14 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_toRightOf="@id/app_icon"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/item_image"
         android:ellipsize="end"
+        android:maxLines="2"
         android:paddingLeft="3.0dip"
         android:paddingRight="3.0dip"
-        android:layout_marginTop="10dp"
-        android:singleLine="true"
         android:text="商品名称"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/price_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/divider"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/app_icon"
-        android:paddingBottom="5dp"
-        android:paddingLeft="3.0dip"
-        android:paddingRight="3.0dip"
-        android:text="￥100.00"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="22sp" />
+        android:textSize="14sp" />
 
     <View
         android:id="@+id/divider"
@@ -48,9 +35,38 @@
         android:layout_height="1px"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/app_icon"
+        android:layout_toRightOf="@id/item_image"
         android:background="@color/text_gray"
         android:paddingLeft="3.0dip"
         android:paddingRight="3.0dip" />
+
+    <TextView
+        android:id="@+id/bottom_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/divider"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_toRightOf="@id/item_image"
+        android:paddingBottom="5dp"
+        android:paddingLeft="3.0dip"
+        android:paddingRight="3.0dip"
+        android:text="@string/item_bottom"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/price_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_text"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/item_image"
+        android:paddingBottom="5dp"
+        android:paddingLeft="3.0dip"
+        android:paddingRight="3.0dip"
+        android:text="@string/item_price"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="18sp" />
+
 
 </RelativeLayout>

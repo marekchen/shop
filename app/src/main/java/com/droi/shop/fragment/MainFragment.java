@@ -22,6 +22,7 @@ import com.droi.sdk.core.DroiQuery;
 import com.droi.shop.R;
 import com.droi.shop.activity.VideoActivity;
 import com.droi.shop.model.Item;
+import com.droi.shop.util.ShoppingCartManager;
 /*import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMCallStateChangeListener;
 import com.hyphenate.chat.EMClient;
@@ -30,6 +31,7 @@ import com.hyphenate.exceptions.EMServiceNotReadyException;*/
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 
 /**
@@ -50,24 +52,26 @@ public class MainFragment extends Fragment implements
     private int indexNum = 0;
     private boolean refreshing = false;
 
-   /* private class CallReceiver extends BroadcastReceiver {
+    /* private class CallReceiver extends BroadcastReceiver {
 
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // 拨打方username
-            String from = intent.getStringExtra("from");
-            // call type
-            String type = intent.getStringExtra("type");
-            //跳转到通话页面
-            try {
-                EMClient.getInstance().callManager().answerCall();
-            } catch (EMNoActiveCallException e) {
-                e.printStackTrace();
-            }
-            Intent intent1 = new Intent(getActivity(), VideoActivity.class);
-            startActivity(intent1);
-        }
-    }*/
+         @Override
+         public void onReceive(Context context, Intent intent) {
+             // 拨打方username
+             String from = intent.getStringExtra("from");
+             // call type
+             String type = intent.getStringExtra("type");
+             //跳转到通话页面
+             try {
+                 EMClient.getInstance().callManager().answerCall();
+             } catch (EMNoActiveCallException e) {
+                 e.printStackTrace();
+             }
+             Intent intent1 = new Intent(getActivity(), VideoActivity.class);
+             startActivity(intent1);
+         }
+     }*/
+    Item item1 = new Item();
+    //Item item2 = new Item();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,6 +79,66 @@ public class MainFragment extends Fragment implements
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         //initToolBar(view);
         initListView(view);
+        Button button1 = (Button) view.findViewById(R.id.button1);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                item1.setName("Name1");
+                item1.setCommentCount(1);
+                item1.setPraiseCount(1);
+                item1.setPrice(1.1f);
+                item1.setDescription("描述");
+                item1.setUrl("https://m.baidu.com");
+                ShoppingCartManager.addToCart(item1);
+                ConcurrentSkipListSet<ShoppingCartManager.CartItem> cartItems = ShoppingCartManager.getList();
+                for (ShoppingCartManager.CartItem item : cartItems) {
+                    Log.i("chenpei", "id:" + item.id + ";num:" + item.num);
+                }
+            }
+        });
+
+        Button button2 = (Button) view.findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShoppingCartManager.removeFromCart(item1.getObjectId(), false);
+                ConcurrentSkipListSet<ShoppingCartManager.CartItem> cartItems = ShoppingCartManager.getList();
+                for (ShoppingCartManager.CartItem item : cartItems) {
+                    Log.i("chenpei", "id:" + item.id + ";num:" + item.num);
+                }
+            }
+        });
+
+        Button button3 = (Button) view.findViewById(R.id.button3);
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShoppingCartManager.removeFromCart(item1.getObjectId(), true);
+                ConcurrentSkipListSet<ShoppingCartManager.CartItem> cartItems = ShoppingCartManager.getList();
+                for (ShoppingCartManager.CartItem item : cartItems) {
+                    Log.i("chenpei", "id:" + item.id + ";num:" + item.num);
+                }
+            }
+        });
+
+        Button button4 = (Button) view.findViewById(R.id.button4);
+        button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Item item2 = new Item();
+                item2.setName("Name1");
+                item2.setCommentCount(1);
+                item2.setPraiseCount(1);
+                item2.setPrice(1.1f);
+                item2.setDescription("描述");
+                item2.setUrl("https://m.baidu.com");
+                ShoppingCartManager.addToCart(item2);
+                ConcurrentSkipListSet<ShoppingCartManager.CartItem> cartItems = ShoppingCartManager.getList();
+                for (ShoppingCartManager.CartItem item : cartItems) {
+                    Log.i("chenpei", "id:" + item.id + ";num:" + item.num);
+                }
+            }
+        });
         /*IntentFilter callFilter = new IntentFilter(EMClient.getInstance().callManager().getIncomingCallBroadcastAction());
         getActivity().registerReceiver(new CallReceiver(), callFilter);
 

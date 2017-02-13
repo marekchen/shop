@@ -27,34 +27,27 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!-- 设置环信应用的AppKey -->
         <meta-data
-            android:name="EASEMOB_APPKEY"
-            android:value="1179170209115450#jiankong" />
-        <!-- 声明SDK所需的service SDK核心功能-->
-<!--        <service
-            android:name="com.hyphenate.chat.EMChatService"
-            android:exported="true" />
-        <service
-            android:name="com.hyphenate.chat.EMJobService"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-        &lt;!&ndash; 声明SDK所需的receiver &ndash;&gt;
-        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-                <data android:scheme="package" />
-            </intent-filter>
-            &lt;!&ndash; 可选filter &ndash;&gt;
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
-        </receiver>-->
+            android:name="com.droi.sdk.application_id"
+            android:value="i0uvmbzh2Sci5C6YTka9JMu6QimYw3WelQDlHYMT" />
+        <meta-data
+            android:name="com.droi.sdk.platform_key"
+            android:value="5vI0kEtluX7mteQH2KaAal_5Cap-9m6Aal_5Cap-" />
+        <meta-data
+            android:name="com.droi.sdk.channel_name"
+            android:value="DROI_CHANNEL1" />
+        <!-- 推送消息加密秘钥，应用创建后由平台自动生成，以下内容为示例 -->
+        <meta-data
+            android:name="com.droi.sdk.secret_key"
+            android:value="h7v9z1oc" />
 
         <activity android:name=".activity.VideoActivity" />
         <activity android:name=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".activity.DetailActivity">
 
@@ -65,11 +58,7 @@
         </activity>
 
         <activity android:name=".activity.ScanActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

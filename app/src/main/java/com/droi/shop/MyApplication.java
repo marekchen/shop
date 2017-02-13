@@ -11,6 +11,7 @@ import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.analytics.SendPolicy;
 import com.droi.sdk.core.Core;
 import com.droi.sdk.core.DroiCloudCache;
+import com.droi.sdk.core.DroiObject;
 import com.droi.sdk.core.DroiPermission;
 import com.droi.sdk.core.DroiPreference;
 import com.droi.sdk.feedback.DroiFeedback;
@@ -19,6 +20,7 @@ import com.droi.sdk.push.DroiMessageHandler;
 import com.droi.sdk.push.DroiPush;
 import com.droi.sdk.selfupdate.DroiUpdate;
 import com.droi.sdk.selfupdate.UpdateUIStyle;
+import com.droi.shop.model.Item;
 /*import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;*/
 
@@ -34,21 +36,13 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Log.i(TAG, "Core");
-        /*EMOptions options = new EMOptions();
-        // 默认添加好友时，是不需要验证的，改成需要验证
-        options.setAcceptInvitationAlways(false);
-        //初始化
-        EMClient.getInstance().init(this, options);
-        //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
-        EMClient.getInstance().setDebugMode(true);*/
+        Core.initialize(this);
+        DroiObject.registerCustomClass(Item.class);
 
         TypefaceProvider.registerDefaultIconSets();
         mContext = this;
-       /* //初始化
-        Core.initialize(this);
-        //注册DroiObject
-        Log.i(TAG, "DroiPush");
-        //初始化
+       /*
+       //初始化
         DroiPush.initialize(this);
         //设置标签
         DroiPush.addTag(this, new String[]{"test1", "test2"}, false);

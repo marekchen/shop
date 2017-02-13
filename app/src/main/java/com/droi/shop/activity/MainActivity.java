@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.droi.sdk.selfupdate.DroiUpdate;
 import com.droi.sdk.selfupdate.DroiUpdateListener;
 import com.droi.sdk.selfupdate.DroiUpdateResponse;
+import com.droi.shop.fragment.ItemListFragment;
 import com.droi.shop.fragment.MainFragment;
 import com.droi.shop.fragment.MineFragment;
 
@@ -71,9 +72,9 @@ public class MainActivity extends FragmentActivity {
         mTabHost.getTabWidget().setDividerDrawable(null);
         mTabHost.addTab(mTabHost.newTabSpec("mainTab").setIndicator(getTabView(R.drawable.btn_home, R.string.activity_main_tab_home)),
                 MainFragment.class, null);
-       /* mTabHost.addTab(mTabHost.newTabSpec("appsTab").setIndicator(getTabView(R.drawable.btn_shop, R.string.activity_main_tab_shop)),
-                AppFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("gamesTab").setIndicator(getTabView(R.drawable.btn_shop, R.string.activity_main_tab_game)),
+        mTabHost.addTab(mTabHost.newTabSpec("itemsTab").setIndicator(getTabView(R.drawable.btn_home, R.string.activity_main_tab_home)),
+                ItemListFragment.class, null);
+        /*mTabHost.addTab(mTabHost.newTabSpec("gamesTab").setIndicator(getTabView(R.drawable.btn_shop, R.string.activity_main_tab_game)),
                 GameFragment.class, null);*/
         mTabHost.addTab(mTabHost.newTabSpec("mineTab").setIndicator(getTabView(R.drawable.btn_mine, R.string.activity_main_tab_mine)),
                 MineFragment.class, null);

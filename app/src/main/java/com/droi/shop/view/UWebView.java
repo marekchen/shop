@@ -10,6 +10,10 @@ import android.webkit.WebViewClient;
 
 public class UWebView extends WebView {
 
+    public UWebView(final Context context) {
+        this(context, null);
+    }
+
     public UWebView(final Context context, AttributeSet attrs) {
         super(context, attrs);
         getSettings().setJavaScriptEnabled(true);
@@ -17,12 +21,12 @@ public class UWebView extends WebView {
         addJavascriptInterface(new JsInterface(context), "app");
         setWebViewClient(new WebViewClient() {
 
-            /*@Override
+            @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 context.startActivity(intent);
                 return true;
-            }*/
+            }
 
             @Override
             public void onPageFinished(WebView view, String url) {
