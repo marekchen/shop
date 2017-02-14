@@ -2,8 +2,6 @@ package com.droi.shop.util;
 
 import com.droi.shop.model.Item;
 
-import java.util.ArrayList;
-import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 /**
@@ -46,10 +44,52 @@ public class ShoppingCartManager {
         }
     }
 
+    public static void setNum(String id, int num) {
+        for (CartItem cartItem : items) {
+            if (id.equals(cartItem.id)) {
+                cartItem.num = num;
+            }
+        }
+    }
+
+    public static void setChecked(String id, boolean checked) {
+        for (CartItem cartItem : items) {
+            if (id.equals(cartItem.id)) {
+                cartItem.checked = checked;
+            }
+        }
+    }
+
+    public static boolean isAllChecked() {
+        for (CartItem cartItem : items) {
+            if (!cartItem.checked) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void checkAll(boolean checked) {
+        for (CartItem cartItem : items) {
+            cartItem.checked = checked;
+        }
+    }
+
+    public static float computeSum() {
+        float sum = 0.0f;
+        for (CartItem cartItem : items) {
+            if (cartItem.checked) {
+                sum += cartItem.num * cartItem.item.getPrice();
+            }
+        }
+        return sum;
+    }
+
     public static class CartItem implements Comparable<CartItem> {
         public String id;
         public Item item;
         public int num;
+        public boolean checked = false;
 
         CartItem(String mId, Item mItem, int mNum) {
             id = mId;

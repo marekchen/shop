@@ -69,5 +69,7 @@
 
     <!-- item -->
     <string name="item_bottom">%1$d条评论, %2$d%%好评</string>
-    <string name="item_price">￥ %1$.2f</string>
+    <string name="item_price">￥%1$.2f</string>
+
+    <string name="total_price">合计:￥ %1$.2f</string>
 </resources>

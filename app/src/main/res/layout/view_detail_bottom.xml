@@ -7,6 +7,7 @@
     android:orientation="horizontal">
 
     <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/like"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -15,6 +16,7 @@
         app:fontAwesomeIcon="fa_heart" />
 
     <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/shopping_cart"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -23,6 +25,7 @@
         app:fontAwesomeIcon="fa_shopping_cart" />
 
     <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/add_cart"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_weight="5"
@@ -31,6 +34,7 @@
         app:bootstrapSize="lg" />
 
     <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/buy"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_weight="4"
