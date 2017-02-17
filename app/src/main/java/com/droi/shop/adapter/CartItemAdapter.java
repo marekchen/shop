@@ -14,6 +14,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.bumptech.glide.Glide;
 import com.droi.shop.R;
 import com.droi.shop.activity.DetailActivity;
@@ -34,16 +35,18 @@ import static com.droi.shop.util.ShoppingCartManager.isAllChecked;
 
 public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ItemViewHolder> {
 
-    Context mContext;
-    List<ShoppingCartManager.CartItem> mItems;
-    TextView mTotalPrice;
-    CheckBox mCheckBox;
+    private Context mContext;
+    private List<ShoppingCartManager.CartItem> mItems;
+    private TextView mTotalPrice;
+    private CheckBox mCheckBox;
+    private BootstrapButton mCheckoutButton;
 
 
-    public CartItemAdapter(List<ShoppingCartManager.CartItem> items, TextView totalPrice, CheckBox checkBox) {
+    public CartItemAdapter(List<ShoppingCartManager.CartItem> items, TextView totalPrice, CheckBox checkBox, BootstrapButton checkoutButton) {
         mItems = items;
         mTotalPrice = totalPrice;
         mCheckBox = checkBox;
+        mCheckoutButton = checkoutButton;
     }
 
     @Override
@@ -69,7 +72,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ItemVi
         }
         holder.mCheckBox.setChecked(mItems.get(position).checked);
 
-       holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 ShoppingCartManager.setChecked(mItems.get(position).id, isChecked);
@@ -81,6 +84,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ItemVi
             public void onAmountChange(View view, int amount) {
                 if (amount != 0) {
                     ShoppingCartManager.setNum(mItems.get(position).id, amount);
+                    Log.i("chenpei","xxxx");
                     changeTotal();
                 } else {
                     showNormalDialog(holder.mAmountView, mItems.get(position).id);
@@ -95,6 +99,11 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ItemVi
     }
 
     public void changeTotal() {
+        String checkoutText = String.format(
+                mContext.getResources().getString(R.string.checkout),
+                ShoppingCartManager.getCheckNum());
+        Log.i("chenpei","num:"+ShoppingCartManager.getCheckNum());
+        mCheckoutButton.setText(checkoutText);
         mCheckBox.setChecked(isAllChecked());
         String priceText = String.format(
                 mContext.getResources().getString(R.string.item_price),
@@ -129,6 +138,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ItemVi
         final AlertDialog.Builder normalDialog =
                 new AlertDialog.Builder(mContext);
         //normalDialog.setIcon(R.drawable.icon_dialog);
+        normalDialog.setCancelable(false);
         normalDialog.setTitle("确认");
         normalDialog.setMessage("你确认要移除该商品吗？");
         normalDialog.setPositiveButton("确定",
@@ -136,6 +146,11 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ItemVi
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         ShoppingCartManager.removeFromCart(id, true);
+                        mItems.clear();
+                        for (ShoppingCartManager.CartItem item : ShoppingCartManager.getList()) {
+                            mItems.add(item);
+                        }
+                        notifyDataSetChanged();
                         changeTotal();
                     }
                 });
@@ -145,9 +160,9 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ItemVi
                     public void onClick(DialogInterface dialog, int which) {
                         mAmountView.setNum(mAmountView.getLastAmount());
                         ShoppingCartManager.setNum(id, mAmountView.getLastAmount());
-                        changeTotal();
                     }
                 });
         normalDialog.show();
     }
+
 }

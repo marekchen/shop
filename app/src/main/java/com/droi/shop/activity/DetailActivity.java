@@ -8,10 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.bumptech.glide.Glide;
 import com.droi.shop.R;
+import com.droi.shop.adapter.ImageNormalAdapter;
 import com.droi.shop.model.Item;
 import com.droi.shop.util.ShoppingCartManager;
 import com.droi.shop.view.UWebView;
@@ -32,22 +34,33 @@ public class DetailActivity extends Activity {
     RollPagerView mViewPager;
     @BindView(R.id.webView)
     UWebView mWebView;
+    @BindView(R.id.name_text)
+    TextView mNameTextView;
+    @BindView(R.id.desc_text)
+    TextView mDescTextView;
+    @BindView(R.id.price_text)
+    TextView mPriceTextView;
+
     @OnClick(R.id.buy)
-    void clickBuy(View view){
+    void clickBuy(View view) {
 
     }
+
     @OnClick(R.id.add_cart)
-    void clickAdd(View view){
+    void clickAdd(View view) {
         ShoppingCartManager.addToCart(item);
     }
+
     @OnClick(R.id.shopping_cart)
-    void clickCart(View view){
+    void clickCart(View view) {
 
     }
+
     @OnClick(R.id.like)
-    void clickLike(View view){
+    void clickLike(View view) {
 
     }
+
     Context mContext;
     Item item;
     public static final String ITEM_ENTRY = "ITEM_ENTRY";
@@ -59,34 +72,19 @@ public class DetailActivity extends Activity {
         ButterKnife.bind(this);
         mContext = this;
         item = getIntent().getParcelableExtra(ITEM_ENTRY);
-        mViewPager.setAdapter(new ImageNormalAdapter(mViewPager));
+        mViewPager.setAdapter(new ImageNormalAdapter(this, mViewPager, item));
         mWebView.loadUrl(item.getUrl());
+        mNameTextView.setText(item.getName());
+        mDescTextView.setText(item.getDescription());
+
+        String priceText = String.format(
+                mContext.getResources().getString(R.string.item_price),
+                item.getPrice());
+        mPriceTextView.setText(priceText);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-    }
-
-    private class ImageNormalAdapter extends LoopPagerAdapter {
-
-
-        public ImageNormalAdapter(RollPagerView viewPager) {
-            super(viewPager);
-        }
-
-        @Override
-        public View getView(ViewGroup container, int position) {
-            ImageView view = new ImageView(container.getContext());
-            view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            Glide.with(DetailActivity.this).load(item.getImages().get(position)).placeholder(R.drawable.loading).into(view);
-            return view;
-        }
-
-        @Override
-        public int getRealCount() {
-            return item.getImages().size();
-        }
     }
 }

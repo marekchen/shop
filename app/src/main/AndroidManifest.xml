@@ -41,7 +41,6 @@
             android:name="com.droi.sdk.secret_key"
             android:value="h7v9z1oc" />
 
-        <activity android:name=".activity.VideoActivity" />
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,17 +48,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.DetailActivity">
-
-        </activity>
-
-        <activity android:name=".activity.AddressListActivity">
-
-        </activity>
-
-        <activity android:name=".activity.ScanActivity">
-
-        </activity>
+        <activity android:name=".activity.DetailActivity"></activity>
+        <activity android:name=".activity.AddressListActivity"></activity>
+        <activity android:name=".activity.ScanActivity"></activity>
+        <activity android:name=".activity.SearchActivity"/>
+        <activity android:name=".activity.ItemsActivity"/>
     </application>
 
 </manifest>

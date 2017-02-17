@@ -61,6 +61,9 @@ public class ShoppingCartManager {
     }
 
     public static boolean isAllChecked() {
+        if (items.size() == 0) {
+            return false;
+        }
         for (CartItem cartItem : items) {
             if (!cartItem.checked) {
                 return false;
@@ -83,6 +86,16 @@ public class ShoppingCartManager {
             }
         }
         return sum;
+    }
+
+    public static int getCheckNum() {
+        int count = 0;
+        for (CartItem cartItem : items) {
+            if (cartItem.checked) {
+                count += cartItem.num;
+            }
+        }
+        return count;
     }
 
     public static class CartItem implements Comparable<CartItem> {

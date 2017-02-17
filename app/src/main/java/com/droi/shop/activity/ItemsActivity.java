@@ -1,26 +1,20 @@
-package com.droi.shop.fragment;
+package com.droi.shop.activity;
 
-import android.content.Context;
-import android.content.Intent;
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.GridView;
-import android.widget.TextView;
 
-import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.shop.R;
-import com.droi.shop.activity.SearchActivity;
+import com.droi.shop.adapter.ItemAdapter;
 import com.droi.shop.adapter.ItemMainAdapter;
-import com.droi.shop.adapter.ItemTypeAdapter;
 import com.droi.shop.adapter.MainBannerAdapter;
 import com.droi.shop.model.Banner;
 import com.droi.shop.model.Item;
-import com.droi.shop.model.ItemType;
 import com.droi.shop.view.DividerGridItemDecoration;
 import com.jude.rollviewpager.RollPagerView;
 import com.zhy.adapter.recyclerview.wrapper.HeaderAndFooterWrapper;
@@ -30,84 +24,26 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 
 /**
- * Created by chenpei on 2016/5/11.
+ * Created by marek on 2017/2/17.
  */
-public class MainFragment extends Fragment {
-    private Context mContext;
-    @OnClick(R.id.toolbar_search)
-    void clickSearch(View view){
-        Intent intent = new Intent(mContext, SearchActivity.class);
-        startActivity(intent);
-    }
+
+public class ItemsActivity extends Activity {
+    public final static String ITEM_NAME = "ITEM_NAME";
     @BindView(R.id.recycler_view)
     public RecyclerView mRecyclerView;
-    List<Item> list;
-    List<Banner> banners;
-    List<ItemType> itemTypes;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mContext = getActivity();
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
-        ButterKnife.bind(this, view);
-        initData();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_items);
+        ButterKnife.bind(this);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
 
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.addItemDecoration(new DividerGridItemDecoration(getActivity()));
-        RecyclerView.Adapter mAdapter = new ItemMainAdapter(list);
-        HeaderAndFooterWrapper wrapper = new HeaderAndFooterWrapper(mAdapter);
-
-        View headView = inflater.inflate(R.layout.view_head_main, null);
-        RollPagerView rollPagerView = (RollPagerView) headView.findViewById(R.id.view_pager);
-        GridView gridView = (GridView) headView.findViewById(R.id.grid_view);
-        ItemTypeAdapter mItemTypeAdapter = new ItemTypeAdapter(mContext, itemTypes);
-        gridView.setAdapter(mItemTypeAdapter);
-
-        MainBannerAdapter bannerAdapter = new MainBannerAdapter(getActivity(), rollPagerView, banners);
-        rollPagerView.setAdapter(bannerAdapter);
-        wrapper.addHeaderView(headView);
-
-        mRecyclerView.setAdapter(wrapper);
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        DroiAnalytics.onFragmentStart(getActivity(), "MainFragment");
-
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        DroiAnalytics.onFragmentEnd(getActivity(), "MainFragment");
-    }
-
-    void initData(){
-        itemTypes = new ArrayList<>();
-        ItemType type = new ItemType();
-        type.setName("男装");
-        type.setIconUrl("http://7xoxqq.com1.z0.glb.clouddn.com/1.png?attname=&e=1487322852&token=nkrk_kj5nU8Nu1bKUM5mr9Zq6bVWC0_vAgApQnO1:Kfvs66zumBmvwcasPpQHqcfBPzY");
-        ItemType type2 = new ItemType();
-        type2.setName("女装");
-        type2.setIconUrl("http://7xoxqq.com1.z0.glb.clouddn.com/2.png?attname=&e=1487322852&token=nkrk_kj5nU8Nu1bKUM5mr9Zq6bVWC0_vAgApQnO1:LunXms6SoLIqq4YMOXIhTyy73o4");
-        ItemType type3 = new ItemType();
-        type3.setName("电器");
-        type3.setIconUrl("http://7xoxqq.com1.z0.glb.clouddn.com/3.png?attname=&e=1487322852&token=nkrk_kj5nU8Nu1bKUM5mr9Zq6bVWC0_vAgApQnO1:hHYgnfNu7GJMljKxIQ4dtnRzlyM");
-        ItemType type4 = new ItemType();
-        type4.setName("图书");
-        type4.setIconUrl("http://7xoxqq.com1.z0.glb.clouddn.com/4.png?attname=&e=1487322852&token=nkrk_kj5nU8Nu1bKUM5mr9Zq6bVWC0_vAgApQnO1:uyu7FEQp4D9jX0fPNa1xlCysQAs");
-        itemTypes.add(type);
-        itemTypes.add(type2);
-        itemTypes.add(type3);
-        itemTypes.add(type4);
-        list = new ArrayList<>();
+        mRecyclerView.addItemDecoration(new DividerGridItemDecoration(this));
+        List<Item> list = new ArrayList<>();
         Item item1 = new Item();
         item1.setName("Name1");
         item1.setCommentCount(1);
@@ -185,8 +121,12 @@ public class MainFragment extends Fragment {
         item8.setUrl("https://www.baidu.com");
         item8.setImages(images);
         list.add(item8);
-
-        banners = new ArrayList<>();
+        RecyclerView.Adapter mAdapter = new ItemMainAdapter(list);
+        HeaderAndFooterWrapper wrapper = new HeaderAndFooterWrapper(mAdapter);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.view_head_main, null);
+        RollPagerView rollPagerView = (RollPagerView) view.findViewById(R.id.view_pager);
+        List<Banner> banners = new ArrayList<>();
         Banner banner = new Banner();
         banner.setImgUrl("http://newmarket.oo523.com:8080/market/img/2013/11/27/kosftkb7nv/1080x300.png");
         Banner banner2 = new Banner();
@@ -196,5 +136,9 @@ public class MainFragment extends Fragment {
         banners.add(banner);
         banners.add(banner2);
         banners.add(banner3);
+        MainBannerAdapter bannerAdapter = new MainBannerAdapter(this, rollPagerView, banners);
+        rollPagerView.setAdapter(bannerAdapter);
+        wrapper.addHeaderView(view);
+        mRecyclerView.setAdapter(wrapper);
     }
 }

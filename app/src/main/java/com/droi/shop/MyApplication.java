@@ -38,6 +38,12 @@ public class MyApplication extends Application {
         Log.i(TAG, "Core");
         Core.initialize(this);
         DroiObject.registerCustomClass(Item.class);
+        //初始化
+        DroiUpdate.initialize(this);
+        //是否只在wifi下更新，默认true
+        DroiUpdate.setUpdateOnlyWifi(true);
+        //UI类型，默认BOTH
+        DroiUpdate.setUpdateUIStyle(UpdateUIStyle.STYLE_BOTH);
 
         TypefaceProvider.registerDefaultIconSets();
         mContext = this;
