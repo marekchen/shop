@@ -16,6 +16,19 @@ public class Address extends DroiObject {
     String phoneNum;
     @DroiExpose
     String location;
+    @DroiExpose
+    String address;
+
+    public Address(){
+
+    }
+    public Address(String userId, String name, String phoneNum, String location, String address) {
+        this.userId = userId;
+        this.name = name;
+        this.phoneNum = phoneNum;
+        this.location = location;
+        this.address = address;
+    }
 
     public String getUserId() {
         return userId;
@@ -56,7 +69,4 @@ public class Address extends DroiObject {
     public void setLocation(String location) {
         this.location = location;
     }
-
-    @DroiExpose
-    String address;
 }

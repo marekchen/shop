@@ -7,13 +7,12 @@
     android:orientation="vertical">
 
     <include
-        android:id="@+id/top_bar"
-        layout="@layout/view_top_bar" />
+        android:id="@+id/toolbar"
+        layout="@layout/view_toolbar_address_edit" />
 
-    <RelativeLayout
-        android:id="@+id/name_text"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:background="@drawable/view_ripple"
         android:gravity="center_vertical">
 
@@ -26,24 +25,17 @@
             android:textColor="@color/normal_font_color"
             android:textSize="18sp" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/name_text"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp">
+            android:background="@null" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:src="@drawable/right_arrow" />
-        </LinearLayout>
+    </LinearLayout>
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/phone_text"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginTop="1dp"
         android:background="@drawable/view_ripple"
         android:gravity="center_vertical">
@@ -57,24 +49,17 @@
             android:textColor="@color/normal_font_color"
             android:textSize="18sp" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/phone_text"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp">
+            android:background="@null" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:src="@drawable/right_arrow" />
-        </LinearLayout>
+    </LinearLayout>
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/location_text"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginTop="1dp"
         android:background="@drawable/view_ripple"
         android:gravity="center_vertical">
@@ -88,24 +73,17 @@
             android:textColor="@color/normal_font_color"
             android:textSize="18sp" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/location_text"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp">
+            android:background="@null" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:src="@drawable/right_arrow" />
-        </LinearLayout>
+    </LinearLayout>
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/address_text"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginTop="1dp"
         android:background="@drawable/view_ripple"
         android:gravity="center_vertical">
@@ -119,19 +97,13 @@
             android:textColor="@color/normal_font_color"
             android:textSize="18sp" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/address_text"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp">
+            android:background="@null" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:src="@drawable/right_arrow" />
-        </LinearLayout>
-
-    </RelativeLayout>
+    </LinearLayout>
 
     <View
         android:layout_width="0dp"
@@ -140,6 +112,7 @@
         android:alpha="0" />
 
     <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"

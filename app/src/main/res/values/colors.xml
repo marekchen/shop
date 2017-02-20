@@ -15,6 +15,7 @@
     <color name="top_bar_background">#157ACE</color>
     <color name="white_half_alpha">#80ffffff</color>
     <color name="bg_main">#EEEEEC</color>
+    <color name="bg_bottom">#EEEEEC</color>
 
     <color name="green0">#45C01A</color>
     <color name="green1">#45C01A</color>

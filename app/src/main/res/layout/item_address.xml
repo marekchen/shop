@@ -6,6 +6,7 @@
     android:paddingBottom="5dp"
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
+    android:background="@color/white"
     android:paddingTop="15dp">
 
     <TextView
@@ -38,10 +39,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/address_text">
 
-        <!--        <RadioButton
-                    android:id="@+id/radio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />-->
         <CheckBox
             android:id="@+id/checkbox"
             android:layout_width="wrap_content"

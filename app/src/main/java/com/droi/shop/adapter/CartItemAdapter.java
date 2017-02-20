@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.bumptech.glide.Glide;
 import com.droi.shop.R;
-import com.droi.shop.activity.DetailActivity;
 import com.droi.shop.util.ShoppingCartManager;
 import com.droi.shop.view.AmountView;
 
@@ -26,8 +26,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.droi.shop.util.ShoppingCartManager.isAllChecked;
 
 /**
  * Created by marek on 2017/2/13.
@@ -40,13 +38,16 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ItemVi
     private TextView mTotalPrice;
     private CheckBox mCheckBox;
     private BootstrapButton mCheckoutButton;
+    private LinearLayout mEmptyLayout;
 
 
-    public CartItemAdapter(List<ShoppingCartManager.CartItem> items, TextView totalPrice, CheckBox checkBox, BootstrapButton checkoutButton) {
+    public CartItemAdapter(List<ShoppingCartManager.CartItem> items, TextView totalPrice,
+                           CheckBox checkBox, BootstrapButton checkoutButton, LinearLayout emptyLayout) {
         mItems = items;
         mTotalPrice = totalPrice;
         mCheckBox = checkBox;
         mCheckoutButton = checkoutButton;
+        mEmptyLayout = emptyLayout;
     }
 
     @Override
@@ -75,7 +76,8 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ItemVi
         holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                ShoppingCartManager.setChecked(mItems.get(position).id, isChecked);
+                ShoppingCartManager.getInstance(mContext.getApplicationContext())
+                        .setChecked(mItems.get(position).id, isChecked);
                 changeTotal();
             }
         });
@@ -83,8 +85,8 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ItemVi
             @Override
             public void onAmountChange(View view, int amount) {
                 if (amount != 0) {
-                    ShoppingCartManager.setNum(mItems.get(position).id, amount);
-                    Log.i("chenpei","xxxx");
+                    ShoppingCartManager.getInstance(mContext.getApplicationContext())
+                            .setNum(mItems.get(position).id, amount);
                     changeTotal();
                 } else {
                     showNormalDialog(holder.mAmountView, mItems.get(position).id);
@@ -98,16 +100,15 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ItemVi
         return mItems.size();
     }
 
-    public void changeTotal() {
+    private void changeTotal() {
         String checkoutText = String.format(
-                mContext.getResources().getString(R.string.checkout),
-                ShoppingCartManager.getCheckNum());
-        Log.i("chenpei","num:"+ShoppingCartManager.getCheckNum());
+                mContext.getResources().getString(R.string.checkout), ShoppingCartManager
+                        .getInstance(mContext.getApplicationContext()).getCheckNum());
         mCheckoutButton.setText(checkoutText);
-        mCheckBox.setChecked(isAllChecked());
+        mCheckBox.setChecked(ShoppingCartManager.getInstance(mContext.getApplicationContext()).isAllChecked());
         String priceText = String.format(
-                mContext.getResources().getString(R.string.item_price),
-                ShoppingCartManager.computeSum());
+                mContext.getResources().getString(R.string.total_price),
+                ShoppingCartManager.getInstance(mContext.getApplicationContext()).computeSum());
         mTotalPrice.setText(priceText);
     }
 
@@ -130,39 +131,41 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ItemVi
     }
 
     private void showNormalDialog(final AmountView mAmountView, final String id) {
-        /* @setIcon 设置对话框图标
-         * @setTitle 设置对话框标题
-         * @setMessage 设置对话框消息提示
-         * setXXX方法返回Dialog对象，因此可以链式设置属性
-         */
         final AlertDialog.Builder normalDialog =
                 new AlertDialog.Builder(mContext);
-        //normalDialog.setIcon(R.drawable.icon_dialog);
         normalDialog.setCancelable(false);
-        normalDialog.setTitle("确认");
-        normalDialog.setMessage("你确认要移除该商品吗？");
-        normalDialog.setPositiveButton("确定",
+        normalDialog.setTitle(R.string.confirm);
+        normalDialog.setMessage(R.string.confirm_remove);
+        normalDialog.setPositiveButton(R.string.confirm,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ShoppingCartManager.removeFromCart(id, true);
-                        mItems.clear();
-                        for (ShoppingCartManager.CartItem item : ShoppingCartManager.getList()) {
-                            mItems.add(item);
-                        }
-                        notifyDataSetChanged();
-                        changeTotal();
+                        ShoppingCartManager.getInstance(mContext.getApplicationContext()).removeFromCart(id, true);
+                        refresh();
                     }
                 });
-        normalDialog.setNegativeButton("按错了",
+        normalDialog.setNegativeButton(R.string.wrong_click,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mAmountView.setNum(mAmountView.getLastAmount());
-                        ShoppingCartManager.setNum(id, mAmountView.getLastAmount());
+                        ShoppingCartManager.getInstance(mContext.getApplicationContext())
+                                .setNum(id, mAmountView.getLastAmount());
                     }
                 });
         normalDialog.show();
+    }
+
+    void refresh() {
+        mItems.clear();
+        mItems.addAll(ShoppingCartManager.getInstance(mContext.getApplicationContext()).getList());
+        if (mItems.size() == 0) {
+            mEmptyLayout.setVisibility(View.VISIBLE);
+        } else {
+            mEmptyLayout.setVisibility(View.GONE);
+        }
+        notifyDataSetChanged();
+        changeTotal();
     }
 
 }

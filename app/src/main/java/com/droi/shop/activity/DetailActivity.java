@@ -48,7 +48,7 @@ public class DetailActivity extends Activity {
 
     @OnClick(R.id.add_cart)
     void clickAdd(View view) {
-        ShoppingCartManager.addToCart(item);
+        ShoppingCartManager.getInstance(getApplicationContext()).addToCart(item);
     }
 
     @OnClick(R.id.shopping_cart)

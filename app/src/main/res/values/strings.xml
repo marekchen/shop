@@ -7,6 +7,7 @@
     <string name="activity_main_tab_mine">我的</string>
 
     <!--address相关-->
+    <string name="activity_address_title">收货地址</string>
     <string name="address_name">收货人:</string>
     <string name="address_phone">手机号码:</string>
     <string name="address_location">所在地区:</string>
@@ -16,6 +17,20 @@
     <string name="address_set">设为默认</string>
     <string name="address_delete">删除</string>
     <string name="address_edit">编辑</string>
+    <string name="activity_add_address_add">添加地址</string>
+    <string name="activity_add_address_modify">修改地址</string>
+    <string name="activity_add_address_name">联系人</string>
+    <string name="activity_add_address_name_hint">请输入联系人姓名</string>
+    <string name="activity_add_address_tel">联系电话</string>
+    <string name="activity_add_address_tel_hint">请输入联系电话</string>
+    <string name="activity_add_address_address">收货地址</string>
+    <string name="activity_add_address_address_hint">请输入详细地址</string>
+    <string name="activity_add_address_confirm">确定</string>
+    <string name="activity_update_address_empty">%1$s不能为空</string>
+    <string name="activity_update_address_tel_error">电话号码格式错误</string>
+    <string name="activity_add_address_add_success">添加地址成功</string>
+    <string name="activity_add_address_update_success">更新地址成功</string>
+    <string name="activity_add_address_del_success">删除地址成功</string>
 
     <!-- Mine Fragment -->
     <string name="fragment_mine_title">我的</string>
@@ -70,10 +85,21 @@
     <!-- item -->
     <string name="item_bottom">%1$d条评论, %2$d%%好评</string>
     <string name="item_price">￥%1$.2f</string>
-
+    <!--shopping cart-->
     <string name="total_price">合计:￥ %1$.2f</string>
     <string name="checkout">去结算(%1$d)</string>
-    <string name="title_activity_main2">Main2Activity</string>
+    <string name="shopping_cart_empty">购物车是空的！</string>
+    <string name="confirm_remove">你确认要移除该商品吗？</string>
+    <string name="wrong_click">按错了</string>
+    <string name="select_all">全选</string>
+    <!--order confirm-->
+    <string name="submit_order">提交订单</string>
+    <string name="activity_order_confirm_input_address">请填写地址</string>
+    <string name="activity_order_confirm_pay">货到付款</string>
+    <string name="activity_order_confirm_remarks">备注</string>
+    <string name="activity_order_confirm_remarks_hint">点击添加备注</string>
+    <string name="activity_order_confirm_receipt">发票信息</string>
+    <string name="activity_order_confirm_receipt_hint">不需要发票</string>
 
     <!-- Search Activity -->
     <string name="activity_search_sort">排序</string>

@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_main"
     android:orientation="vertical">
 
     <include
@@ -9,17 +10,25 @@
         layout="@layout/view_top_bar" />
 
     <include
-        android:id="@+id/bottom"
+        android:id="@+id/bottom_layout"
         layout="@layout/view_shopping_cart_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" />
 
+    <include
+        android:id="@+id/empty_layout"
+        layout="@layout/view_empty_shop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_layout"
+        android:layout_below="@id/top_bar" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottom"
+        android:layout_above="@id/bottom_layout"
         android:layout_below="@id/top_bar">
 
     </android.support.v7.widget.RecyclerView>
