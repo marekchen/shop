@@ -3,9 +3,12 @@ package com.droi.shop.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -29,7 +32,7 @@ import butterknife.ButterKnife;
  * Created by marek on 2017/2/17.
  */
 
-public class ItemsActivity extends Activity {
+public class ItemsActivity extends AppCompatActivity {
     public final static String ITEM_NAME = "ITEM_NAME";
     @BindView(R.id.recycler_view)
     public RecyclerView mRecyclerView;
@@ -140,5 +143,20 @@ public class ItemsActivity extends Activity {
         rollPagerView.setAdapter(bannerAdapter);
         wrapper.addHeaderView(view);
         mRecyclerView.setAdapter(wrapper);
+        initToolbar();
+    }
+
+    private void initToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.activity_confirm_title);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

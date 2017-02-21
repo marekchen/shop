@@ -32,10 +32,14 @@ public class SearchActivity extends AppCompatActivity {
     private static final String SP_SEARCH_HISTORY_FILE = "search_history";
     private static final String SP_SEARCH_HISTORY_KEY = "search";
     private String mSeparator;
-    private LinearLayout mSearchHistoryLayout;
-    private LinearLayout mSearchResultLayout;
-    private EditText mSearchView;
-    private ProgressBar mProgressBar;
+    @BindView(R.id.search_history_layout)
+    LinearLayout mSearchHistoryLayout;
+    @BindView(R.id.search_result_layout)
+    LinearLayout mSearchResultLayout;
+    @BindView(R.id.toolbar_search)
+    EditText mSearchView;
+    @BindView(R.id.search_progress)
+    ProgressBar mProgressBar;
 
     @OnClick(R.id.search_history_clear)
     void clear(View view) {
@@ -60,7 +64,7 @@ public class SearchActivity extends AppCompatActivity {
                 finish();
             }
         });
-        mSearchView = (EditText) findViewById(R.id.toolbar_search);
+
         mSearchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -76,9 +80,6 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        mSearchHistoryLayout = (LinearLayout) findViewById(R.id.search_history_layout);
-        mSearchResultLayout = (LinearLayout) findViewById(R.id.search_result_layout);
-        mProgressBar = (ProgressBar) findViewById(R.id.search_progress);
         mSearchHistoryLayout.setVisibility(View.GONE);
         mSearchResultLayout.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.GONE);

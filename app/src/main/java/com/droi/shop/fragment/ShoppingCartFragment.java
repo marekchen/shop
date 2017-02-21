@@ -2,25 +2,24 @@ package com.droi.shop.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ShortcutManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
-import com.droi.sdk.core.DroiCloud;
 import com.droi.shop.R;
 import com.droi.shop.activity.OrderConfirmActivity;
 import com.droi.shop.adapter.CartItemAdapter;
@@ -50,8 +49,6 @@ public class ShoppingCartFragment extends Fragment {
     LinearLayout mEmptyLayout;
     @BindView(R.id.bottom_layout)
     LinearLayout mBottomLayout;
-    @BindView(R.id.top_bar_back_btn)
-    ImageButton backButton;
 
     Context mContext;
     List<ShoppingCartManager.CartItem> list = new ArrayList<>();
@@ -80,10 +77,25 @@ public class ShoppingCartFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, OrderConfirmActivity.class);
+                String gson = ShoppingCartManager.getInstance(mContext).getOrderJson();
+                if (gson == null) {
+                    Toast.makeText(mContext, "没有选择物品", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                intent.putExtra(OrderConfirmActivity.ORDER, gson);
                 startActivity(intent);
             }
         });
+        initToolbar(view);
         return view;
+    }
+
+    private void initToolbar(View view) {
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.activity_confirm_title);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

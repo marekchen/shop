@@ -92,7 +92,10 @@
     <string name="confirm_remove">你确认要移除该商品吗？</string>
     <string name="wrong_click">按错了</string>
     <string name="select_all">全选</string>
+
     <!--order confirm-->
+    <string name="activity_confirm_title">确认订单</string>
+    <string name="item_num">x%1$d</string>
     <string name="submit_order">提交订单</string>
     <string name="activity_order_confirm_input_address">请填写地址</string>
     <string name="activity_order_confirm_pay">货到付款</string>

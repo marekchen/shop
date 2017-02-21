@@ -20,7 +20,11 @@ import com.droi.sdk.push.DroiMessageHandler;
 import com.droi.sdk.push.DroiPush;
 import com.droi.sdk.selfupdate.DroiUpdate;
 import com.droi.sdk.selfupdate.UpdateUIStyle;
+import com.droi.shop.model.Address;
+import com.droi.shop.model.Banner;
 import com.droi.shop.model.Item;
+import com.droi.shop.model.Order;
+import com.droi.shop.model.ShopUser;
 /*import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;*/
 
@@ -29,8 +33,6 @@ import com.hyphenate.chat.EMOptions;*/
  */
 public class MyApplication extends Application {
     private static final String TAG = "MyApplication";
-    private static Context mContext;
-    private Toast toast = null;
 
     @Override
     public void onCreate() {
@@ -38,6 +40,11 @@ public class MyApplication extends Application {
         Log.i(TAG, "Core");
         Core.initialize(this);
         DroiObject.registerCustomClass(Item.class);
+        DroiObject.registerCustomClass(Address.class);
+        DroiObject.registerCustomClass(Banner.class);
+        DroiObject.registerCustomClass(ShopUser.class);
+        DroiObject.registerCustomClass(Order.class);
+
         //初始化
         DroiUpdate.initialize(this);
         //是否只在wifi下更新，默认true
@@ -46,7 +53,6 @@ public class MyApplication extends Application {
         DroiUpdate.setUpdateUIStyle(UpdateUIStyle.STYLE_BOTH);
 
         TypefaceProvider.registerDefaultIconSets();
-        mContext = this;
        /*
        //初始化
         DroiPush.initialize(this);

@@ -1,6 +1,7 @@
 package com.droi.shop.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,8 +13,14 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.droi.sdk.DroiCallback;
+import com.droi.sdk.DroiError;
 import com.droi.shop.R;
+import com.droi.shop.activity.AddressEditActivity;
+import com.droi.shop.activity.DetailActivity;
+import com.droi.shop.interfaces.MyItemClickListener;
 import com.droi.shop.model.Address;
+import com.droi.shop.util.ProgressDialogUtil;
 
 import java.util.List;
 
@@ -26,8 +33,9 @@ import butterknife.ButterKnife;
 
 public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressViewHolder> {
 
-    Context mContext;
-    List<Address> mAddresses;
+    private Context mContext;
+    private List<Address> mAddresses;
+    private MyItemClickListener mItemClickListener;
 
     public AddressAdapter(List<Address> addresses) {
         mAddresses = addresses;
@@ -37,16 +45,78 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
     public AddressViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_address, parent, false);
-        return new AddressViewHolder(view);
+        return new AddressViewHolder(view, mItemClickListener);
+    }
+
+    public void setOnItemClickListener(MyItemClickListener listener) {
+        this.mItemClickListener = listener;
     }
 
     @Override
-    public void onBindViewHolder(final AddressViewHolder holder, int position) {
+    public void onBindViewHolder(final AddressViewHolder holder, final int position) {
         holder.mNameTextView.setText(mAddresses.get(position).getName());
+        holder.mPhoneTextView.setText(mAddresses.get(position).getPhoneNum());
+        holder.mAddressTextView.setText(mAddresses.get(position).getAddress());
         holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // 更新默认地址云代码实现
+            }
+        });
+        holder.mEditImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, AddressEditActivity.class);
+                intent.putExtra(AddressEditActivity.ADDRESS, mAddresses.get(holder.getAdapterPosition()));
+                mContext.startActivity(intent);
+            }
+        });
+        holder.mEditTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, AddressEditActivity.class);
+                intent.putExtra(AddressEditActivity.ADDRESS, mAddresses.get(holder.getAdapterPosition()));
+                mContext.startActivity(intent);
+            }
+        });
+        holder.mDeleteImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final ProgressDialogUtil dialog = new ProgressDialogUtil(mContext);
+                dialog.showDialog("正在删除");
+                mAddresses.get(holder.getAdapterPosition()).deleteInBackground(new DroiCallback<Boolean>() {
+                    @Override
+                    public void result(Boolean aBoolean, DroiError droiError) {
+                        if (aBoolean) {
+                            mAddresses.remove(position);
+                            dialog.dismissDialog();
+                            notifyDataSetChanged();
+                        } else {
+                            //错误
+                        }
+                    }
+                });
+            }
+        });
+
+        holder.mDeleteTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final ProgressDialogUtil dialog = new ProgressDialogUtil(mContext);
+                dialog.showDialog("正在删除");
+                mAddresses.get(holder.getAdapterPosition()).deleteInBackground(new DroiCallback<Boolean>() {
+                    @Override
+                    public void result(Boolean aBoolean, DroiError droiError) {
+                        if (aBoolean) {
+                            mAddresses.remove(position);
+                            dialog.dismissDialog();
+                            notifyDataSetChanged();
+                        } else {
+                            //错误
+                            dialog.dismissDialog();
+                        }
+                    }
+                });
             }
         });
     }
@@ -56,16 +126,13 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
         return mAddresses.size();
     }
 
-    class AddressViewHolder extends RecyclerView.ViewHolder {
+    class AddressViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         @BindView(R.id.name_text)
         TextView mNameTextView;
         @BindView(R.id.phone_text)
         TextView mPhoneTextView;
         @BindView(R.id.address_text)
         TextView mAddressTextView;
-        /*@BindView(R.id.radio)
-        RadioButton mRadioButton;*/
-
         @BindView(R.id.checkbox)
         CheckBox mCheckBox;
         @BindView(R.id.edit_image)
@@ -76,10 +143,25 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
         ImageView mDeleteImageView;
         @BindView(R.id.delete_text)
         TextView mDeleteTextView;
+        private MyItemClickListener mListener;
 
-        AddressViewHolder(View itemView) {
+        AddressViewHolder(View itemView, MyItemClickListener listener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            mListener = listener;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mListener != null) {
+                mListener.onItemClick(v, getLayoutPosition());
+            }
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            return false;
         }
     }
 }

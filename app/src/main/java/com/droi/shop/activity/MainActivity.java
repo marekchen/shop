@@ -1,12 +1,12 @@
 package com.droi.shop.activity;
 
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
 import com.droi.shop.R;
 
 import android.content.Context;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,7 +20,7 @@ import com.droi.shop.fragment.MainFragment;
 import com.droi.shop.fragment.MineFragment;
 import com.droi.shop.fragment.ShoppingCartFragment;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppCompatActivity {
     public static final String MAIN_TAB_INDEX = "index";
     private FragmentTabHost mTabHost;
     private Context mContext;

@@ -2,10 +2,8 @@ package com.droi.shop.adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +51,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ItemVi
     @Override
     public CartItemAdapter.ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         mContext = parent.getContext();
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cartitem_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cartitem, parent, false);
         return new CartItemAdapter.ItemViewHolder(view);
     }
 

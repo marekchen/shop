@@ -3,6 +3,9 @@ package com.droi.shop.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +32,7 @@ import butterknife.OnClick;
  * Created by marek on 2017/2/7.
  */
 
-public class DetailActivity extends Activity {
+public class DetailActivity extends AppCompatActivity {
     @BindView(R.id.view_pager)
     RollPagerView mViewPager;
     @BindView(R.id.webView)
@@ -81,6 +84,21 @@ public class DetailActivity extends Activity {
                 mContext.getResources().getString(R.string.item_price),
                 item.getPrice());
         mPriceTextView.setText(priceText);
+        initToolbar();
+    }
+
+    private void initToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.activity_confirm_title);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

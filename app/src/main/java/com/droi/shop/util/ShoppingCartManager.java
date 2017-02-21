@@ -3,6 +3,7 @@ package com.droi.shop.util;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -73,6 +74,44 @@ public class ShoppingCartManager {
         }
         return cartList.getList();
     }
+
+    public String getOrderJson() {
+        CartList cartList = getValue(KEY, CartList.class);
+        if (cartList == null) {
+            return null;
+        }
+        List<CartItem> list = cartList.getList();
+        List<CartItem> list2 = new ArrayList<>();
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        for (CartItem item : list) {
+            if (item.checked) {
+                list2.add(item);
+            }
+        }
+        if (list2.size() == 0) {
+            return null;
+        }
+        CartList cartList2 = new CartList();
+        cartList2.setList(list2);
+
+        return GSON.toJson(cartList2);
+    }
+
+    public List<CartItem> getOrderList(String gson) {
+        if (gson == null) {
+            return null;
+        } else {
+            try {
+                return GSON.fromJson(gson, CartList.class).getList();
+            } catch (Exception e) {
+                Log.i("chenpei", "e:" + e.toString());
+                return null;
+            }
+        }
+    }
+
 
     public void addToCart(Item item) {
         CartList cartList = getValue(KEY, CartList.class);

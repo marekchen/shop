@@ -44,7 +44,7 @@ public class MainFragment extends Fragment {
         startActivity(intent);
     }
     @BindView(R.id.recycler_view)
-    public RecyclerView mRecyclerView;
+    RecyclerView mRecyclerView;
     List<Item> list;
     List<Banner> banners;
     List<ItemType> itemTypes;

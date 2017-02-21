@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.droi.shop.R;
 import com.droi.shop.activity.DetailActivity;
+import com.droi.shop.interfaces.MyItemClickListener;
 import com.droi.shop.model.Item;
 
 import java.util.ArrayList;
@@ -68,12 +69,12 @@ public class ItemMainAdapter extends RecyclerView.Adapter<ItemMainAdapter.ItemVi
         TextView mNameTextView;
         @BindView(R.id.price_text)
         TextView mPriceTextView;
-        private ItemAdapter.MyItemClickListener mListener;
+        private MyItemClickListener mListener;
 
         ItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            mListener = new ItemAdapter.MyItemClickListener() {
+            mListener = new MyItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
                     Intent intent = new Intent(mContext, DetailActivity.class);
@@ -95,9 +96,5 @@ public class ItemMainAdapter extends RecyclerView.Adapter<ItemMainAdapter.ItemVi
         public boolean onLongClick(View v) {
             return false;
         }
-    }
-
-    public interface MyItemClickListener {
-        void onItemClick(View view, int position);
     }
 }
