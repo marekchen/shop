@@ -1,18 +1,14 @@
 package com.droi.shop.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import com.droi.sdk.DroiCallback;
@@ -54,7 +50,6 @@ public class OrderConfirmActivity extends AppCompatActivity {
 
     @OnClick(R.id.checkout)
     void checkout(View view) {
-        Log.i("chenpei", "check out");
         Order order = new Order();
         order.setAddress(address);
         order.setCartItems(cartItems);
@@ -62,11 +57,10 @@ public class OrderConfirmActivity extends AppCompatActivity {
         order.setReceiptType(1);
         order.setRemark(remarkTextView.getText().toString());
         final ProgressDialogUtil dialog = new ProgressDialogUtil(mContext);
-        dialog.showDialog("提交订单中");
+        dialog.showDialog(R.string.submitting_order);
         order.saveInBackground(new DroiCallback<Boolean>() {
             @Override
             public void result(Boolean aBoolean, DroiError droiError) {
-                Log.i("chenpei", "msg:" + droiError.toString());
                 if (aBoolean) {
                     ShoppingCartManager.getInstance(mContext).clear();
                     finish();
@@ -84,7 +78,6 @@ public class OrderConfirmActivity extends AppCompatActivity {
         mContext = this;
         String gson = getIntent().getStringExtra(ORDER);
         cartItems = new ArrayList<>();
-        Log.i("chenpei", ">>" + gson);
         cartItems.addAll(ShoppingCartManager.getInstance(this).getOrderList(gson));
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
