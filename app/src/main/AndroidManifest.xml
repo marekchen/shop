@@ -48,13 +48,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.DetailActivity"></activity>
-        <activity android:name=".activity.AddressListActivity"></activity>
-        <activity android:name=".activity.AddressEditActivity"/>
-        <activity android:name=".activity.ScanActivity"></activity>
-        <activity android:name=".activity.SearchActivity"/>
-        <activity android:name=".activity.ItemsActivity"/>
-        <activity android:name=".activity.OrderConfirmActivity"/>
+        <activity android:name=".activity.DetailActivity"/>
+        <activity android:name=".activity.AddressListActivity"/>
+        <activity android:name=".activity.AddressEditActivity" />
+        <activity android:name=".activity.ScanActivity"/>
+        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.ItemsActivity" />
+        <activity android:name=".activity.OrderConfirmActivity" />
+        <activity android:name=".activity.MyOrderActivity" />
+        <activity android:name=".activity.AboutUsActivity"/>
     </application>
 
 </manifest>

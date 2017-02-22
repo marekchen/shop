@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.bumptech.glide.Glide;
 import com.droi.shop.R;
+import com.droi.shop.model.CartItem;
 import com.droi.shop.util.ShoppingCartManager;
 import com.droi.shop.view.AmountView;
 
@@ -32,14 +33,14 @@ import butterknife.ButterKnife;
 public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ItemViewHolder> {
 
     private Context mContext;
-    private List<ShoppingCartManager.CartItem> mItems;
+    private List<CartItem> mItems;
     private TextView mTotalPrice;
     private CheckBox mCheckBox;
     private BootstrapButton mCheckoutButton;
     private LinearLayout mEmptyLayout;
 
 
-    public CartItemAdapter(List<ShoppingCartManager.CartItem> items, TextView totalPrice,
+    public CartItemAdapter(List<CartItem> items, TextView totalPrice,
                            CheckBox checkBox, BootstrapButton checkoutButton, LinearLayout emptyLayout) {
         mItems = items;
         mTotalPrice = totalPrice;

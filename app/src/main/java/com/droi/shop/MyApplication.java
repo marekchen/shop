@@ -22,9 +22,11 @@ import com.droi.sdk.selfupdate.DroiUpdate;
 import com.droi.sdk.selfupdate.UpdateUIStyle;
 import com.droi.shop.model.Address;
 import com.droi.shop.model.Banner;
+import com.droi.shop.model.CartItem;
 import com.droi.shop.model.Item;
 import com.droi.shop.model.Order;
 import com.droi.shop.model.ShopUser;
+import com.droi.shop.util.ShoppingCartManager;
 /*import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;*/
 
@@ -37,60 +39,32 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i(TAG, "Core");
+        TypefaceProvider.registerDefaultIconSets();
         Core.initialize(this);
         DroiObject.registerCustomClass(Item.class);
         DroiObject.registerCustomClass(Address.class);
         DroiObject.registerCustomClass(Banner.class);
         DroiObject.registerCustomClass(ShopUser.class);
         DroiObject.registerCustomClass(Order.class);
+        DroiObject.registerCustomClass(CartItem.class);
 
-        //初始化
         DroiUpdate.initialize(this);
-        //是否只在wifi下更新，默认true
         DroiUpdate.setUpdateOnlyWifi(true);
-        //UI类型，默认BOTH
         DroiUpdate.setUpdateUIStyle(UpdateUIStyle.STYLE_BOTH);
 
-        TypefaceProvider.registerDefaultIconSets();
-       /*
-       //初始化
         DroiPush.initialize(this);
-        //设置标签
-        DroiPush.addTag(this, new String[]{"test1", "test2"}, false);
-        DroiPush.removeTag(this, new String[]{"test2,test3"});
-        //设置静默时间为0:30 到 8:00
-        DroiPush.setSilentTime(this, 0, 30, 8, 0);
 
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                //使用DroiPreference设置是否打开push功能
-                boolean enablePush = DroiPreference.instance().getBoolean("push", true);
-                Log.i(TAG, "DroiPreference:" + enablePush);
-                DroiPush.setPushEnabled(getApplicationContext(), enablePush);
-                //DroiCloudCache
-                // 设定数据
-                DroiCloudCache.set("keyName", "54678");
-                // 由云端取回设定数据
-                DroiError error = new DroiError();
-                String value = DroiCloudCache.get("keyName", error);
-                Log.i(TAG, "DroiCloudCache:" + value);
-            }
-        };
-        thread.start();
+        DroiFeedback.initialize(this);
 
-        //透传消息
-        DroiPush.setMessageHandler(new DroiMessageHandler() {
-            @Override
-            public void onHandleCustomMessage(Context context, String s) {
-                //String st = decodeFromBase64Data(s);
-                //showToastInUiThread(st);
-            }
-        });
+        DroiPermission permission = DroiPermission.getDefaultPermission();
+        if (permission == null)
+            permission = new DroiPermission();
+        // 设置默认权限为所有用户可读不可写
+        permission.setPublicReadPermission(true);
+        permission.setPublicWritePermission(true);
+        DroiPermission.setDefaultPermission(permission);
 
-        Log.i(TAG, "DroiAnalytics");
+        /*
         //初始化
         DroiAnalytics.initialize(this);
         //方式一:
@@ -109,25 +83,8 @@ public class MyApplication extends Application {
         //设置语言
         DroiOauth.setLanguage("zh_CN");
 
-        Log.i(TAG, "DroiUpdate");
-        //初始化
-        DroiUpdate.initialize(this);
-        //是否只在wifi下更新，默认true
-        DroiUpdate.setUpdateOnlyWifi(true);
-        //UI类型，默认BOTH
-        DroiUpdate.setUpdateUIStyle(UpdateUIStyle.STYLE_BOTH);
-
-        Log.i(TAG, "DroiFeedback");
-        //初始化
-        DroiFeedback.initialize(this);
 
         //权限设置
-        DroiPermission permission = DroiPermission.getDefaultPermission();
-        if (permission == null)
-            permission = new DroiPermission();
-        // 设置默认权限为所有用户可读不可写
-        permission.setPublicReadPermission(true);
-        permission.setPublicWritePermission(true);
-        DroiPermission.setDefaultPermission(permission);*/
+        */
     }
 }

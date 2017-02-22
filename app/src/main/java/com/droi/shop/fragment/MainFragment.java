@@ -6,13 +6,19 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.droi.sdk.DroiCallback;
+import com.droi.sdk.DroiError;
 import com.droi.sdk.analytics.DroiAnalytics;
+import com.droi.sdk.core.DroiObject;
+import com.droi.sdk.core.DroiQuery;
+import com.droi.sdk.core.DroiQueryCallback;
 import com.droi.shop.R;
 import com.droi.shop.activity.SearchActivity;
 import com.droi.shop.adapter.ItemMainAdapter;
@@ -21,6 +27,7 @@ import com.droi.shop.adapter.MainBannerAdapter;
 import com.droi.shop.model.Banner;
 import com.droi.shop.model.Item;
 import com.droi.shop.model.ItemType;
+import com.droi.shop.model.Order;
 import com.droi.shop.view.DividerGridItemDecoration;
 import com.jude.rollviewpager.RollPagerView;
 import com.zhy.adapter.recyclerview.wrapper.HeaderAndFooterWrapper;
@@ -38,14 +45,16 @@ import butterknife.OnClick;
  */
 public class MainFragment extends Fragment {
     private Context mContext;
+
     @OnClick(R.id.toolbar_search)
-    void clickSearch(View view){
+    void clickSearch(View view) {
         Intent intent = new Intent(mContext, SearchActivity.class);
         startActivity(intent);
     }
+
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
-    List<Item> list;
+    List<Item> mItems;
     List<Banner> banners;
     List<ItemType> itemTypes;
 
@@ -55,11 +64,12 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, view);
         initData();
-
+        mItems = new ArrayList<>();
+        fetchItems();
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addItemDecoration(new DividerGridItemDecoration(getActivity()));
-        RecyclerView.Adapter mAdapter = new ItemMainAdapter(list);
+        RecyclerView.Adapter mAdapter = new ItemMainAdapter(mItems);
         HeaderAndFooterWrapper wrapper = new HeaderAndFooterWrapper(mAdapter);
 
         View headView = inflater.inflate(R.layout.view_head_main, null);
@@ -89,7 +99,7 @@ public class MainFragment extends Fragment {
         DroiAnalytics.onFragmentEnd(getActivity(), "MainFragment");
     }
 
-    void initData(){
+    void initData() {
         itemTypes = new ArrayList<>();
         ItemType type = new ItemType();
         type.setName("男装");
@@ -107,7 +117,7 @@ public class MainFragment extends Fragment {
         itemTypes.add(type2);
         itemTypes.add(type3);
         itemTypes.add(type4);
-        list = new ArrayList<>();
+/*        list = new ArrayList<>();
         Item item1 = new Item();
         item1.setName("Name1");
         item1.setCommentCount(1);
@@ -184,7 +194,7 @@ public class MainFragment extends Fragment {
         item8.setDescription("描述8");
         item8.setUrl("https://www.baidu.com");
         item8.setImages(images);
-        list.add(item8);
+        list.add(item8);*/
 
         banners = new ArrayList<>();
         Banner banner = new Banner();
@@ -196,5 +206,31 @@ public class MainFragment extends Fragment {
         banners.add(banner);
         banners.add(banner2);
         banners.add(banner3);
+
+/*        DroiObject.saveAllInBackground(list, new DroiCallback<Boolean>() {
+            @Override
+            public void result(Boolean aBoolean, DroiError droiError) {
+                Log.i("chenpei", "saveall:" + droiError.toString());
+            }
+        });*/
+    }
+
+    void fetchItems() {
+        DroiQuery query = DroiQuery.Builder.newBuilder().limit(10).query(Item.class).build();
+        query.runQueryInBackground(new DroiQueryCallback<Item>() {
+            @Override
+            public void result(List<Item> list, DroiError droiError) {
+                Log.i("chenpei", "msg:" + droiError.toString());
+                Log.i("chenpei", "size:" + list.size());
+                if (droiError.isOk()) {
+                    if (list.size() > 0) {
+                        mItems.clear();
+                        mItems.addAll(list);
+                    }
+                } else {
+                    //做请求失败处理
+                }
+            }
+        });
     }
 }

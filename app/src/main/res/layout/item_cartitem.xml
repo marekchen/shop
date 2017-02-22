@@ -44,7 +44,7 @@
         android:layout_height="1px"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="5dp"
-        android:background="@color/text_gray"
+        android:background="@color/bg_main"
         android:paddingLeft="3.0dip"
         android:paddingRight="3.0dip" />
 

@@ -23,6 +23,7 @@ import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.droi.shop.R;
 import com.droi.shop.activity.OrderConfirmActivity;
 import com.droi.shop.adapter.CartItemAdapter;
+import com.droi.shop.model.CartItem;
 import com.droi.shop.util.ShoppingCartManager;
 
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class ShoppingCartFragment extends Fragment {
     LinearLayout mBottomLayout;
 
     Context mContext;
-    List<ShoppingCartManager.CartItem> list = new ArrayList<>();
+    List<CartItem> list = new ArrayList<>();
     RecyclerView.Adapter mAdapter;
 
     @Nullable

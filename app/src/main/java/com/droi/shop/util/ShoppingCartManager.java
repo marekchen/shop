@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.droi.shop.model.CartItem;
 import com.google.gson.Gson;
 
 import com.droi.shop.model.Item;
@@ -259,19 +260,6 @@ public class ShoppingCartManager {
 
         public void setList(List<CartItem> list) {
             this.list = list;
-        }
-    }
-
-    public static class CartItem {
-        public String id;
-        public Item item;
-        public int num;
-        public boolean checked = false;
-
-        CartItem(String mId, Item mItem, int mNum) {
-            this.id = mId;
-            this.item = mItem;
-            this.num = mNum;
         }
     }
 }

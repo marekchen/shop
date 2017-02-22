@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.droi.shop.R;
+import com.droi.shop.model.CartItem;
 import com.droi.shop.util.ShoppingCartManager;
 
 import java.util.ArrayList;
@@ -25,10 +26,10 @@ import butterknife.ButterKnife;
 public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.ItemViewHolder> {
 
     private Context mContext;
-    private List<ShoppingCartManager.CartItem> mItems;
+    private List<CartItem> mItems;
 
 
-    public OrderItemAdapter(List<ShoppingCartManager.CartItem> items) {
+    public OrderItemAdapter(List<CartItem> items) {
         mItems = items;
     }
 

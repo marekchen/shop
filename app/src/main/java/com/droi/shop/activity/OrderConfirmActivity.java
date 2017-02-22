@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import com.droi.sdk.DroiError;
 import com.droi.shop.R;
 import com.droi.shop.adapter.OrderItemAdapter;
 import com.droi.shop.model.Address;
+import com.droi.shop.model.CartItem;
 import com.droi.shop.model.Order;
 import com.droi.shop.util.ProgressDialogUtil;
 import com.droi.shop.util.ShoppingCartManager;
@@ -37,7 +39,7 @@ public class OrderConfirmActivity extends AppCompatActivity {
     public static final int ADDRESS_REQUEST_CODE = 10;
     public static final String ORDER = "ORDER";
 
-    private List<ShoppingCartManager.CartItem> cartItems;
+    private List<CartItem> cartItems;
     private Address address;
     Context mContext;
     TextView remarkTextView;
@@ -131,7 +133,7 @@ public class OrderConfirmActivity extends AppCompatActivity {
     float computeTotal() {
         float sum = 0.0f;
         if (cartItems.size() != 0) {
-            for (ShoppingCartManager.CartItem cartItem : cartItems) {
+            for (CartItem cartItem : cartItems) {
                 sum += cartItem.num * cartItem.item.getPrice();
             }
         }

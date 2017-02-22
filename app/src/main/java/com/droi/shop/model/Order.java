@@ -25,19 +25,19 @@ public class Order extends DroiObject {
     @DroiExpose
     int receiptType;
 
-    public ArrayList<ShoppingCartManager.CartItem> getCartItems() {
-        ArrayList<ShoppingCartManager.CartItem> lists = new ArrayList<>();
+    public ArrayList<CartItem> getCartItems() {
+        ArrayList<CartItem> lists = new ArrayList<>();
         if (cartItems != null) {
             for (DroiReferenceObject ref : cartItems) {
-                lists.add((ShoppingCartManager.CartItem) ref.droiObject());
+                lists.add((CartItem) ref.droiObject());
             }
         }
         return lists;
     }
 
-    public void setCartItems(List<ShoppingCartManager.CartItem> cartItems) {
+    public void setCartItems(List<CartItem> cartItems) {
         ArrayList<DroiReferenceObject> castList = new ArrayList<>();
-        for (ShoppingCartManager.CartItem cartItem : cartItems) {
+        for (CartItem cartItem : cartItems) {
             DroiReferenceObject ref1 = new DroiReferenceObject();
             ref1.setDroiObject(cartItem);
             castList.add(ref1);

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -20,8 +19,12 @@ import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiUser;
+import com.droi.sdk.feedback.DroiFeedback;
 import com.droi.sdk.push.DroiPush;
+import com.droi.sdk.selfupdate.DroiUpdate;
 import com.droi.shop.R;
+import com.droi.shop.activity.AboutUsActivity;
+import com.droi.shop.activity.MyOrderActivity;
 import com.droi.shop.model.ShopUser;
 import com.droi.shop.view.CircleImageView;
 
@@ -93,9 +96,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     private void initUI(View view) {
         view.findViewById(R.id.mine_frag_follow).setOnClickListener(this);
-        view.findViewById(R.id.mine_frag_favorite).setOnClickListener(this);
-        view.findViewById(R.id.mine_frag_answer).setOnClickListener(this);
-        view.findViewById(R.id.mine_frag_question).setOnClickListener(this);
+        view.findViewById(R.id.mine_frag_address).setOnClickListener(this);
+        view.findViewById(R.id.mine_frag_order).setOnClickListener(this);
         view.findViewById(R.id.mine_frag_update).setOnClickListener(this);
         view.findViewById(R.id.mine_frag_feedback).setOnClickListener(this);
         view.findViewById(R.id.mine_frag_upload).setOnClickListener(this);
@@ -125,54 +127,31 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                     toLogin();
                 }
                 break;
+            case R.id.mine_frag_order:
+                Intent orderIntent = new Intent(getActivity(), MyOrderActivity.class);
+                startActivity(orderIntent);
+                break;
             /*case R.id.mine_frag_follow:
                 Log.i("test", "follow");
                 Intent followIntent = new Intent(getActivity(), MyFollowActivity.class);
                 startActivity(followIntent);
-                break;
-            case R.id.mine_frag_favorite:
-                Log.i("test", "favorite");
-                Intent favoriteIntent = new Intent(getActivity(), MyFavoriteActivity.class);
-                startActivity(favoriteIntent);
-                break;
-            case R.id.mine_frag_answer:
-                Log.i("test", "answer");
-                Intent answerIntent = new Intent(getActivity(), MyAnswerActivity.class);
-                startActivity(answerIntent);
-                break;
-            case R.id.mine_frag_question:
-                Log.i("test", "question");
-                if (user == null) {
-                    break;
-                }
-                Intent questionIntent = new Intent(getActivity(), QuestionListActivity.class);
-                questionIntent.putExtra(QuestionFragment.QUESTIONER, user.getObjectId());
-                startActivity(questionIntent);
-                break;
+                break;*/
             case R.id.mine_frag_update:
                 //手动更新
                 DroiUpdate.manualUpdate(mContext);
                 break;
             case R.id.mine_frag_feedback:
                 //自定义部分颜色
-                DroiFeedback.setTitleBarColor(getResources().getColor(R.color.top_bar_background));
-                DroiFeedback.setSendButtonColor(getResources().getColor(R.color.top_bar_background),
-                        getResources().getColor(R.color.top_bar_background));
+                DroiFeedback.setTitleBarColor(getResources().getColor(R.color.colorPrimary));
+                DroiFeedback.setSendButtonColor(getResources().getColor(R.color.colorPrimaryDark),
+                        getResources().getColor(R.color.colorPrimary));
                 //打开反馈页面
                 DroiFeedback.callFeedback(mContext);
                 break;
             case R.id.mine_about_us:
-                Log.i("test", "about");
                 Intent aboutUsIntent = new Intent(getActivity(), AboutUsActivity.class);
                 startActivity(aboutUsIntent);
                 break;
-            case R.id.mine_frag_upload:
-                Log.i("TEST", "mine_frag_upload");
-                uploadBanner();
-                //uploadAppInfo();
-                //uploadAppType();
-                uploadOfficialGuide();
-                break;*/
             default:
                 break;
         }
