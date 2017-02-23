@@ -48,6 +48,7 @@
     <string name="dialog_cancel">取消</string>
 
     <!-- item -->
+    <string name="item_list_title">商品列表</string>
     <string name="item_bottom">%1$d条评论, %2$d%%好评</string>
     <string name="item_price">￥%1$.2f</string>
 

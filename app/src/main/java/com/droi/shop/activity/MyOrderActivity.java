@@ -65,8 +65,6 @@ public class MyOrderActivity extends AppCompatActivity {
         query.runQueryInBackground(new DroiQueryCallback<Order>() {
             @Override
             public void result(List<Order> list, DroiError droiError) {
-                Log.i("chenpei", "msg:" + droiError.toString());
-                Log.i("chenpei", "size:" + list.size());
                 if (droiError.isOk()) {
                     if (list.size() > 0) {
                         mOrders.clear();

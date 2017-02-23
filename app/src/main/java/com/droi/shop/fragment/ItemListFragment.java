@@ -4,20 +4,24 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.droi.sdk.DroiError;
+import com.droi.sdk.core.DroiCondition;
+import com.droi.sdk.core.DroiQuery;
+import com.droi.sdk.core.DroiQueryCallback;
 import com.droi.shop.R;
-import com.droi.shop.adapter.AddressAdapter;
 import com.droi.shop.adapter.ItemAdapter;
 import com.droi.shop.model.Item;
-import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +34,42 @@ import butterknife.ButterKnife;
  */
 
 public class ItemListFragment extends Fragment {
+
+    public final static String ITEM_NAME = "ITEM_NAME";
+    public final static String TYPE = "TYPE";
+    public final static int TYPE_SEARCH = 1;
+    public final static int TYPE_TYPE = 2;
+
     Context mContext;
     @BindView(R.id.recycler_view)
-    public RecyclerView mRecyclerView;
+    RecyclerView mRecyclerView;
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    List<Item> mItems;
+    String name;
+    int type;
+    RecyclerView.Adapter mAdapter;
+
+    public ItemListFragment() {
+    }
+
+    public static ItemListFragment newInstance(int type, String name) {
+        ItemListFragment fragment = new ItemListFragment();
+        Bundle args = new Bundle();
+        args.putInt(TYPE, type);
+        args.putString(ITEM_NAME, name);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            type = getArguments().getInt(TYPE);
+            name = getArguments().getString(ITEM_NAME);
+        }
+    }
 
     @Nullable
     @Override
@@ -40,103 +77,86 @@ public class ItemListFragment extends Fragment {
         mContext = getActivity();
         View view = inflater.inflate(R.layout.fragment_item_list, container, false);
         ButterKnife.bind(this, view);
-        //initUI(view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(layoutManager);
-        List<Item> list = new ArrayList<>();
-        Item item1 = new Item();
-        item1.setName("Name1");
-        item1.setCommentCount(1);
-        item1.setPraiseCount(1);
-        item1.setPrice(1.1f);
-        item1.setDescription("描述");
-        item1.setUrl("https://m.baidu.com");
-        ArrayList<String> images = new ArrayList<>();
-        images.add("https://m.360buyimg.com/n12/jfs/t3235/100/1618018440/139400/44fd706e/57d11c33N5cd57490.jpg!q70.jpg");
-        images.add("https://m.360buyimg.com/n12/jfs/t3271/63/1662792438/102212/520aadea/57d11c33N17fca17c.jpg!q70.jpg");
-        images.add("https://m.360buyimg.com/n12/jfs/t3250/243/1621682752/58357/ff68e7a4/57d11c33N1cb90a82.jpg!q70.jpg");
-        images.add("https://m.360buyimg.com/n12/jfs/t3205/201/1641534867/20579/160ed304/57d11c34Nb6c6ae50.jpg!q70.jpg");
-        item1.setImages(images);
-        list.add(item1);
-        Item item2 = new Item();
-        item2.setName("Name2");
-        item2.setCommentCount(1);
-        item2.setPraiseCount(1);
-        item2.setPrice(1.1f);
-        item2.setDescription("描述2");
-        item2.setUrl("https://www.baidu.com");
-        item2.setImages(images);
-        list.add(item2);
-        Item item3 = new Item();
-        item3.setName("Name3");
-        item3.setCommentCount(1);
-        item3.setPraiseCount(1);
-        item3.setPrice(1.1f);
-        item3.setDescription("描述3");
-        item3.setUrl("https://www.baidu.com");
-        item3.setImages(images);
-        list.add(item3);
-        Item item4 = new Item();
-        item4.setName("Name4");
-        item4.setCommentCount(1);
-        item4.setPraiseCount(1);
-        item4.setPrice(1.1f);
-        item4.setDescription("描述4");
-        item4.setUrl("https://www.baidu.com");
-        item4.setImages(images);
-        list.add(item4);
-        Item item5 = new Item();
-        item5.setName("Name5");
-        item5.setCommentCount(1);
-        item5.setPraiseCount(1);
-        item5.setPrice(1.1f);
-        item5.setDescription("描述5");
-        item5.setUrl("https://www.baidu.com");
-        item5.setImages(images);
-        list.add(item5);
-        Item item6 = new Item();
-        item6.setName("Name6");
-        item6.setCommentCount(1);
-        item6.setPraiseCount(1);
-        item6.setPrice(1.1f);
-        item6.setDescription("描述6");
-        item6.setUrl("https://www.baidu.com");
-        item6.setImages(images);
-        list.add(item6);
-        Item item7 = new Item();
-        item7.setName("Name7");
-        item7.setCommentCount(1);
-        item7.setPraiseCount(1);
-        item7.setPrice(1.1f);
-        item7.setDescription("描述7");
-        item7.setUrl("https://www.baidu.com");
-        item7.setImages(images);
-        list.add(item7);
-        Item item8 = new Item();
-        item8.setName("Name8");
-        item8.setCommentCount(1);
-        item8.setPraiseCount(1);
-        item8.setPrice(1.1f);
-        item8.setDescription("描述8");
-        item8.setUrl("https://www.baidu.com");
-        item8.setImages(images);
-        list.add(item8);
-        RecyclerView.Adapter mAdapter = new ItemAdapter(list);
+        mItems = new ArrayList<>();
+        mAdapter = new ItemAdapter(mItems);
         mRecyclerView.setAdapter(mAdapter);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fetchItems();
+            }
+        });
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView,
+                                             int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                /*if (newState == RecyclerView.SCROLL_STATE_IDLE
+                        && lastVisibleItem + 1 == adapter.getItemCount()) {
+                    mSwipeRefreshWidget.setRefreshing(true);
+                    // 此处在现实项目中，请换成网络请求数据代码，sendRequest .....
+                    handler.sendEmptyMessageDelayed(0, 3000);
+                }*/
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+               // lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
+            }
+        });
         initToolbar(view);
+        fetchItems();
         return view;
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onDestroyView() {
+        super.onDestroyView();
+        mRecyclerView.clearOnScrollListeners();
     }
 
     private void initToolbar(View view) {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.activity_confirm_title);
+        toolbar.setTitle(R.string.item_list_title);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+    }
+
+    void fetchItems() {
+        DroiQuery query;
+        if (type == TYPE_SEARCH) {
+            DroiCondition cond = DroiCondition.cond("name", DroiCondition.Type.CONTAINS, name);
+            DroiCondition cond1 = DroiCondition.cond("description", DroiCondition.Type.CONTAINS, name);
+            query = DroiQuery.Builder.newBuilder().where(cond.or(cond1)).limit(10).query(Item.class).build();
+        } else {
+            DroiCondition cond = DroiCondition.cond("type", DroiCondition.Type.EQ, type);
+            query = DroiQuery.Builder.newBuilder().where(cond).limit(10).query(Item.class).build();
+        }
+        query.runQueryInBackground(new DroiQueryCallback<Item>() {
+            @Override
+            public void result(List<Item> list, DroiError droiError) {
+                if (droiError.isOk()) {
+                    if (list.size() > 0) {
+                        mItems.clear();
+                        mItems.addAll(list);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                } else {
+                    //做请求失败处理
+                }
+            }
+        });
     }
 }

@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.shop.R;
 import com.droi.shop.adapter.SimpleAdapter;
+import com.droi.shop.fragment.ItemListFragment;
 
 import java.util.ArrayList;
 
@@ -112,7 +113,7 @@ public class SearchActivity extends AppCompatActivity {
         DroiAnalytics.onEvent(this, "search");
         saveSearchHistory(searchContent);
         Intent intent = new Intent(this, ItemsActivity.class);
-        intent.putExtra(ItemsActivity.ITEM_NAME, searchContent);
+        intent.putExtra(ItemListFragment.ITEM_NAME, searchContent);
         startActivity(intent);
     }
 

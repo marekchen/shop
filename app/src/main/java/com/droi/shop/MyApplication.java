@@ -24,6 +24,7 @@ import com.droi.shop.model.Address;
 import com.droi.shop.model.Banner;
 import com.droi.shop.model.CartItem;
 import com.droi.shop.model.Item;
+import com.droi.shop.model.ItemType;
 import com.droi.shop.model.Order;
 import com.droi.shop.model.ShopUser;
 import com.droi.shop.util.ShoppingCartManager;
@@ -47,6 +48,7 @@ public class MyApplication extends Application {
         DroiObject.registerCustomClass(ShopUser.class);
         DroiObject.registerCustomClass(Order.class);
         DroiObject.registerCustomClass(CartItem.class);
+        DroiObject.registerCustomClass(ItemType.class);
 
         DroiUpdate.initialize(this);
         DroiUpdate.setUpdateOnlyWifi(true);
