@@ -24,6 +24,8 @@ import com.droi.sdk.push.DroiPush;
 import com.droi.sdk.selfupdate.DroiUpdate;
 import com.droi.shop.R;
 import com.droi.shop.activity.AboutUsActivity;
+import com.droi.shop.activity.AddressListActivity;
+import com.droi.shop.activity.MyFollowActivity;
 import com.droi.shop.activity.MyOrderActivity;
 import com.droi.shop.model.ShopUser;
 import com.droi.shop.view.CircleImageView;
@@ -131,11 +133,14 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 Intent orderIntent = new Intent(getActivity(), MyOrderActivity.class);
                 startActivity(orderIntent);
                 break;
-            /*case R.id.mine_frag_follow:
-                Log.i("test", "follow");
+            case R.id.mine_frag_address:
+                Intent addressIntent = new Intent(getActivity(), AddressListActivity.class);
+                startActivity(addressIntent);
+                break;
+            case R.id.mine_frag_follow:
                 Intent followIntent = new Intent(getActivity(), MyFollowActivity.class);
                 startActivity(followIntent);
-                break;*/
+                break;
             case R.id.mine_frag_update:
                 //手动更新
                 DroiUpdate.manualUpdate(mContext);

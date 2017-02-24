@@ -34,8 +34,6 @@ import java.io.File;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-//import com.droi.sdk.analytics.DroiAnalytics;
-
 /**
  * Created by chenpei on 2016/5/30.
  */
@@ -172,7 +170,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         DroiUser user = DroiUser.getCurrentUser();
-        /*switch (v.getId()) {
+        switch (v.getId()) {
             case R.id.top_bar_back_btn:
                 finish();
                 break;
@@ -223,22 +221,21 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 DroiError droiError;
                 if (user != null && user.isAuthorized() && !user.isAnonymous()) {
                     droiError = user.logout();
-                    if (droiError.isOk()) {
+                    /*if (droiError.isOk()) {
                         Toast.makeText(this, R.string.logout_success, Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(this, R.string.logout_failed, Toast.LENGTH_SHORT).show();
-                    }
+                    }*/
                 }
                 finish();
                 break;
             default:
                 break;
-        }*/
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.i(TAG, "onActivityResult");
         if (resultCode != RESULT_OK) {
             Log.i(TAG, "resultCode != RESULT_OK");
             Toast.makeText(mContext, "获取图片失败", Toast.LENGTH_SHORT).show();
@@ -255,16 +252,13 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     }
 
     private void upload(Intent data) {
-        Log.i(TAG, "upload");
         Uri mImageCaptureUri = data.getData();
         if (mImageCaptureUri != null) {
-            Log.i(TAG, "pick pic");
             Bitmap image;
             try {
                 image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), mImageCaptureUri);
                 if (image != null) {
                     String path = CommonUtils.getPath(this, mImageCaptureUri);
-                    Log.i("TEST", "path=" + path);
                     DroiFile headIcon = new DroiFile(new File(path));
                     ShopUser user = DroiUser.getCurrentUser(ShopUser.class);
                     user.avatar = headIcon;
@@ -289,7 +283,6 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 selectPic.setVisibility(View.GONE);
             }
         } else {
-            Log.i(TAG, "take photo");
             Bundle extras = data.getExtras();
             if (extras != null) {
                 //这里是有些拍照后的图片是直接存放到Bundle中的所以我们可以从这里面获取Bitmap图片

@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.droi.shop.R;
 import com.droi.shop.model.CartItem;
-import com.droi.shop.util.ShoppingCartManager;
 
 import java.util.ArrayList;
 import java.util.List;

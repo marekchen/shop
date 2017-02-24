@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,7 +34,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-
 /**
  * Created by chenpei on 2016/5/11.
  */
@@ -46,12 +46,17 @@ public class MainFragment extends Fragment {
     MainBannerAdapter mBannerAdapter;
     ItemTypeAdapter mItemTypeAdapter;
     RecyclerView.Adapter mAdapter;
+    HeaderAndFooterWrapper wrapper;
+    View view;
+    boolean isRefreshing = false;
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     @OnClick(R.id.toolbar_search)
-    void clickSearch(View view) {
+    void clickSearch() {
         Intent intent = new Intent(mContext, SearchActivity.class);
         startActivity(intent);
     }
@@ -59,29 +64,42 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mContext = getActivity();
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
-        ButterKnife.bind(this, view);
-        mItems = new ArrayList<>();
-        mBanners = new ArrayList<>();
-        mItemTypes = new ArrayList<>();
-        initData();
-        fetchItems();
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new ItemAdapter(mItems);
-        HeaderAndFooterWrapper wrapper = new HeaderAndFooterWrapper(mAdapter);
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_main, container, false);
+            ButterKnife.bind(this, view);
+            mItems = new ArrayList<>();
+            mBanners = new ArrayList<>();
+            mItemTypes = new ArrayList<>();
+            initData();
+            fetchItems();
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+            mRecyclerView.setLayoutManager(mLayoutManager);
+            mAdapter = new ItemAdapter(mItems, 1);
+            wrapper = new HeaderAndFooterWrapper(mAdapter);
 
-        View headView = inflater.inflate(R.layout.view_head_main, null);
-        RollPagerView rollPagerView = (RollPagerView) headView.findViewById(R.id.view_pager);
-        GridView gridView = (GridView) headView.findViewById(R.id.grid_view);
-        mItemTypeAdapter = new ItemTypeAdapter(mContext, mItemTypes);
-        gridView.setAdapter(mItemTypeAdapter);
+            View headView = inflater.inflate(R.layout.view_head_main, null);
+            RollPagerView rollPagerView = (RollPagerView) headView.findViewById(R.id.view_pager);
+            GridView gridView = (GridView) headView.findViewById(R.id.grid_view);
+            mItemTypeAdapter = new ItemTypeAdapter(mContext, mItemTypes);
+            gridView.setAdapter(mItemTypeAdapter);
 
-        mBannerAdapter = new MainBannerAdapter(getActivity(), rollPagerView, mBanners);
-        rollPagerView.setAdapter(mBannerAdapter);
-        wrapper.addHeaderView(headView);
+            mBannerAdapter = new MainBannerAdapter(getActivity(), rollPagerView, mBanners);
+            rollPagerView.setAdapter(mBannerAdapter);
+            wrapper.addHeaderView(headView);
 
-        mRecyclerView.setAdapter(wrapper);
+            mRecyclerView.setAdapter(wrapper);
+
+            mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    fetchItems();
+                }
+            });
+        }
+        ViewGroup parent = (ViewGroup) view.getParent();
+        if (parent != null) {
+            parent.removeView(view);
+        }
         return view;
     }
 
@@ -132,19 +150,32 @@ public class MainFragment extends Fragment {
     }
 
     void fetchItems() {
+        setRefreshing(true);
+        if (isRefreshing) {
+            return;
+        }
         DroiQuery query = DroiQuery.Builder.newBuilder().limit(10).query(Item.class).build();
         query.runQueryInBackground(new DroiQueryCallback<Item>() {
             @Override
             public void result(List<Item> list, DroiError droiError) {
-                if (droiError.isOk()) {
-                    if (list.size() > 0) {
-                        mItems.clear();
-                        mItems.addAll(list);
-                        mAdapter.notifyDataSetChanged();
-                    }
+                if (droiError.isOk() && list.size() > 0) {
+                    mItems.clear();
+                    mItems.addAll(list);
+                    //wrapper.notifyDataSetChanged();
                 } else {
-                    //做请求失败处理
+
                 }
+                setRefreshing(false);
+                isRefreshing = false;
+            }
+        });
+    }
+
+    void setRefreshing(final boolean b) {
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(b);
             }
         });
     }

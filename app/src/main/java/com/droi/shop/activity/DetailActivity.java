@@ -1,28 +1,21 @@
 package com.droi.shop.activity;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.beardedhen.androidbootstrap.BootstrapButton;
-import com.bumptech.glide.Glide;
 import com.droi.shop.R;
 import com.droi.shop.adapter.ImageNormalAdapter;
+import com.droi.shop.fragment.ShoppingCartFragment;
 import com.droi.shop.model.Item;
 import com.droi.shop.util.ShoppingCartManager;
 import com.droi.shop.view.UWebView;
 import com.jude.rollviewpager.RollPagerView;
-import com.jude.rollviewpager.adapter.LoopPagerAdapter;
-import com.jude.rollviewpager.adapter.StaticPagerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,22 +38,24 @@ public class DetailActivity extends AppCompatActivity {
     TextView mPriceTextView;
 
     @OnClick(R.id.buy)
-    void clickBuy(View view) {
+    void clickBuy() {
 
     }
 
     @OnClick(R.id.add_cart)
-    void clickAdd(View view) {
+    void clickAdd() {
         ShoppingCartManager.getInstance(getApplicationContext()).addToCart(item);
     }
 
     @OnClick(R.id.shopping_cart)
-    void clickCart(View view) {
-
+    void clickCart() {
+        Intent intent = new Intent(this, ShoppingCartActivity.class);
+        intent.putExtra(ShoppingCartFragment.TYPE,1);
+        startActivity(intent);
     }
 
     @OnClick(R.id.like)
-    void clickLike(View view) {
+    void clickLike() {
 
     }
 

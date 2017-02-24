@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +37,8 @@ import butterknife.ButterKnife;
 
 public class ShoppingCartFragment extends Fragment {
 
+    public static final String TYPE = "TYPE";
+    int type = 0;
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
     @BindView(R.id.sum)
@@ -54,6 +55,26 @@ public class ShoppingCartFragment extends Fragment {
     Context mContext;
     List<CartItem> list = new ArrayList<>();
     RecyclerView.Adapter mAdapter;
+
+    public ShoppingCartFragment() {
+
+    }
+
+    public static ShoppingCartFragment newInstance(int type) {
+        ShoppingCartFragment fragment = new ShoppingCartFragment();
+        Bundle args = new Bundle();
+        args.putInt(TYPE, type);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            type = getArguments().getInt(TYPE);
+        }
+    }
 
     @Nullable
     @Override
@@ -93,10 +114,18 @@ public class ShoppingCartFragment extends Fragment {
 
     private void initToolbar(View view) {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.activity_confirm_title);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        toolbar.setTitle(R.string.activity_main_tab_shop);
+        if (type == 1) {
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().finish();
+                }
+            });
+        }
     }
 
     @Override

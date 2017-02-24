@@ -38,9 +38,9 @@ public class Order extends DroiObject {
     public void setCartItems(List<CartItem> cartItems) {
         ArrayList<DroiReferenceObject> castList = new ArrayList<>();
         for (CartItem cartItem : cartItems) {
-            DroiReferenceObject ref1 = new DroiReferenceObject();
-            ref1.setDroiObject(cartItem);
-            castList.add(ref1);
+            DroiReferenceObject ref = new DroiReferenceObject();
+            ref.setDroiObject(cartItem);
+            castList.add(ref);
         }
         this.cartItems = castList;
     }

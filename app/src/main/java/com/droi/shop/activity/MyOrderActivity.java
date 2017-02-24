@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 
 import com.droi.sdk.DroiError;
@@ -13,7 +12,6 @@ import com.droi.sdk.core.DroiQuery;
 import com.droi.sdk.core.DroiQueryCallback;
 import com.droi.shop.R;
 import com.droi.shop.adapter.OrderAdapter;
-import com.droi.shop.adapter.OrderItemAdapter;
 import com.droi.shop.model.Order;
 
 import java.util.ArrayList;

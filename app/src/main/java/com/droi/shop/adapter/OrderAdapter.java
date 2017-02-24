@@ -6,8 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.droi.shop.R;
@@ -15,7 +13,6 @@ import com.droi.shop.model.CartItem;
 import com.droi.shop.model.Order;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +25,7 @@ import butterknife.ButterKnife;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
     private List<Order> mOrders;
-    Context mContext;
+    private Context mContext;
 
     public OrderAdapter(List<Order> list) {
         mOrders = list;

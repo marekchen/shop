@@ -17,7 +17,6 @@ import com.droi.shop.model.Item;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentSkipListSet;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,9 +29,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     private Context mContext;
     private List<Item> mItems;
+    private int mOffset;
 
-    public ItemAdapter(List<Item> items) {
+    public ItemAdapter(List<Item> items, int offset) {
         mItems = items;
+        mOffset = offset;
     }
 
     @Override
@@ -87,7 +88,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 @Override
                 public void onItemClick(View view, int position) {
                     Intent intent = new Intent(mContext, DetailActivity.class);
-                    intent.putExtra(DetailActivity.ITEM_ENTRY, mItems.get(position));
+                    intent.putExtra(DetailActivity.ITEM_ENTRY, mItems.get(position - mOffset));
                     mContext.startActivity(intent);
                 }
             };
@@ -97,7 +98,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         @Override
         public void onClick(View v) {
             if (mListener != null) {
-                mListener.onItemClick(v, getPosition());
+                mListener.onItemClick(v, getAdapterPosition());
             }
         }
 
