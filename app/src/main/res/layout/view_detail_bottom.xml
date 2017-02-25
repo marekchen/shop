@@ -7,15 +7,6 @@
     android:orientation="horizontal">
 
     <com.beardedhen.androidbootstrap.BootstrapButton
-        android:id="@+id/like"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        app:bootstrapBrand="regular"
-        app:bootstrapSize="lg"
-        app:fontAwesomeIcon="fa_heart" />
-
-    <com.beardedhen.androidbootstrap.BootstrapButton
         android:id="@+id/shopping_cart"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

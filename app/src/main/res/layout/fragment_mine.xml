@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="@color/top_bar_background">
+        android:background="@color/colorPrimary">
 
         <com.droi.shop.view.CircleImageView
             android:id="@+id/head_icon"
@@ -66,6 +66,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/mine_frag_follow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

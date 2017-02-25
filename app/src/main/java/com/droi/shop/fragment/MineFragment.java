@@ -25,8 +25,10 @@ import com.droi.sdk.selfupdate.DroiUpdate;
 import com.droi.shop.R;
 import com.droi.shop.activity.AboutUsActivity;
 import com.droi.shop.activity.AddressListActivity;
+import com.droi.shop.activity.LoginActivity;
 import com.droi.shop.activity.MyFollowActivity;
 import com.droi.shop.activity.MyOrderActivity;
+import com.droi.shop.activity.ProfileActivity;
 import com.droi.shop.model.ShopUser;
 import com.droi.shop.view.CircleImageView;
 
@@ -166,15 +168,15 @@ public class MineFragment extends Fragment implements View.OnClickListener {
      * 转到登录页面
      */
     private void toLogin() {
-        /*Intent loginIntent = new Intent(mContext, LoginActivity.class);
-        startActivity(loginIntent);*/
+        Intent loginIntent = new Intent(mContext, LoginActivity.class);
+        startActivity(loginIntent);
     }
 
     /**
      * 转到个人信息页面
      */
     private void toProfile() {
-        /*Intent profileIntent = new Intent(mContext, ProfileActivity.class);
-        startActivity(profileIntent);*/
+        Intent profileIntent = new Intent(mContext, ProfileActivity.class);
+        startActivity(profileIntent);
     }
 }

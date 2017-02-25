@@ -53,11 +53,11 @@ public class DetailActivity extends AppCompatActivity {
         intent.putExtra(ShoppingCartFragment.TYPE,1);
         startActivity(intent);
     }
-
-    @OnClick(R.id.like)
+/*
+    @OnClick(R.id.follow)
     void clickLike() {
 
-    }
+    }*/
 
     Context mContext;
     Item item;

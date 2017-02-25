@@ -73,15 +73,11 @@
     <string name="phone_86">+86</string>
     <string name="phone">请填写手机号码</string>
     <string name="ping_code">请输入验证码</string>
-    <string name="top_bar_save">保存</string>
-    <string name="top_bar_confirm">确认</string>
     <string name="logout">退出登陆</string>
     <string name="logout_success">登出成功</string>
     <string name="logout_failed">登出成功</string>
-    <string name="login_first">请先登录</string>
     <string name="confirm">确定</string>
     <string name="next_step">下一步</string>
-    <string name="verified">已验证</string>
     <string name="not_verified">未验证</string>
 
     <!-- 拍照上传部分 -->

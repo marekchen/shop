@@ -59,6 +59,11 @@
         <activity android:name=".activity.AboutUsActivity" />
         <activity android:name=".activity.ShoppingCartActivity" />
         <activity android:name=".activity.MyFollowActivity" />
+        <activity android:name=".activity.ProfileActivity"/>
+        <activity android:name=".activity.LoginActivity"/>
+        <activity android:name=".activity.BindEmailActivity"/>
+        <activity android:name=".activity.BindPhoneNumActivity"/>
+        <activity android:name=".activity.ChangePasswordActivity"/>
     </application>
 
 </manifest>

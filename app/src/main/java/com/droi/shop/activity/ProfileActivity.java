@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -104,7 +105,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     }
 
     private void refreshView() {
-        ShopUser user = DroiUser.getCurrentUser(ShopUser.class);
+        final ShopUser user = DroiUser.getCurrentUser(ShopUser.class);
         if (user != null && user.isAuthorized() && !user.isAnonymous()) {
             userNameText.setText(user.getUserId());
             if (user.getEmail() != null) {
@@ -115,6 +116,16 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 } else {
                     bindEmailTextView.setText(getString(R.string.not_verified));
                 }
+                user.refreshValidationStatusInBackground(new DroiCallback<Boolean>() {
+                    @Override
+                    public void result(Boolean aBoolean, DroiError droiError) {
+                        if (user.isEmailVerified()) {
+                            bindEmailTextView.setText(getString(R.string.change));
+                        } else {
+                            bindEmailTextView.setText(getString(R.string.not_verified));
+                        }
+                    }
+                });
             } else {
                 emailTextView.setVisibility(View.GONE);
                 bindEmailTextView.setText(getString(R.string.bind));
@@ -201,13 +212,18 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
             case R.id.btn_pick_photo:
                 try {
                     Intent intent;
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        intent = new Intent();
+                        intent.setAction(Intent.ACTION_PICK);
+                        intent.setType("image/*");
+                    } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
                         intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                         intent.addCategory(Intent.CATEGORY_OPENABLE);
+                        intent.setType("image*//*");
                     } else {
                         intent = new Intent(Intent.ACTION_GET_CONTENT);
+                        intent.setType("image*//*");
                     }
-                    intent.setType("image*//*");
                     startActivityForResult(intent, 2);
                 } catch (ActivityNotFoundException e) {
                     e.printStackTrace();
@@ -221,11 +237,11 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 DroiError droiError;
                 if (user != null && user.isAuthorized() && !user.isAnonymous()) {
                     droiError = user.logout();
-                    /*if (droiError.isOk()) {
+                    if (droiError.isOk()) {
                         Toast.makeText(this, R.string.logout_success, Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(this, R.string.logout_failed, Toast.LENGTH_SHORT).show();
-                    }*/
+                    }
                 }
                 finish();
                 break;
@@ -285,7 +301,6 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
         } else {
             Bundle extras = data.getExtras();
             if (extras != null) {
-                //这里是有些拍照后的图片是直接存放到Bundle中的所以我们可以从这里面获取Bitmap图片
                 Bitmap image = extras.getParcelable("data");
                 if (image != null) {
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
