@@ -10,12 +10,15 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.droi.sdk.DroiError;
+import com.droi.sdk.core.DroiCondition;
 import com.droi.sdk.core.DroiQuery;
 import com.droi.sdk.core.DroiQueryCallback;
+import com.droi.sdk.core.DroiUser;
 import com.droi.shop.R;
 import com.droi.shop.adapter.AddressAdapter;
 import com.droi.shop.interfaces.MyItemClickListener;
 import com.droi.shop.model.Address;
+import com.droi.shop.model.ShopUser;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.ArrayList;
@@ -91,7 +94,8 @@ public class AddressListActivity extends AppCompatActivity {
     }
 
     void fetchAddress() {
-        DroiQuery query = DroiQuery.Builder.newBuilder().orderBy("_ModifiedTime", false).offset(0).query(Address.class).build();
+        DroiCondition cond = DroiCondition.cond("userObjectId", DroiCondition.Type.EQ, DroiUser.getCurrentUser().getObjectId());
+        DroiQuery query = DroiQuery.Builder.newBuilder().where(cond).orderBy("_ModifiedTime", false).offset(0).query(Address.class).build();
         query.runQueryInBackground(new DroiQueryCallback<Address>() {
             @Override
             public void result(List<Address> list, DroiError droiError) {

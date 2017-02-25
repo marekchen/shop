@@ -19,10 +19,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.droi.sdk.core.DroiUser;
 import com.droi.shop.R;
 import com.droi.shop.activity.OrderConfirmActivity;
 import com.droi.shop.adapter.CartItemAdapter;
 import com.droi.shop.model.CartItem;
+import com.droi.shop.model.ShopUser;
 import com.droi.shop.util.ShoppingCartManager;
 
 import java.util.ArrayList;
@@ -98,10 +100,15 @@ public class ShoppingCartFragment extends Fragment {
         mCheckoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ShopUser user = DroiUser.getCurrentUser(ShopUser.class);
+                if (user == null || !user.isLoggedIn() || user.isAnonymous()) {
+                    Toast.makeText(getActivity(), R.string.login_first, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent intent = new Intent(mContext, OrderConfirmActivity.class);
                 String gson = ShoppingCartManager.getInstance(mContext).getOrderJson();
                 if (gson == null) {
-                    Toast.makeText(mContext, "没有选择物品", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.no_select_item, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 intent.putExtra(OrderConfirmActivity.ORDER, gson);

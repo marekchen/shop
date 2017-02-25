@@ -64,6 +64,7 @@
         <activity android:name=".activity.BindEmailActivity"/>
         <activity android:name=".activity.BindPhoneNumActivity"/>
         <activity android:name=".activity.ChangePasswordActivity"/>
+        <activity android:name=".activity.OrderDetailActivity"/>
     </application>
 
 </manifest>

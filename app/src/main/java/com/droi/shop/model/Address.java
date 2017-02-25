@@ -9,7 +9,7 @@ import com.droi.sdk.core.DroiObject;
 
 public class Address extends DroiObject {
     @DroiExpose
-    String userId;
+    String userObjectId;
     @DroiExpose
     String name;
     @DroiExpose
@@ -22,20 +22,20 @@ public class Address extends DroiObject {
     public Address(){
 
     }
-    public Address(String userId, String name, String phoneNum, String location, String address) {
-        this.userId = userId;
+    public Address(String userObjectId, String name, String phoneNum, String location, String address) {
+        this.userObjectId = userObjectId;
         this.name = name;
         this.phoneNum = phoneNum;
         this.location = location;
         this.address = address;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUserObjectId() {
+        return userObjectId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserObjectId(String userObjectId) {
+        this.userObjectId = userObjectId;
     }
 
     public String getAddress() {

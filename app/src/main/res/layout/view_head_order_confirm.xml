@@ -40,6 +40,7 @@
             android:textSize="15sp" />
 
         <CheckBox
+            android:checked="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -55,6 +56,8 @@
         android:layout_below="@id/order_confirm_pay_type_area"
         android:layout_marginTop="1px"
         android:background="@color/white"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:clickable="true">
 
         <TextView
@@ -67,7 +70,7 @@
             android:textColor="@color/text_color_black"
             android:textSize="15sp" />
 
-        <TextView
+        <EditText
             android:id="@+id/order_confirm_remarks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -75,7 +78,7 @@
             android:layout_centerVertical="true"
             android:background="@android:color/transparent"
             android:paddingRight="16dp"
-            android:text="@string/order_confirm_remarks_hint"
+            android:hint="@string/order_confirm_remarks_hint"
             android:textSize="15sp" />
 
     </RelativeLayout>

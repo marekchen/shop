@@ -8,8 +8,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.droi.sdk.DroiError;
+import com.droi.sdk.core.DroiCondition;
 import com.droi.sdk.core.DroiQuery;
 import com.droi.sdk.core.DroiQueryCallback;
+import com.droi.sdk.core.DroiUser;
 import com.droi.shop.R;
 import com.droi.shop.adapter.OrderAdapter;
 import com.droi.shop.model.Order;
@@ -59,7 +61,8 @@ public class MyOrderActivity extends AppCompatActivity {
     }
 
     void fetchOrders() {
-        DroiQuery query = DroiQuery.Builder.newBuilder().limit(10).query(Order.class).build();
+        DroiCondition cond = DroiCondition.cond("userObjectId", DroiCondition.Type.EQ, DroiUser.getCurrentUser().getObjectId());
+        DroiQuery query = DroiQuery.Builder.newBuilder().where(cond).orderBy("_ModifiedTime", false).limit(10).query(Order.class).build();
         query.runQueryInBackground(new DroiQueryCallback<Order>() {
             @Override
             public void result(List<Order> list, DroiError droiError) {

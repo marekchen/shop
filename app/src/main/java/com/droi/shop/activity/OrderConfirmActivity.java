@@ -8,11 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
+import com.droi.sdk.core.DroiUser;
 import com.droi.shop.R;
 import com.droi.shop.adapter.OrderItemAdapter;
 import com.droi.shop.model.Address;
@@ -50,8 +53,13 @@ public class OrderConfirmActivity extends AppCompatActivity {
     TextView mTotalTextView;
 
     @OnClick(R.id.checkout)
-    void checkout(View view) {
-        Order order = new Order();
+    void checkout() {
+        if (address == null) {
+            Toast.makeText(this, R.string.select_address, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        final Order order = new Order();
+        order.setUserObjectId(DroiUser.getCurrentUser().getObjectId());
         order.setAddress(address);
         order.setCartItems(cartItems);
         order.setPayType(1);
@@ -62,11 +70,16 @@ public class OrderConfirmActivity extends AppCompatActivity {
         order.saveInBackground(new DroiCallback<Boolean>() {
             @Override
             public void result(Boolean aBoolean, DroiError droiError) {
+                dialog.dismissDialog();
                 if (aBoolean) {
                     ShoppingCartManager.getInstance(mContext).clear();
+                    Intent intent = new Intent(mContext, OrderDetailActivity.class);
+                    intent.putExtra(OrderDetailActivity.ORDER,order);
+                    mContext.startActivity(intent);
                     finish();
+                } else {
+                    Toast.makeText(mContext, "失败", Toast.LENGTH_SHORT).show();
                 }
-                dialog.dismissDialog();
             }
         });
     }

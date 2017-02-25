@@ -15,6 +15,8 @@ import java.util.List;
 
 public class Order extends DroiObject {
     @DroiExpose
+    String userObjectId;
+    @DroiExpose
     ArrayList<DroiReferenceObject> cartItems;
     @DroiReference
     Address address;
@@ -24,6 +26,16 @@ public class Order extends DroiObject {
     String remark;
     @DroiExpose
     int receiptType;
+    @DroiExpose
+    int state;
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
 
     public ArrayList<CartItem> getCartItems() {
         ArrayList<CartItem> lists = new ArrayList<>();
@@ -43,6 +55,14 @@ public class Order extends DroiObject {
             castList.add(ref);
         }
         this.cartItems = castList;
+    }
+
+    public String getUserObjectId() {
+        return userObjectId;
+    }
+
+    public void setUserObjectId(String userObjectId) {
+        this.userObjectId = userObjectId;
     }
 
     public Address getAddress() {

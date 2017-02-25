@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -40,7 +39,7 @@ public class AddressEditActivity extends AppCompatActivity {
     EditText mAddressEditText;
 
     @OnClick(R.id.save)
-    void save(View view) {
+    void save() {
         String userId = DroiUser.getCurrentUser().getObjectId();
         String name = mNameEditText.getText().toString();
         String phone = mPhoneEditText.getText().toString();
@@ -50,6 +49,7 @@ public class AddressEditActivity extends AppCompatActivity {
         if (mAddress == null) {
             address = new Address(userId, name, phone, location, addressText);
         } else {
+
             address = mAddress;
             address.setName(name);
             address.setPhoneNum(phone);
@@ -57,11 +57,10 @@ public class AddressEditActivity extends AppCompatActivity {
             address.setAddress(addressText);
         }
         final ProgressDialogUtil dialog = new ProgressDialogUtil(mContext);
-        dialog.showDialog("保存中...");
+        dialog.showDialog(R.string.saving);
         address.saveInBackground(new DroiCallback<Boolean>() {
             @Override
             public void result(Boolean aBoolean, DroiError droiError) {
-                Log.i("chenpei", "save:" + aBoolean + ";code:" + droiError.toString());
                 if (aBoolean) {
                     dialog.dismissDialog();
                     setResult(RESULT_OK, null);
