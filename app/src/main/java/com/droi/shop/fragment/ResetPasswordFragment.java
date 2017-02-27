@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -66,7 +67,6 @@ public class ResetPasswordFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_reset, container, false);
         mProgressView = new ProgressDialog(getActivity());
-        mProgressView.setMessage("Changing...");
         ButterKnife.bind(this, view);
         return view;
     }
@@ -91,12 +91,31 @@ public class ResetPasswordFragment extends Fragment {
         if (mResetTask != null) {
             return;
         }
+        mUserNameView.setError(null);
         String userName = mUserNameView.getText().toString();
-        mResetTask = new RestTask(userName);
-        mResetTask.execute((Void) null);
+        boolean cancel = false;
+        View focusView = null;
+
+        if (TextUtils.isEmpty(userName)) {
+            mUserNameView.setError(getString(R.string.error_field_required));
+            focusView = mUserNameView;
+            cancel = true;
+        } else if (!isUserNameValid(userName)) {
+            mUserNameView.setError(getString(R.string.error_invalid_user_name));
+            focusView = mUserNameView;
+            cancel = true;
+        }
+        if (cancel) {
+            focusView.requestFocus();
+        } else {
+            mProgressView.setMessage("Sending...");
+            showProgress(true);
+            mResetTask = new RestTask(userName);
+            mResetTask.execute((Void) null);
+        }
     }
 
-    @OnClick(R.id.login_button)
+    @OnClick(R.id.confirm_button)
     void attemptLogin() {
         if (mAuthTask != null) {
             return;
@@ -132,6 +151,7 @@ public class ResetPasswordFragment extends Fragment {
         if (cancel) {
             focusView.requestFocus();
         } else {
+            mProgressView.setMessage("Changing...");
             showProgress(true);
             mAuthTask = new ConfirmTask(userName, pincode, password);
             mAuthTask.execute((Void) null);
@@ -167,10 +187,7 @@ public class ResetPasswordFragment extends Fragment {
 
         @Override
         protected DroiError doInBackground(Void... params) {
-            DroiError droiError = new DroiError();
-            //droiError = DroiUser.resetPassword(mEmail, DroiUser.ResetType.EMAIL);
-            //DroiUser.confirmResetPassword(mEmail)
-            return droiError;
+            return DroiUser.resetPassword(mEmail, DroiUser.ResetType.PHONE);
         }
 
         @Override
@@ -178,19 +195,9 @@ public class ResetPasswordFragment extends Fragment {
             mAuthTask = null;
             showProgress(false);
             if (droiError.isOk()) {
-                Toast.makeText(getActivity(), R.string.login_success, Toast.LENGTH_SHORT).show();
-                activity.finish();
+                Toast.makeText(getActivity(), R.string.send_pincode_success, Toast.LENGTH_SHORT).show();
             } else {
-                if (droiError.getCode() == DroiError.USER_NOT_EXISTS) {
-                    mUserNameView.setError(getString(R.string.error_user_not_exists));
-                    mUserNameView.requestFocus();
-                } else if (droiError.getCode() == DroiError.USER_PASSWORD_INCORRECT) {
-                    mPasswordView.setError(getString(R.string.error_incorrect_password));
-                    mPasswordView.requestFocus();
-                } else {
-                    Log.i(TAG, "error:" + droiError.toString());
-                    Toast.makeText(getActivity(), getString(R.string.error_network), Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(getActivity(), R.string.send_pincode_fail, Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -215,10 +222,7 @@ public class ResetPasswordFragment extends Fragment {
 
         @Override
         protected DroiError doInBackground(Void... params) {
-            DroiError droiError = new DroiError();
-            //droiError = DroiUser.resetPassword(mEmail, DroiUser.ResetType.a);
-            //droiError = DroiUser.confirmResetPassword(mEmail, mPincode, mPassword);
-            return droiError;
+            return DroiUser.confirmResetPassword(mEmail, mPincode, mPassword);
         }
 
         @Override
@@ -226,19 +230,10 @@ public class ResetPasswordFragment extends Fragment {
             mAuthTask = null;
             showProgress(false);
             if (droiError.isOk()) {
-                Toast.makeText(getActivity(), R.string.login_success, Toast.LENGTH_SHORT).show();
-                activity.finish();
+                Toast.makeText(getActivity(), R.string.confirm_success, Toast.LENGTH_SHORT).show();
+                toLogin();
             } else {
-                if (droiError.getCode() == DroiError.USER_NOT_EXISTS) {
-                    mUserNameView.setError(getString(R.string.error_user_not_exists));
-                    mUserNameView.requestFocus();
-                } else if (droiError.getCode() == DroiError.USER_PASSWORD_INCORRECT) {
-                    mPasswordView.setError(getString(R.string.error_incorrect_password));
-                    mPasswordView.requestFocus();
-                } else {
-                    Log.i(TAG, "error:" + droiError.toString());
-                    Toast.makeText(getActivity(), getString(R.string.error_network), Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(getActivity(), R.string.confirm_fail, Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -247,5 +242,12 @@ public class ResetPasswordFragment extends Fragment {
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    void toLogin() {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        Fragment loginFragment = new LoginFragment();
+        transaction.replace(R.id.droi_login_container, loginFragment);
+        transaction.commit();
     }
 }

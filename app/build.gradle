@@ -36,6 +36,9 @@ repositories {
     maven {
         url "https://github.com/DroiBaaS/DroiBaaS-SDK-Android/raw/master/"
     }
+    maven {
+        url "http://gitlab.droi.com/DroiBaaS/DroiBaaS-SDK-Android/raw/master/"
+    }
 }
 
 dependencies {

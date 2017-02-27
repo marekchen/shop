@@ -49,7 +49,6 @@ public class AddressEditActivity extends AppCompatActivity {
         if (mAddress == null) {
             address = new Address(userId, name, phone, location, addressText);
         } else {
-
             address = mAddress;
             address.setName(name);
             address.setPhoneNum(phone);

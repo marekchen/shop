@@ -21,13 +21,13 @@ public class Order extends DroiObject {
     @DroiReference
     private Address address;
     @DroiExpose
-    private int payType;
+    private int payType; //1.货到付款 2.在线支付
     @DroiExpose
     private String remark;
     @DroiExpose
-    private int receiptType;
+    private int receiptType;//1.无需发票
     @DroiExpose
-    private int state;
+    private int state;//1.付款中 2.准备发货 3.订单取消
 
     public int getState() {
         return state;

@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,7 @@ public class OrderConfirmActivity extends AppCompatActivity {
     Context mContext;
     TextView remarkTextView;
     TextView addressSelect;
+    CheckBox payType;
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
@@ -61,8 +63,9 @@ public class OrderConfirmActivity extends AppCompatActivity {
         order.setUserObjectId(DroiUser.getCurrentUser().getObjectId());
         order.setAddress(address);
         order.setCartItems(cartItems);
-        order.setPayType(1);
+        order.setPayType(payType.isChecked() ? 1 : 2);
         order.setReceiptType(1);
+        order.setState(1);
         order.setRemark(remarkTextView.getText().toString());
         final ProgressDialogUtil dialog = new ProgressDialogUtil(mContext);
         dialog.showDialog(R.string.submitting_order);
@@ -77,7 +80,7 @@ public class OrderConfirmActivity extends AppCompatActivity {
                     mContext.startActivity(intent);
                     finish();
                 } else {
-                    Toast.makeText(mContext, "失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.submit_order_fail, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -101,6 +104,7 @@ public class OrderConfirmActivity extends AppCompatActivity {
         View headView = getLayoutInflater().inflate(R.layout.view_head_order_confirm, null);
         remarkTextView = (TextView) headView.findViewById(R.id.order_confirm_remarks);
         addressSelect = (TextView) headView.findViewById(R.id.order_confirm_input_address);
+        payType = (CheckBox) headView.findViewById(R.id.order_confirm_pay_type);
         addressSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,7 +1,5 @@
 package com.droi.shop.model;
 
-import android.net.Uri;
-
 import com.droi.sdk.core.DroiExpose;
 import com.droi.sdk.core.DroiObject;
 

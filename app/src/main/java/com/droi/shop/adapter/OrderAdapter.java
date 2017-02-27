@@ -1,16 +1,22 @@
 package com.droi.shop.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.droi.sdk.DroiCallback;
+import com.droi.sdk.DroiError;
 import com.droi.shop.R;
+import com.droi.shop.activity.OrderDetailActivity;
 import com.droi.shop.model.CartItem;
 import com.droi.shop.model.Order;
+import com.droi.shop.util.ProgressDialogUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,7 +45,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     }
 
     @Override
-    public void onBindViewHolder(OrderViewHolder holder, int position) {
+    public void onBindViewHolder(final OrderViewHolder holder, int position) {
         holder.mOrderNoTextView.setText(mOrders.get(position).getObjectId());
         Date date = mOrders.get(position).getCreationTime();
         SimpleDateFormat dateFm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -55,6 +61,50 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                 mContext.getResources().getString(R.string.total_price),
                 computeTotal(mOrders.get(position).getCartItems()));
         holder.mTotalPriceTextView.setText(priceText);
+        int orderStateNum;
+        holder.mOrderStateTextView.setOnClickListener(null);
+        switch (mOrders.get(position).getState()) {
+            case 1:
+                orderStateNum = R.string.order_state_1;
+                holder.mOrderStateTextView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final ProgressDialogUtil dialog = new ProgressDialogUtil(mContext);
+                        dialog.showDialog(R.string.order_paying);
+                        Order order = mOrders.get(holder.getAdapterPosition());
+                        order.setState(3);
+                        order.saveInBackground(new DroiCallback<Boolean>() {
+                            @Override
+                            public void result(Boolean aBoolean, DroiError droiError) {
+                                if (aBoolean) {
+                                    holder.mOrderStateTextView.setText(R.string.order_state_3);
+                                } else {
+                                    Toast.makeText(mContext, R.string.order_pay_fail, Toast.LENGTH_SHORT).show();
+                                }
+                                dialog.dismissDialog();
+                            }
+                        });
+                    }
+                });
+                break;
+            case 2:
+                orderStateNum = R.string.order_state_2;
+                break;
+            case 3:
+                orderStateNum = R.string.order_state_3;
+                break;
+            default:
+                orderStateNum = R.string.order_state_0;
+        }
+        holder.mOrderStateTextView.setText(orderStateNum);
+        holder.mOrderNoTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, OrderDetailActivity.class);
+                intent.putExtra(OrderDetailActivity.ORDER, mOrders.get(holder.getAdapterPosition()));
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override

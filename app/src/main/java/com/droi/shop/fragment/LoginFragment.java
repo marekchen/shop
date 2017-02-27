@@ -103,8 +103,6 @@ public class LoginFragment extends Fragment {
 
     @OnClick(R.id.login_button)
     void attemptLogin() {
-        //计数事件
-        //DroiAnalytics.onEvent(getActivity(), "login");
         if (mAuthTask != null) {
             return;
         }

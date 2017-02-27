@@ -89,13 +89,15 @@ public class OrderDetailActivity extends AppCompatActivity {
                 dateFm.format(date));
         orderTimeText.setText(orderTimeString);
 
-        String payType = "";
+        int payType;
         if (order.getPayType() == 1) {
-            payType = "货到付款";
+            payType = R.string.order_confirm_pay;
+        } else {
+            payType = R.string.order_confirm_pay_online;
         }
         String payTypeString = String.format(
                 this.getResources().getString(R.string.pay_type),
-                payType);
+                getString(payType));
         payTypeText.setText(payTypeString);
 
         String remarkString = String.format(
@@ -106,31 +108,73 @@ public class OrderDetailActivity extends AppCompatActivity {
 
         View headView = getLayoutInflater().inflate(R.layout.view_head_detail_order, null);
         TextView orderNoText = (TextView) headView.findViewById(R.id.order_no);
-        TextView orderState = (TextView) headView.findViewById(R.id.order_state);
+        final TextView orderState = (TextView) headView.findViewById(R.id.order_state);
         orderNoText.setText(order.getObjectId());
-        orderState.setText(""+order.getState());
+        int orderStateNum;
+        switch (order.getState()) {
+            case 1:
+                orderStateNum = R.string.order_state_1;
+                orderState.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final ProgressDialogUtil dialog = new ProgressDialogUtil(mContext);
+                        dialog.showDialog(R.string.order_paying);
+                        order.setState(3);
+                        order.saveInBackground(new DroiCallback<Boolean>() {
+                            @Override
+                            public void result(Boolean aBoolean, DroiError droiError) {
+                                if (aBoolean) {
+                                    mPayButton.setVisibility(View.GONE);
+                                    orderState.setText(R.string.order_state_3);
+                                } else {
+                                    Toast.makeText(mContext, R.string.order_pay_fail, Toast.LENGTH_SHORT).show();
+                                }
+                                dialog.dismissDialog();
+                            }
+                        });
+                    }
+                });
+                break;
+            case 2:
+                orderStateNum = R.string.order_state_2;
+                break;
+            case 3:
+                orderStateNum = R.string.order_state_3;
+                break;
+            default:
+                orderStateNum = R.string.order_state_0;
+        }
+        orderState.setText(orderStateNum);
         wrapper.addHeaderView(headView);
         mContext = this;
         mRecyclerView.setAdapter(wrapper);
-        mPayButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final ProgressDialogUtil dialog = new ProgressDialogUtil(mContext);
-                dialog.showDialog(R.string.submitting_order);
-                order.setState(2);
-                order.saveInBackground(new DroiCallback<Boolean>() {
+
+        switch (order.getState()) {
+            case 1:
+                mPayButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void result(Boolean aBoolean, DroiError droiError) {
-                        dialog.dismissDialog();
-                        if (aBoolean){
-                            //finish();
-                        }else{
-                            Toast.makeText(mContext, "失败", Toast.LENGTH_SHORT).show();
-                        }
+                    public void onClick(View v) {
+                        final ProgressDialogUtil dialog = new ProgressDialogUtil(mContext);
+                        dialog.showDialog(R.string.order_paying);
+                        order.setState(2);
+                        order.saveInBackground(new DroiCallback<Boolean>() {
+                            @Override
+                            public void result(Boolean aBoolean, DroiError droiError) {
+                                dialog.dismissDialog();
+                                if (aBoolean) {
+                                    finish();
+                                } else {
+                                    Toast.makeText(mContext, R.string.order_pay_fail, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
                     }
                 });
-            }
-        });
+                break;
+            default:
+                mPayButton.setVisibility(View.GONE);
+        }
+
     }
 
     private void initToolbar() {
