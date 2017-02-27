@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.shop.R;
 
 import butterknife.BindView;
@@ -36,17 +35,5 @@ public class AboutUsActivity extends AppCompatActivity {
                 finish();
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        DroiAnalytics.onResume(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        DroiAnalytics.onPause(this);
     }
 }

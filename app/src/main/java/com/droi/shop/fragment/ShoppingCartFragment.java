@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiUser;
 import com.droi.shop.R;
 import com.droi.shop.activity.OrderConfirmActivity;
@@ -135,12 +136,20 @@ public class ShoppingCartFragment extends Fragment {
         }
     }
 
+
+
     @Override
     public void onResume() {
         super.onResume();
+        DroiAnalytics.onFragmentStart(getActivity(), "ItemListFragment");
         refresh();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        DroiAnalytics.onFragmentEnd(getActivity(), "ItemListFragment");
+    }
     void refresh() {
         list.clear();
         list.addAll(ShoppingCartManager.getInstance(getActivity().getApplicationContext()).getList());

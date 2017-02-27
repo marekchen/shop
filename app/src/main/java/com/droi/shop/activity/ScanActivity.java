@@ -1,9 +1,9 @@
 package com.droi.shop.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,7 +22,7 @@ import com.droi.shop.R;
  * Created by marek on 2017/2/10.
  */
 
-public class ScanActivity extends Activity implements QRCodeView.Delegate {
+public class ScanActivity extends AppCompatActivity implements QRCodeView.Delegate {
 
     private FrameLayout mView;
     private PopupWindow mPopupWindow;

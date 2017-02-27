@@ -24,9 +24,7 @@ public class CommonUtils {
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
-        // DocumentProvider
         if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
-            // ExternalStorageProvider
             if (isExternalStorageDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
@@ -68,16 +66,12 @@ public class CommonUtils {
                 return getDataColumn(context, contentUri, selection, selectionArgs);
             }
         }
-        // MediaStore (and general)
         else if ("content".equalsIgnoreCase(uri.getScheme())) {
-
-            // Return the remote address
             if (isGooglePhotosUri(uri))
                 return uri.getLastPathSegment();
 
             return getDataColumn(context, uri, null, null);
         }
-        // File
         else if ("file".equalsIgnoreCase(uri.getScheme())) {
             return uri.getPath();
         }

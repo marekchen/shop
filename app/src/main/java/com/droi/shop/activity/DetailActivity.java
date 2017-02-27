@@ -53,11 +53,6 @@ public class DetailActivity extends AppCompatActivity {
         intent.putExtra(ShoppingCartFragment.TYPE,1);
         startActivity(intent);
     }
-/*
-    @OnClick(R.id.follow)
-    void clickLike() {
-
-    }*/
 
     Context mContext;
     Item item;
@@ -94,10 +89,5 @@ public class DetailActivity extends AppCompatActivity {
                 finish();
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 }

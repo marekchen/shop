@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.droi.sdk.DroiError;
+import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiCondition;
 import com.droi.sdk.core.DroiQuery;
 import com.droi.sdk.core.DroiQueryCallback;
@@ -186,5 +187,18 @@ public class ItemListFragment extends Fragment {
                 mSwipeRefreshLayout.setRefreshing(b);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        DroiAnalytics.onFragmentStart(getActivity(), "ItemListFragment");
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        DroiAnalytics.onFragmentEnd(getActivity(), "ItemListFragment");
     }
 }

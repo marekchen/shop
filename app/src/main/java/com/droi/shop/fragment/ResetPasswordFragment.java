@@ -157,12 +157,6 @@ public class ResetPasswordFragment extends Fragment {
         }
     }
 
-//    @OnClick(R.id.weixin_login)
-//    void weixinLogin() {
-//        Log.i("TEST", "weixinLogin");
-//
-//    }
-
     public class RestTask extends AsyncTask<Void, Void, DroiError> {
 
         private final String mEmail;

@@ -15,19 +15,19 @@ import java.util.List;
 
 public class Order extends DroiObject {
     @DroiExpose
-    String userObjectId;
+    private String userObjectId;
     @DroiExpose
-    ArrayList<DroiReferenceObject> cartItems;
+    private ArrayList<DroiReferenceObject> cartItems;
     @DroiReference
-    Address address;
+    private Address address;
     @DroiExpose
-    int payType;
+    private int payType;
     @DroiExpose
-    String remark;
+    private String remark;
     @DroiExpose
-    int receiptType;
+    private int receiptType;
     @DroiExpose
-    int state;
+    private int state;
 
     public int getState() {
         return state;

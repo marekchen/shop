@@ -1,6 +1,5 @@
 package com.droi.shop.activity;
 
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +22,6 @@ import android.widget.Toast;
 
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
-import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiFile;
 import com.droi.sdk.core.DroiUser;
 import com.droi.shop.R;
@@ -38,7 +37,7 @@ import butterknife.ButterKnife;
 /**
  * Created by chenpei on 2016/5/30.
  */
-public class ProfileActivity extends Activity implements View.OnClickListener {
+public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
     private static String TAG = "ProfileActivity";
     Context mContext;
 
@@ -95,13 +94,6 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         refreshView();
-        DroiAnalytics.onResume(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        DroiAnalytics.onPause(this);
     }
 
     private void refreshView() {
@@ -142,9 +134,8 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 mobileTextView.setVisibility(View.GONE);
                 bindMobileTextView.setText(getString(R.string.bind));
             }
-            if (user.avatar != null) {
-                user.avatar.getUri();
-                user.avatar.getInBackground(new DroiCallback<byte[]>() {
+            if (user.getAvatar() != null) {
+                user.getAvatar().getInBackground(new DroiCallback<byte[]>() {
                     @Override
                     public void result(byte[] bytes, DroiError error) {
                         if (error.isOk()) {
@@ -275,9 +266,13 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), mImageCaptureUri);
                 if (image != null) {
                     String path = CommonUtils.getPath(this, mImageCaptureUri);
+                    if (path == null) {
+                        Toast.makeText(mContext, "上传失败", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     DroiFile headIcon = new DroiFile(new File(path));
                     ShopUser user = DroiUser.getCurrentUser(ShopUser.class);
-                    user.avatar = headIcon;
+                    user.setAvatar(headIcon);
                     user.saveInBackground(new DroiCallback<Boolean>() {
                         @Override
                         public void result(Boolean aBoolean, DroiError droiError) {
@@ -308,7 +303,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                     byte[] imageBytes = baos.toByteArray();
                     DroiFile headIcon = new DroiFile(imageBytes);
                     ShopUser user = DroiUser.getCurrentUser(ShopUser.class);
-                    user.avatar = headIcon;
+                    user.setAvatar(headIcon);
                     user.saveInBackground(new DroiCallback<Boolean>() {
                         @Override
                         public void result(Boolean aBoolean, DroiError droiError) {

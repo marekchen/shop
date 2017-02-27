@@ -43,7 +43,7 @@ public class SearchActivity extends AppCompatActivity {
     ProgressBar mProgressBar;
 
     @OnClick(R.id.search_history_clear)
-    void clear(View view) {
+    void clear() {
         clearSearchHistory();
     }
 

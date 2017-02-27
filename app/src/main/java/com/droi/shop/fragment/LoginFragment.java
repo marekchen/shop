@@ -163,12 +163,6 @@ public class LoginFragment extends Fragment {
         }
     }
 
-//    @OnClick(R.id.weixin_login)
-//    void weixinLogin() {
-//        Log.i("TEST", "weixinLogin");
-//
-//    }
-
     public class UserLoginTask extends AsyncTask<Void, Void, DroiError> {
 
         private final String mEmail;
@@ -182,8 +176,7 @@ public class LoginFragment extends Fragment {
         @Override
         protected DroiError doInBackground(Void... params) {
             DroiError droiError = new DroiError();
-            ShopUser user = DroiUser.login(mEmail,
-                    mPassword, ShopUser.class, droiError);
+            DroiUser.login(mEmail, mPassword, ShopUser.class, droiError);
             return droiError;
         }
 

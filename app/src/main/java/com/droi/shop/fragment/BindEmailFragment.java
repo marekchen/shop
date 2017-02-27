@@ -3,7 +3,6 @@ package com.droi.shop.fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.widget.Toast;
 
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
+import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiUser;
 import com.droi.shop.R;
 import com.droi.shop.interfaces.OnFragmentInteractionListener;
@@ -35,8 +35,7 @@ public class BindEmailFragment extends BackHandledFragment {
     }
 
     public static BindEmailFragment newInstance() {
-        BindEmailFragment fragment = new BindEmailFragment();
-        return fragment;
+        return new BindEmailFragment();
     }
 
     @Override
@@ -69,36 +68,21 @@ public class BindEmailFragment extends BackHandledFragment {
             @Override
             public void result(Boolean aBoolean, DroiError droiError) {
                 if (aBoolean && droiError.isOk()) {
-                    /*DroiError error = user.validateEmail();
-                    if (error.isOk()) {
-                        //跳转 pincode验证fragment
-                        Log.i(TAG, "sendPinCode:success");
-                        if (mListener != null) {
-                            mListener.onFragmentInteraction(1);
-                        }
-                    } else {
-                        Log.i(TAG, "sendPinCode:failed:" + error.toString());
-                        Toast.makeText(getActivity(), "失败", Toast.LENGTH_SHORT).show();
-                    }*/
                     user.validateEmailInBackground(new DroiCallback<Boolean>() {
                         @Override
                         public void result(Boolean aBoolean, DroiError droiError) {
                             hideInValidationProgress();
                             if (droiError.isOk()) {
-                                //跳转 pincode验证fragment
-                                Log.i(TAG, "sendPinCode:success");
                                 if (mListener != null) {
                                     mListener.onFragmentInteraction(1);
                                 }
                             } else {
-                                Log.i(TAG, "sendPinCode:failed:" + droiError.toString());
                                 Toast.makeText(getActivity(), "失败", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
                 } else {
                     hideInValidationProgress();
-                    Log.i(TAG, "sendPinCode:user:" + droiError.toString());
                     Toast.makeText(getActivity(), "失败", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -137,5 +121,18 @@ public class BindEmailFragment extends BackHandledFragment {
 
     public void hideInValidationProgress() {
         mProgressDialog.cancel();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        DroiAnalytics.onFragmentStart(getActivity(), "BindEmailFragment");
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        DroiAnalytics.onFragmentEnd(getActivity(), "BindEmailFragment");
     }
 }

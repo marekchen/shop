@@ -87,7 +87,7 @@ public class ShoppingCartManager {
             return null;
         }
         for (CartItem item : list) {
-            if (item.checked) {
+            if (item.isChecked()) {
                 list2.add(item);
             }
         }
@@ -124,9 +124,9 @@ public class ShoppingCartManager {
         boolean isExist = false;
         List<CartItem> items = cartList.getList();
         for (CartItem cartItem : items) {
-            if (item.getObjectId().equals(cartItem.id)) {
+            if (item.getObjectId().equals(cartItem.getId())) {
                 isExist = true;
-                cartItem.num += 1;
+                cartItem.setNum(cartItem.getNum() + 1);
             }
         }
 
@@ -143,12 +143,13 @@ public class ShoppingCartManager {
         }
         List<CartItem> items = cartList.getList();
         for (CartItem item : items) {
-            if (item.id.equals(id)) {
+            if (item.getId().equals(id)) {
                 if (isAll) {
                     items.remove(item);
                 } else {
-                    item.num -= 1;
-                    if (item.num == 0) {
+                    item.setNum(item.getNum() - 1);
+                    ;
+                    if (item.getNum() == 0) {
                         items.remove(item);
                     }
                 }
@@ -164,8 +165,8 @@ public class ShoppingCartManager {
         }
         List<CartItem> items = cartList.getList();
         for (CartItem cartItem : items) {
-            if (id.equals(cartItem.id)) {
-                cartItem.num = num;
+            if (id.equals(cartItem.getId())) {
+                cartItem.setNum(num);
             }
         }
         putValue(KEY, cartList);
@@ -178,8 +179,9 @@ public class ShoppingCartManager {
         }
         List<CartItem> items = cartList.getList();
         for (CartItem cartItem : items) {
-            if (id.equals(cartItem.id)) {
-                cartItem.checked = checked;
+            if (id.equals(cartItem.getId())) {
+                cartItem.setChecked(checked);
+                ;
             }
         }
         putValue(KEY, cartList);
@@ -195,7 +197,7 @@ public class ShoppingCartManager {
             return false;
         }
         for (CartItem cartItem : items) {
-            if (!cartItem.checked) {
+            if (!cartItem.isChecked()) {
                 return false;
             }
         }
@@ -209,7 +211,7 @@ public class ShoppingCartManager {
         }
         List<CartItem> items = cartList.getList();
         for (CartItem cartItem : items) {
-            cartItem.checked = checked;
+            cartItem.setChecked(checked);
         }
         putValue(KEY, cartList);
     }
@@ -223,8 +225,8 @@ public class ShoppingCartManager {
         List<CartItem> items = cartList.getList();
 
         for (CartItem cartItem : items) {
-            if (cartItem.checked) {
-                sum += cartItem.num * cartItem.item.getPrice();
+            if (cartItem.isChecked()) {
+                sum += cartItem.getNum() * cartItem.getItem().getPrice();
             }
         }
         return sum;
@@ -239,8 +241,8 @@ public class ShoppingCartManager {
         List<CartItem> items = cartList.getList();
 
         for (CartItem cartItem : items) {
-            if (cartItem.checked) {
-                count += cartItem.num;
+            if (cartItem.isChecked()) {
+                count += cartItem.getNum();
             }
         }
         return count;

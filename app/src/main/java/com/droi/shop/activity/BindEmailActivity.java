@@ -3,12 +3,9 @@ package com.droi.shop.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -23,12 +20,10 @@ import com.droi.shop.interfaces.OnFragmentInteractionListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-//import com.droi.sdk.analytics.DroiAnalytics;
-
 /**
  * Created by chenpei on 16/9/12.
  */
-public class BindEmailActivity extends FragmentActivity implements OnFragmentInteractionListener, BackHandlerInterface {
+public class BindEmailActivity extends AppCompatActivity implements OnFragmentInteractionListener, BackHandlerInterface {
     static FragmentManager fm;
     static Context context;
     private BackHandledFragment mBackHandedFragment;
@@ -53,18 +48,6 @@ public class BindEmailActivity extends FragmentActivity implements OnFragmentInt
         });
         fm = getSupportFragmentManager();
         displayBindEmailFragment();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //DroiAnalytics.onResume(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //DroiAnalytics.onPause(this);
     }
 
     private static void displayBindEmailFragment() {
@@ -108,19 +91,10 @@ public class BindEmailActivity extends FragmentActivity implements OnFragmentInt
 
     @Override
     public void onBackPressed() {
-        Log.i("TAG", "onBackPressed");
-        if (mBackHandedFragment == null) {
-            Log.i("TAG", "mBackHandedFragment == null");
-        }
-        if (!mBackHandedFragment.onBackPressed()) {
-            Log.i("TAG", "!onBackPressed");
-        }
         if (mBackHandedFragment == null || !mBackHandedFragment.onBackPressed()) {
             if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-                Log.i("TAG", "1");
                 super.onBackPressed();
             } else {
-                Log.i("TAG", "2");
                 getSupportFragmentManager().popBackStack();
             }
         } else {

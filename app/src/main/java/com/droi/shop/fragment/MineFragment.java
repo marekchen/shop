@@ -26,7 +26,6 @@ import com.droi.shop.R;
 import com.droi.shop.activity.AboutUsActivity;
 import com.droi.shop.activity.AddressListActivity;
 import com.droi.shop.activity.LoginActivity;
-import com.droi.shop.activity.MyFollowActivity;
 import com.droi.shop.activity.MyOrderActivity;
 import com.droi.shop.activity.ProfileActivity;
 import com.droi.shop.model.ShopUser;
@@ -77,8 +76,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         ShopUser user = DroiUser.getCurrentUser(ShopUser.class);
         if (user != null && user.isAuthorized() && !user.isAnonymous()) {
             nameTextView.setText(user.getUserId());
-            if (user.avatar != null) {
-                user.avatar.getInBackground(new DroiCallback<byte[]>() {
+            if (user.getAvatar() != null) {
+                user.getAvatar().getInBackground(new DroiCallback<byte[]>() {
                     @Override
                     public void result(byte[] bytes, DroiError error) {
                         if (error.isOk()) {
@@ -140,8 +139,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 startActivity(addressIntent);
                 break;
             case R.id.mine_frag_follow:
-                Intent followIntent = new Intent(getActivity(), MyFollowActivity.class);
-                startActivity(followIntent);
+                /*Intent followIntent = new Intent(getActivity(), MyFollowActivity.class);
+                startActivity(followIntent);*/
                 break;
             case R.id.mine_frag_update:
                 //手动更新

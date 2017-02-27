@@ -1,10 +1,10 @@
 package com.droi.shop.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.droi.shop.R;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
-import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiUser;
 
 import butterknife.BindView;
@@ -25,7 +24,7 @@ import butterknife.ButterKnife;
 /**
  * Created by chenpei on 2016/5/30.
  */
-public class ChangePasswordActivity extends Activity {
+public class ChangePasswordActivity extends AppCompatActivity {
 
     @BindView(R.id.old_password)
     EditText oldPasswordEditText;
@@ -50,18 +49,6 @@ public class ChangePasswordActivity extends Activity {
         ButterKnife.bind(this);
         mContext = this;
         initUI();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        DroiAnalytics.onResume(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        DroiAnalytics.onPause(this);
     }
 
     private void initUI() {

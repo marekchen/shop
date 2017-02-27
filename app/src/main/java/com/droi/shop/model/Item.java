@@ -11,21 +11,21 @@ import java.util.ArrayList;
 
 public class Item extends DroiObject {
     @DroiExpose
-    String name;
+    private String name;
     @DroiExpose
-    ArrayList<String> images;
+    private ArrayList<String> images;
     @DroiExpose
-    float price;
+    private float price;
     @DroiExpose
-    String description;
+    private String description;
     @DroiExpose
-    int commentCount;
+    private int commentCount;
     @DroiExpose
-    int praiseCount;
+    private int praiseCount;
     @DroiExpose
-    String url;
+    private String url;
     @DroiExpose
-    String type;
+    private String type;
 
     public String getType() {
         return type;

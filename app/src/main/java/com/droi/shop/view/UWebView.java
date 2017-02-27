@@ -31,15 +31,6 @@ public class UWebView extends WebView {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                /*String js = "javascript:(function () {\n" +
-                        "    var objs = document.getElementsByTagName(\"img\");\n" +
-                        "    for (var i = 0; i < objs.length; i++) {\n" +
-                        "        objs[i].onclick = function () {\n" +
-                        "            window.app.displayImg(this.src);\n" +
-                        "        }\n" +
-                        "    }\n" +
-                        "})()";
-                view.loadUrl(js);*/
             }
         });
     }

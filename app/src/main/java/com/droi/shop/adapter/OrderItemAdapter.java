@@ -41,20 +41,20 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.Item
 
     @Override
     public void onBindViewHolder(final OrderItemAdapter.ItemViewHolder holder, final int position) {
-        holder.mNameTextView.setText(mItems.get(position).item.getName());
+        holder.mNameTextView.setText(mItems.get(position).getItem().getName());
 
         String priceText = String.format(
                 mContext.getResources().getString(R.string.item_price),
-                mItems.get(position).item.getPrice());
+                mItems.get(position).getItem().getPrice());
         holder.mPriceTextView.setText(priceText);
-        ArrayList<String> images = mItems.get(position).item.getImages();
+        ArrayList<String> images = mItems.get(position).getItem().getImages();
         if (images != null && images.size() > 0) {
             String imageUrl = images.get(0);
             Glide.with(mContext).load(imageUrl).into(holder.mItemImageView);
         }
         String numText = String.format(
                 mContext.getResources().getString(R.string.item_num),
-                mItems.get(position).num);
+                mItems.get(position).getNum());
         holder.mNumTextView.setText(numText);
 
     }

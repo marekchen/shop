@@ -161,7 +161,7 @@ public class MainFragment extends Fragment {
                 if (droiError.isOk() && list.size() > 0) {
                     mItems.clear();
                     mItems.addAll(list);
-                    //wrapper.notifyDataSetChanged();
+                    wrapper.notifyDataSetChanged();
                 } else {
 
                 }

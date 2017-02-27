@@ -57,26 +57,26 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ItemVi
     }
 
     @Override
-    public void onBindViewHolder(final CartItemAdapter.ItemViewHolder holder, final int position) {
-        holder.mNameTextView.setText(mItems.get(position).item.getName());
+    public void onBindViewHolder(final CartItemAdapter.ItemViewHolder holder, int position) {
+        holder.mNameTextView.setText(mItems.get(position).getItem().getName());
 
         String priceText = String.format(
                 mContext.getResources().getString(R.string.item_price),
-                mItems.get(position).item.getPrice());
+                mItems.get(position).getItem().getPrice());
         holder.mPriceTextView.setText(priceText);
-        holder.mAmountView.setNum(mItems.get(position).num);
-        ArrayList<String> images = mItems.get(position).item.getImages();
+        holder.mAmountView.setNum(mItems.get(position).getNum());
+        ArrayList<String> images = mItems.get(position).getItem().getImages();
         if (images != null && images.size() > 0) {
             String imageUrl = images.get(0);
             Glide.with(mContext).load(imageUrl).into(holder.mItemImageView);
         }
-        holder.mCheckBox.setChecked(mItems.get(position).checked);
+        holder.mCheckBox.setChecked(mItems.get(position).isChecked());
 
         holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 ShoppingCartManager.getInstance(mContext.getApplicationContext())
-                        .setChecked(mItems.get(position).id, isChecked);
+                        .setChecked(mItems.get(holder.getAdapterPosition()).getId(), isChecked);
                 changeTotal();
             }
         });
@@ -85,10 +85,10 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ItemVi
             public void onAmountChange(View view, int amount) {
                 if (amount != 0) {
                     ShoppingCartManager.getInstance(mContext.getApplicationContext())
-                            .setNum(mItems.get(position).id, amount);
+                            .setNum(mItems.get(holder.getAdapterPosition()).getId(), amount);
                     changeTotal();
                 } else {
-                    showNormalDialog(holder.mAmountView, mItems.get(position).id);
+                    showNormalDialog(holder.mAmountView, mItems.get(holder.getAdapterPosition()).getId());
                 }
             }
         });

@@ -35,7 +35,6 @@ public class RegisterFragment extends Fragment {
 
     private UserRegisterTask mAuthTask = null;
 
-    // UI references.
     @BindView(R.id.user_name)
     EditText mUserNameView;
     @BindView(R.id.password)
@@ -99,8 +98,6 @@ public class RegisterFragment extends Fragment {
 
     @OnClick(R.id.register_button)
     void attemptRegister() {
-        //计数事件
-        //DroiAnalytics.onEvent(getActivity(), "register");
         if (mAuthTask != null) {
             return;
         }

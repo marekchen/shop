@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.droi.shop.R;
 import com.droi.shop.fragment.ShoppingCartFragment;
@@ -23,7 +22,6 @@ public class ShoppingCartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_shopping_cart);
         ButterKnife.bind(this);
         FragmentManager fm = getSupportFragmentManager();
-        Log.i("chenpei","1111");
         Fragment fragment = ShoppingCartFragment.newInstance(1);
         fm.beginTransaction().add(R.id.frame, fragment).commit();
     }

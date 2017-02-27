@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -74,7 +73,7 @@ public class OrderConfirmActivity extends AppCompatActivity {
                 if (aBoolean) {
                     ShoppingCartManager.getInstance(mContext).clear();
                     Intent intent = new Intent(mContext, OrderDetailActivity.class);
-                    intent.putExtra(OrderDetailActivity.ORDER,order);
+                    intent.putExtra(OrderDetailActivity.ORDER, order);
                     mContext.startActivity(intent);
                     finish();
                 } else {
@@ -146,7 +145,7 @@ public class OrderConfirmActivity extends AppCompatActivity {
         float sum = 0.0f;
         if (cartItems.size() != 0) {
             for (CartItem cartItem : cartItems) {
-                sum += cartItem.num * cartItem.item.getPrice();
+                sum += cartItem.getNum() * cartItem.getItem().getPrice();
             }
         }
         return sum;

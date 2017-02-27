@@ -10,14 +10,14 @@ import com.droi.sdk.core.DroiReference;
 
 public class CartItem extends DroiObject {
     @DroiExpose
-    public String id;
+    private String id;
     @DroiReference
-    public Item item;
+    private Item item;
     @DroiExpose
-    public int num;
-    public boolean checked = false;
+    private int num;
+    private boolean checked = false;
 
-    public CartItem(){
+    public CartItem() {
 
     }
 
@@ -25,5 +25,37 @@ public class CartItem extends DroiObject {
         this.id = mId;
         this.item = mItem;
         this.num = mNum;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 }

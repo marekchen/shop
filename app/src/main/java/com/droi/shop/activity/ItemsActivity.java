@@ -14,7 +14,6 @@ import butterknife.ButterKnife;
 /**
  * Created by marek on 2017/2/17.
  */
-
 public class ItemsActivity extends AppCompatActivity {
 
     @Override

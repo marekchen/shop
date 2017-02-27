@@ -18,7 +18,6 @@ import com.droi.shop.R;
 import com.droi.shop.adapter.AddressAdapter;
 import com.droi.shop.interfaces.MyItemClickListener;
 import com.droi.shop.model.Address;
-import com.droi.shop.model.ShopUser;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.ArrayList;

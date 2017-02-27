@@ -50,7 +50,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
     }
 
     @Override
-    public void onBindViewHolder(final AddressViewHolder holder, final int position) {
+    public void onBindViewHolder(final AddressViewHolder holder, int position) {
         holder.mNameTextView.setText(mAddresses.get(position).getName());
         holder.mPhoneTextView.setText(mAddresses.get(position).getPhoneNum());
         holder.mAddressTextView.setText(mAddresses.get(position).getAddress());
@@ -85,7 +85,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
                     @Override
                     public void result(Boolean aBoolean, DroiError droiError) {
                         if (aBoolean) {
-                            mAddresses.remove(position);
+                            mAddresses.remove(holder.getAdapterPosition());
                             dialog.dismissDialog();
                             notifyDataSetChanged();
                         } else {
@@ -105,7 +105,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
                     @Override
                     public void result(Boolean aBoolean, DroiError droiError) {
                         if (aBoolean) {
-                            mAddresses.remove(position);
+                            mAddresses.remove(holder.getAdapterPosition());
                             dialog.dismissDialog();
                             notifyDataSetChanged();
                         } else {

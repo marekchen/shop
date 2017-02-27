@@ -9,15 +9,15 @@ import com.droi.sdk.core.DroiObject;
 
 public class Address extends DroiObject {
     @DroiExpose
-    String userObjectId;
+    private String userObjectId;
     @DroiExpose
-    String name;
+    private String name;
     @DroiExpose
-    String phoneNum;
+    private String phoneNum;
     @DroiExpose
-    String location;
+    private String location;
     @DroiExpose
-    String address;
+    private String address;
 
     public Address(){
 

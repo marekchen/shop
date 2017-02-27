@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.shop.R;
 import com.droi.shop.interfaces.OnFragmentInteractionListener;
 
@@ -52,7 +53,6 @@ public class BindCompleteFragment extends BackHandledFragment {
     @OnClick(R.id.confirm_button)
     public void onConfirmButtonPressed() {
         if (mListener != null) {
-            //成功 回到ProfileActivity
             mListener.onFragmentInteraction(2);
         }
     }
@@ -77,5 +77,18 @@ public class BindCompleteFragment extends BackHandledFragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        DroiAnalytics.onFragmentStart(getActivity(), "BindCompleteFragment");
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        DroiAnalytics.onFragmentEnd(getActivity(), "BindCompleteFragment");
     }
 }

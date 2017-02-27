@@ -11,5 +11,13 @@ import com.droi.sdk.core.DroiUser;
 public class ShopUser extends DroiUser {
 
     @DroiExpose
-    public DroiFile avatar;
+    private DroiFile avatar;
+
+    public DroiFile getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(DroiFile avatar) {
+        this.avatar = avatar;
+    }
 }

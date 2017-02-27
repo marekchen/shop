@@ -81,11 +81,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         }
     }
 
-    float computeTotal(List<CartItem> cartItems) {
+    private float computeTotal(List<CartItem> cartItems) {
         float sum = 0.0f;
         if (cartItems.size() != 0) {
             for (CartItem cartItem : cartItems) {
-                sum += cartItem.num * cartItem.item.getPrice();
+                sum += cartItem.getNum() * cartItem.getItem().getPrice();
             }
         }
         return sum;

@@ -151,7 +151,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         float sum = 0.0f;
         if (cartItems.size() != 0) {
             for (CartItem cartItem : cartItems) {
-                sum += cartItem.num * cartItem.item.getPrice();
+                sum += cartItem.getNum() * cartItem.getItem().getPrice();
             }
         }
         return sum;

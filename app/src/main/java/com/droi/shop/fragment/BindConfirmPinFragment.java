@@ -41,8 +41,7 @@ public class BindConfirmPinFragment extends BackHandledFragment {
     }
 
     public static BindConfirmPinFragment newInstance() {
-        BindConfirmPinFragment fragment = new BindConfirmPinFragment();
-        return fragment;
+        return new BindConfirmPinFragment();
     }
 
     @Override
@@ -86,14 +85,12 @@ public class BindConfirmPinFragment extends BackHandledFragment {
             public void result(Boolean aBoolean, DroiError droiError) {
                 hideInValidationProgress();
                 if (droiError.isOk()) {
-                    Log.i(TAG, "validatePinCode:success");
                     Toast.makeText(getActivity(), "绑定成功", Toast.LENGTH_SHORT).show();
                     if (mListener != null) {
                         //成功 回到ProfileActivity
                         mListener.onFragmentInteraction(2);
                     }
                 } else {
-                    Log.i(TAG, "validatePinCode:failed:" + droiError.toString());
                     if (droiError.getCode() == 1040018) {
                         Toast.makeText(getActivity(), "绑定操作过于频繁，请稍后再试", Toast.LENGTH_SHORT).show();
                     } else {
@@ -102,22 +99,6 @@ public class BindConfirmPinFragment extends BackHandledFragment {
                 }
             }
         });
-        /*DroiError error = user.confirmPhoneNumberPinCode(pinCode);
-        if (error.isOk()) {
-            Log.i(TAG, "validatePinCode:success");
-            Toast.makeText(getActivity(),"绑定成功", Toast.LENGTH_SHORT).show();
-            if (mListener != null) {
-                //成功 回到ProfileActivity
-                mListener.onFragmentInteraction(2);
-            }
-        } else {
-            Log.i(TAG, "validatePinCode:failed:" + error.toString());
-            if (error.getCode()==1040018) {
-                Toast.makeText(getActivity(), "绑定操作过于频繁，请稍后再试", Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(getActivity(), "绑定失败", Toast.LENGTH_SHORT).show();
-            }
-        }*/
     }
 
     @Override
@@ -163,7 +144,6 @@ public class BindConfirmPinFragment extends BackHandledFragment {
             timerTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO 需要写异步
                     CountDownTimerUtils mCountDownTimerUtils = new CountDownTimerUtils(60000, 1000);
                     mCountDownTimerUtils.start();
                     DroiUser user = DroiUser.getCurrentUser();
@@ -202,5 +182,4 @@ public class BindConfirmPinFragment extends BackHandledFragment {
     public void hideInValidationProgress() {
         mProgressDialog.cancel();
     }
-
 }
