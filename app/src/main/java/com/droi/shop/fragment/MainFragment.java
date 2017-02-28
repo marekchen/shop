@@ -5,9 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -17,6 +23,7 @@ import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiQuery;
 import com.droi.sdk.core.DroiQueryCallback;
 import com.droi.shop.R;
+import com.droi.shop.activity.ScanActivity;
 import com.droi.shop.activity.SearchActivity;
 import com.droi.shop.adapter.ItemAdapter;
 import com.droi.shop.adapter.ItemTypeAdapter;
@@ -100,7 +107,32 @@ public class MainFragment extends Fragment {
         if (parent != null) {
             parent.removeView(view);
         }
+        initToolbar(view);
         return view;
+    }
+
+    private void initToolbar(View view) {
+        setHasOptionsMenu(true);
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.action_edit) {
+                    Intent intent = new Intent(getActivity(), ScanActivity.class);
+                    getActivity().startActivity(intent);
+                }
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        if (getChildFragmentManager().getBackStackEntryCount() == 0) {
+            inflater.inflate(R.menu.menu_main, menu);
+        }
     }
 
     @Override

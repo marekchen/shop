@@ -39,7 +39,10 @@ public class DetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.buy)
     void clickBuy() {
-
+        ShoppingCartManager.getInstance(getApplicationContext()).addToCart(item);
+        Intent intent = new Intent(this, ShoppingCartActivity.class);
+        intent.putExtra(ShoppingCartFragment.TYPE,1);
+        startActivity(intent);
     }
 
     @OnClick(R.id.add_cart)

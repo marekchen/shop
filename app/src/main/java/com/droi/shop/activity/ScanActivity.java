@@ -10,22 +10,27 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zxing.ZXingView;
 
+import com.droi.sdk.DroiError;
+import com.droi.sdk.core.DroiCondition;
+import com.droi.sdk.core.DroiQuery;
+import com.droi.sdk.core.DroiQueryCallback;
 import com.droi.shop.R;
+import com.droi.shop.model.Item;
+
+import java.util.List;
 
 /**
  * Created by marek on 2017/2/10.
  */
 
 public class ScanActivity extends AppCompatActivity implements QRCodeView.Delegate {
-
-    private FrameLayout mView;
-    private PopupWindow mPopupWindow;
 
     @BindView(R.id.zxingview)
     ZXingView mZxingview;
@@ -78,7 +83,6 @@ public class ScanActivity extends AppCompatActivity implements QRCodeView.Delega
 
     @Override
     public void onScanQRCodeSuccess(String result) {
-        /*LogUtils.sf(result);*/
         handleResult(result);
     }
 
@@ -86,7 +90,30 @@ public class ScanActivity extends AppCompatActivity implements QRCodeView.Delega
         vibrate();
         mZxingview.startSpot();
         Log.i("chenpei", "result>>" + result);
-        //TODO 处理二维码
+        if (result.startsWith("droi_shop://")) {
+            fetchItem(result);
+        } else {
+            Toast.makeText(this, "没有查询到信息", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    void fetchItem(String result) {
+        result = result.replace("droi_shop://", "");
+        DroiCondition cond = DroiCondition.cond("_Id", DroiCondition.Type.EQ, result);
+        DroiQuery query = DroiQuery.Builder.newBuilder().where(cond).limit(10).query(Item.class).build();
+        query.runQueryInBackground(new DroiQueryCallback<Item>() {
+            @Override
+            public void result(List<Item> list, DroiError droiError) {
+                if (droiError.isOk() && list.size() == 1) {
+                    Intent intent = new Intent(ScanActivity.this, DetailActivity.class);
+                    intent.putExtra(DetailActivity.ITEM_ENTRY, list.get(0));
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(ScanActivity.this, "没有查询到信息", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void vibrate() {
@@ -131,8 +158,7 @@ public class ScanActivity extends AppCompatActivity implements QRCodeView.Delega
 
     @Override
     public void onScanQRCodeOpenCameraError() {
-        //UIUtils.showToast("打开相机出错");
-        Log.i("chenpei", "打开相机出错");
+        Toast.makeText(this, "打开相机出错", Toast.LENGTH_SHORT).show();
     }
 
     @Override

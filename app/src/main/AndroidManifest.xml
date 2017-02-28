@@ -2,23 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.droi.shop">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:name=".MyApplication"
@@ -31,9 +15,6 @@
             android:name="com.droi.sdk.application_id"
             android:value="i0uvmbzh2Sci5C6YTka9JMu6QimYw3WelQDlHYMT" />
         <meta-data
-            android:name="com.droi.sdk.platform_key"
-            android:value="5vI0kEtluX7mteQH2KaAal_5Cap-9m6Aal_5Cap-" />
-        <meta-data
             android:name="com.droi.sdk.channel_name"
             android:value="DROI_CHANNEL1" />
         <!-- 推送消息加密秘钥，应用创建后由平台自动生成，以下内容为示例 -->
@@ -41,29 +22,63 @@
             android:name="com.droi.sdk.secret_key"
             android:value="h7v9z1oc" />
 
-        <activity android:name=".activity.MainActivity">
+        <activity
+            android:name=".activity.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.DetailActivity" />
-        <activity android:name=".activity.AddressListActivity" />
-        <activity android:name=".activity.AddressEditActivity" />
-        <activity android:name=".activity.ScanActivity" />
-        <activity android:name=".activity.SearchActivity" />
-        <activity android:name=".activity.ItemsActivity" />
-        <activity android:name=".activity.OrderConfirmActivity" />
-        <activity android:name=".activity.MyOrderActivity" />
-        <activity android:name=".activity.AboutUsActivity" />
-        <activity android:name=".activity.ShoppingCartActivity" />
-        <activity android:name=".activity.ProfileActivity"/>
-        <activity android:name=".activity.LoginActivity"/>
-        <activity android:name=".activity.BindEmailActivity"/>
-        <activity android:name=".activity.BindPhoneNumActivity"/>
-        <activity android:name=".activity.ChangePasswordActivity"/>
-        <activity android:name=".activity.OrderDetailActivity"/>
+        <activity
+            android:name=".activity.DetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AddressListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AddressEditActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ScanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ItemsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.OrderConfirmActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MyOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AboutUsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ShoppingCartActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BindEmailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BindPhoneNumActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ChangePasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.OrderDetailActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

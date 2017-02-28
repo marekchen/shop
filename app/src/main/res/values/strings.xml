@@ -12,7 +12,6 @@
     <string name="fragment_mine_follow">我的关注</string>
     <string name="fragment_mine_order">我的订单</string>
     <string name="fragment_mine_address">收货地址</string>
-
     <string name="fragment_mine_updating">检查更新</string>
     <string name="fragment_mine_feedback">意见反馈</string>
     <string name="fragment_mine_push">推送设置</string>
@@ -140,5 +139,6 @@
     <string name="activity_search_history">历史搜索词</string>
     <string name="activity_search_clear">清除</string>
     <string name="activity_search_empty">没有搜索到</string>
+    <string name="scan">二维码</string>
 
 </resources>
