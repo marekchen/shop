@@ -20,10 +20,6 @@ android {
         }
         debug {
             minifyEnabled false
-            ndk {
-                // 在这里指定你需要的cpu架构
-                abiFilters "armeabi-v7a"
-            }
         }
     }
 }
