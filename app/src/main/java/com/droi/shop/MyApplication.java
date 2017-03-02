@@ -18,6 +18,7 @@ import com.droi.shop.model.Item;
 import com.droi.shop.model.ItemType;
 import com.droi.shop.model.Order;
 import com.droi.shop.model.ShopUser;
+import com.droi.shop.model.Test;
 
 /**
  * Created by chenpei on 2016/5/11.
@@ -37,6 +38,7 @@ public class MyApplication extends Application {
         DroiObject.registerCustomClass(Order.class);
         DroiObject.registerCustomClass(CartItem.class);
         DroiObject.registerCustomClass(ItemType.class);
+        DroiObject.registerCustomClass(Test.class);
 
         /*DroiAnalytics.initialize(this);
         DroiAnalytics.enableActivityLifecycleCallbacks(this);*/

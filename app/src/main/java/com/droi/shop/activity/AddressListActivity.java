@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -34,6 +35,8 @@ public class AddressListActivity extends AppCompatActivity {
 
     public static final int ADDRESS_REQUEST = 10;
     public static final String ADDRESS = "ADDRESS";
+    public static final String TYPE = "TYPE";
+    int type;
 
     @BindView(R.id.recycler_view)
     public RecyclerView mRecyclerView;
@@ -46,6 +49,7 @@ public class AddressListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_list);
         ButterKnife.bind(this);
+        type = getIntent().getIntExtra(TYPE, 0);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
@@ -59,15 +63,27 @@ public class AddressListActivity extends AppCompatActivity {
         mAdapter.setOnItemClickListener(new MyItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent();
-                intent.putExtra(ADDRESS, mAddressList.get(position));
-                setResult(RESULT_OK, intent);
-                finish();
+                Log.i("chenpei", "type:" + type);
+                if (type == 0) {
+                    Intent intent = new Intent();
+                    intent.putExtra(ADDRESS, mAddressList.get(position));
+                    setResult(RESULT_OK, intent);
+                    finish();
+                } else {
+                    Intent intent = new Intent(AddressListActivity.this, AddressEditActivity.class);
+                    intent.putExtra(AddressEditActivity.ADDRESS, mAddressList.get(position));
+                    startActivity(intent);
+                }
             }
         });
         mRecyclerView.setAdapter(mAdapter);
-        fetchAddress();
         initToolbar();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchAddress();
     }
 
     private void initToolbar() {

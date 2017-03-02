@@ -95,6 +95,7 @@
     <string name="item_list_title">商品列表</string>
     <string name="item_bottom">%1$d条评论, %2$d%%好评</string>
     <string name="item_price">￥%1$.2f</string>
+    <string name="item_list_empty">没有商品</string>
 
     <!--shopping cart-->
     <string name="total_price">合计:￥ %1$.2f</string>
@@ -134,11 +135,13 @@
     <string name="order_state_3">订单已取消</string>
     <string name="order_paying">支付中</string>
     <string name="order_pay_fail">支付失败</string>
+    <string name="order_empty">没有订单！</string>
 
     <!-- Search Activity -->
     <string name="activity_search_history">历史搜索词</string>
     <string name="activity_search_clear">清除</string>
     <string name="activity_search_empty">没有搜索到</string>
     <string name="scan">二维码</string>
+    <string name="activity_search_search">搜索</string>
 
 </resources>

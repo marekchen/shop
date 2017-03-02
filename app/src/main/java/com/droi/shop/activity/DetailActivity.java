@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.droi.shop.R;
 import com.droi.shop.adapter.ImageNormalAdapter;
@@ -41,19 +42,20 @@ public class DetailActivity extends AppCompatActivity {
     void clickBuy() {
         ShoppingCartManager.getInstance(getApplicationContext()).addToCart(item);
         Intent intent = new Intent(this, ShoppingCartActivity.class);
-        intent.putExtra(ShoppingCartFragment.TYPE,1);
+        intent.putExtra(ShoppingCartFragment.TYPE, 1);
         startActivity(intent);
     }
 
     @OnClick(R.id.add_cart)
     void clickAdd() {
         ShoppingCartManager.getInstance(getApplicationContext()).addToCart(item);
+        Toast.makeText(this, "添加成功", Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.shopping_cart)
     void clickCart() {
         Intent intent = new Intent(this, ShoppingCartActivity.class);
-        intent.putExtra(ShoppingCartFragment.TYPE,1);
+        intent.putExtra(ShoppingCartFragment.TYPE, 1);
         startActivity(intent);
     }
 

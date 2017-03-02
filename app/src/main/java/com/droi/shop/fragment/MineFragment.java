@@ -141,6 +141,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.mine_frag_address:
                 Intent addressIntent = new Intent(getActivity(), AddressListActivity.class);
+                addressIntent.putExtra(AddressListActivity.TYPE, 1);
                 startActivity(addressIntent);
                 break;
             case R.id.mine_frag_follow:

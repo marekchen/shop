@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.droi.sdk.DroiError;
 import com.droi.sdk.analytics.DroiAnalytics;
@@ -45,6 +46,8 @@ public class ItemListFragment extends Fragment {
     RecyclerView mRecyclerView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.empty_layout)
+    LinearLayout emptyLayout;
     List<Item> mItems;
     String name;
     int type;
@@ -81,8 +84,8 @@ public class ItemListFragment extends Fragment {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_item_list, container, false);
             ButterKnife.bind(this, view);
-            final LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
-            mRecyclerView.setLayoutManager(layoutManager);
+            final LinearLayoutManager mLayoutManager = new LinearLayoutManager(mContext);
+            mRecyclerView.setLayoutManager(mLayoutManager);
             mItems = new ArrayList<>();
             mAdapter = new ItemAdapter(mItems, 0);
             mRecyclerView.setAdapter(mAdapter);
@@ -101,7 +104,7 @@ public class ItemListFragment extends Fragment {
                                                  int newState) {
                     super.onScrollStateChanged(recyclerView, newState);
                     if (newState == RecyclerView.SCROLL_STATE_IDLE
-                            && layoutManager.findLastVisibleItemPosition() + 1
+                            && mLayoutManager.findLastVisibleItemPosition() + 1
                             == mItems.size()) {
                         if (mItems.size() != 0 && mItems.size() >= 10) {
                             fetchItems();
@@ -150,6 +153,11 @@ public class ItemListFragment extends Fragment {
     }
 
     void fetchItems() {
+        setRefreshing(true);
+        if (isRefreshing) {
+            return;
+        }
+        isRefreshing = true;
         DroiQuery query;
         if (type == TYPE_SEARCH) {
             DroiCondition cond = DroiCondition.cond("name", DroiCondition.Type.CONTAINS, name);
@@ -162,17 +170,16 @@ public class ItemListFragment extends Fragment {
         query.runQueryInBackground(new DroiQueryCallback<Item>() {
             @Override
             public void result(List<Item> list, DroiError droiError) {
-                if (droiError.isOk()) {
-                    if (list.size() > 0) {
-                        if (offset == 0) {
-                            mItems.clear();
-                        }
-                        mItems.addAll(list);
-                        mAdapter.notifyDataSetChanged();
-                        offset = mItems.size();
+                if (droiError.isOk() && list.size() > 0) {
+                    if (offset == 0) {
+                        mItems.clear();
                     }
+                    mItems.addAll(list);
+                    mAdapter.notifyDataSetChanged();
+                    offset = mItems.size();
+                    emptyLayout.setVisibility(View.GONE);
                 } else {
-                    //做请求失败处理
+                    emptyLayout.setVisibility(View.VISIBLE);
                 }
                 setRefreshing(false);
                 isRefreshing = false;

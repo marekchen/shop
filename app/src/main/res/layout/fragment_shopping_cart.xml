@@ -16,13 +16,22 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" />
 
-    <include
+    <LinearLayout
         android:id="@+id/empty_layout"
-        layout="@layout/view_empty_shop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_layout"
-        android:layout_below="@id/toolbar" />
+        android:layout_below="@id/toolbar"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_list_empty"
+            android:textColor="@color/text_color_gray"
+            android:textSize="20sp" />
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"

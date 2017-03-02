@@ -1,8 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/action_scan"
-        android:title="@string/scan"
+    <item
+        android:id="@+id/action_search"
         android:orderInCategory="80"
+        android:title="@string/activity_search_search"
         app:showAsAction="ifRoom" />
 </menu>

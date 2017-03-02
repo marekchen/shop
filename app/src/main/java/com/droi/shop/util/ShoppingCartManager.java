@@ -107,7 +107,6 @@ public class ShoppingCartManager {
             try {
                 return GSON.fromJson(gson, CartList.class).getList();
             } catch (Exception e) {
-                Log.i("chenpei", "e:" + e.toString());
                 return null;
             }
         }
@@ -148,7 +147,6 @@ public class ShoppingCartManager {
                     items.remove(item);
                 } else {
                     item.setNum(item.getNum() - 1);
-                    ;
                     if (item.getNum() == 0) {
                         items.remove(item);
                     }
@@ -246,6 +244,21 @@ public class ShoppingCartManager {
             }
         }
         return count;
+    }
+
+    public void clearOrder() {
+        CartList cartList = getValue(KEY, CartList.class);
+        if (cartList == null) {
+            return;
+        }
+        List<CartItem> items = cartList.getList();
+
+        for (CartItem cartItem : items) {
+            if (cartItem.isChecked()) {
+                items.remove(cartItem);
+            }
+        }
+        putValue(KEY, cartList);
     }
 
     public void clear() {

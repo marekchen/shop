@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
+import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiQuery;
@@ -31,10 +33,12 @@ import com.droi.shop.adapter.MainBannerAdapter;
 import com.droi.shop.model.Banner;
 import com.droi.shop.model.Item;
 import com.droi.shop.model.ItemType;
+import com.droi.shop.model.Test;
 import com.jude.rollviewpager.RollPagerView;
 import com.zhy.adapter.recyclerview.wrapper.HeaderAndFooterWrapper;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -118,7 +122,7 @@ public class MainFragment extends Fragment {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.action_edit) {
+                if (item.getItemId() == R.id.action_scan) {
                     Intent intent = new Intent(getActivity(), ScanActivity.class);
                     getActivity().startActivity(intent);
                 }
@@ -202,6 +206,7 @@ public class MainFragment extends Fragment {
             }
         });
     }
+
 
     void setRefreshing(final boolean b) {
         mSwipeRefreshLayout.post(new Runnable() {

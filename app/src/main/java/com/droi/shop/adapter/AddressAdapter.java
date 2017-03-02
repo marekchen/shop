@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
@@ -54,12 +55,12 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
         holder.mNameTextView.setText(mAddresses.get(position).getName());
         holder.mPhoneTextView.setText(mAddresses.get(position).getPhoneNum());
         holder.mAddressTextView.setText(mAddresses.get(position).getAddress());
-        holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+/*        holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // 更新默认地址云代码实现
             }
-        });
+        });*/
         holder.mEditImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +90,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
                             dialog.dismissDialog();
                             notifyDataSetChanged();
                         } else {
-                            //错误
+                            Toast.makeText(mContext, "删除失败", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -130,8 +131,8 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
         TextView mPhoneTextView;
         @BindView(R.id.address_text)
         TextView mAddressTextView;
-        @BindView(R.id.checkbox)
-        CheckBox mCheckBox;
+        /*        @BindView(R.id.checkbox)
+                CheckBox mCheckBox;*/
         @BindView(R.id.edit_image)
         ImageView mEditImageView;
         @BindView(R.id.edit_text)

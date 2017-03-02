@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
@@ -45,6 +47,22 @@ public class AddressEditActivity extends AppCompatActivity {
         String phone = mPhoneEditText.getText().toString();
         String location = mLocationEditText.getText().toString();
         String addressText = mAddressEditText.getText().toString();
+        if (name.isEmpty()) {
+            Toast.makeText(this, "收件人不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (phone.isEmpty()) {
+            Toast.makeText(this, "手机号码不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (location.isEmpty()) {
+            Toast.makeText(this, "所在地区不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (addressText.isEmpty()) {
+            Toast.makeText(this, "详细地址不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Address address;
         if (mAddress == null) {
             address = new Address(userId, name, phone, location, addressText);
@@ -77,7 +95,7 @@ public class AddressEditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_address_edit);
         ButterKnife.bind(this);
         mContext = this;
-        mAddress = (Address) getIntent().getSerializableExtra(ADDRESS);
+        mAddress = getIntent().getParcelableExtra(ADDRESS);
         initToolbar();
     }
 

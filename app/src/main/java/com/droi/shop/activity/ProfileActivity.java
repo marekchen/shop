@@ -178,6 +178,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.change_head_icon:
                 selectPic.setVisibility(View.VISIBLE);
+                popLayout.setVisibility(View.VISIBLE);
                 break;
             case R.id.change_password:
                 Intent changePasswordIntent = new Intent(this, ChangePasswordActivity.class);
@@ -203,18 +204,16 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.btn_pick_photo:
                 try {
                     Intent intent;
-                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         intent = new Intent();
                         intent.setAction(Intent.ACTION_PICK);
-                        intent.setType("image/*");
-                    } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                         intent.addCategory(Intent.CATEGORY_OPENABLE);
-                        intent.setType("image*//*");
                     } else {
                         intent = new Intent(Intent.ACTION_GET_CONTENT);
-                        intent.setType("image*//*");
                     }
+                    intent.setType("image/*");
                     startActivityForResult(intent, 2);
                 } catch (ActivityNotFoundException e) {
                     e.printStackTrace();
@@ -254,6 +253,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             upload(data);
         } else {
             Toast.makeText(mContext, "上传失败", Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.GONE);
             selectPic.setVisibility(View.GONE);
         }
     }
@@ -268,6 +268,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     String path = CommonUtils.getPath(this, mImageCaptureUri);
                     if (path == null) {
                         Toast.makeText(mContext, "上传失败", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                        selectPic.setVisibility(View.GONE);
                         return;
                     }
                     DroiFile headIcon = new DroiFile(new File(path));
@@ -281,16 +283,19 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                             } else {
                                 Toast.makeText(mContext, "上传失败", Toast.LENGTH_SHORT).show();
                             }
+                            progressBar.setVisibility(View.GONE);
                             selectPic.setVisibility(View.GONE);
                         }
                     });
                 } else {
                     Toast.makeText(mContext, "上传失败", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                     selectPic.setVisibility(View.GONE);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
                 Toast.makeText(mContext, "上传失败", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
                 selectPic.setVisibility(View.GONE);
             }
         } else {
@@ -312,15 +317,18 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                             } else {
                                 Toast.makeText(mContext, "上传失败", Toast.LENGTH_SHORT).show();
                             }
+                            progressBar.setVisibility(View.GONE);
                             selectPic.setVisibility(View.GONE);
                         }
                     });
                 } else {
                     Toast.makeText(mContext, "上传失败", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                     selectPic.setVisibility(View.GONE);
                 }
             } else {
                 Toast.makeText(mContext, "上传失败", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
                 selectPic.setVisibility(View.GONE);
             }
         }

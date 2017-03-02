@@ -74,7 +74,7 @@ public class OrderConfirmActivity extends AppCompatActivity {
             public void result(Boolean aBoolean, DroiError droiError) {
                 dialog.dismissDialog();
                 if (aBoolean) {
-                    ShoppingCartManager.getInstance(mContext).clear();
+                    ShoppingCartManager.getInstance(mContext).clearOrder();
                     Intent intent = new Intent(mContext, OrderDetailActivity.class);
                     intent.putExtra(OrderDetailActivity.ORDER, order);
                     mContext.startActivity(intent);
@@ -109,6 +109,7 @@ public class OrderConfirmActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, AddressListActivity.class);
+                intent.putExtra(AddressListActivity.ADDRESS,0);
                 startActivityForResult(intent, ADDRESS_REQUEST_CODE);
             }
         });
