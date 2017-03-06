@@ -1,6 +1,7 @@
 package com.droi.shop;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 import com.droi.sdk.analytics.DroiAnalytics;
@@ -19,6 +20,8 @@ import com.droi.shop.model.ItemType;
 import com.droi.shop.model.Order;
 import com.droi.shop.model.ShopUser;
 import com.droi.shop.model.Test;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 /**
  * Created by chenpei on 2016/5/11.
@@ -26,9 +29,20 @@ import com.droi.shop.model.Test;
 public class MyApplication extends Application {
     private static final String TAG = "MyApplication";
 
-    @Override
-    public void onCreate() {
+    public static RefWatcher getRefWatcher(Context context) {
+        MyApplication application = (MyApplication) context.getApplicationContext();
+        return application.refWatcher;
+    }
+
+    private RefWatcher refWatcher;
+
+    @Override public void onCreate() {
         super.onCreate();
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        refWatcher = LeakCanary.install(this);
+
         TypefaceProvider.registerDefaultIconSets();
         Core.initialize(this);
         DroiObject.registerCustomClass(Item.class);

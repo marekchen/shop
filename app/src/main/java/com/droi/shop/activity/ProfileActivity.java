@@ -1,7 +1,6 @@
 package com.droi.shop.activity;
 
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -39,7 +38,6 @@ import butterknife.ButterKnife;
  */
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
     private static String TAG = "ProfileActivity";
-    Context mContext;
 
     @BindView(R.id.change_head_icon)
     LinearLayout changeHeadIcon;
@@ -86,7 +84,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
-        mContext = this;
         initUI();
     }
 
@@ -244,7 +241,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_OK) {
             Log.i(TAG, "resultCode != RESULT_OK");
-            Toast.makeText(mContext, "获取图片失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "获取图片失败", Toast.LENGTH_SHORT).show();
             return;
         }
         progressBar.setVisibility(View.VISIBLE);
@@ -252,7 +249,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         if (data != null) {
             upload(data);
         } else {
-            Toast.makeText(mContext, "上传失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "上传失败", Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.GONE);
             selectPic.setVisibility(View.GONE);
         }
@@ -267,7 +264,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 if (image != null) {
                     String path = CommonUtils.getPath(this, mImageCaptureUri);
                     if (path == null) {
-                        Toast.makeText(mContext, "上传失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "上传失败", Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);
                         selectPic.setVisibility(View.GONE);
                         return;
@@ -279,22 +276,22 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         @Override
                         public void result(Boolean aBoolean, DroiError droiError) {
                             if (aBoolean) {
-                                Toast.makeText(mContext, "上传成功", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "上传成功", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(mContext, "上传失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "上传失败", Toast.LENGTH_SHORT).show();
                             }
                             progressBar.setVisibility(View.GONE);
                             selectPic.setVisibility(View.GONE);
                         }
                     });
                 } else {
-                    Toast.makeText(mContext, "上传失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "上传失败", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                     selectPic.setVisibility(View.GONE);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(mContext, "上传失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "上传失败", Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
                 selectPic.setVisibility(View.GONE);
             }
@@ -313,21 +310,21 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         @Override
                         public void result(Boolean aBoolean, DroiError droiError) {
                             if (aBoolean) {
-                                Toast.makeText(mContext, "上传成功", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "上传成功", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(mContext, "上传失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "上传失败", Toast.LENGTH_SHORT).show();
                             }
                             progressBar.setVisibility(View.GONE);
                             selectPic.setVisibility(View.GONE);
                         }
                     });
                 } else {
-                    Toast.makeText(mContext, "上传失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "上传失败", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                     selectPic.setVisibility(View.GONE);
                 }
             } else {
-                Toast.makeText(mContext, "上传失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "上传失败", Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
                 selectPic.setVisibility(View.GONE);
             }

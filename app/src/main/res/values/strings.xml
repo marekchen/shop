@@ -2,7 +2,7 @@
     <string name="app_name">shop</string>
     <string name="activity_main_search_hint">搜索商品</string>
     <string name="activity_main_tab_home">首页</string>
-    <string name="activity_main_tab_category">分类</string>
+    <string name="activity_main_tab_category">商品</string>
     <string name="activity_main_tab_shop">购物车</string>
     <string name="activity_main_tab_mine">我的</string>
 

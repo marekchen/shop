@@ -1,6 +1,5 @@
 package com.droi.shop.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -43,7 +42,6 @@ public class OrderConfirmActivity extends AppCompatActivity {
 
     private List<CartItem> cartItems;
     private Address address;
-    Context mContext;
     TextView remarkTextView;
     TextView addressSelect;
     CheckBox payType;
@@ -67,20 +65,20 @@ public class OrderConfirmActivity extends AppCompatActivity {
         order.setReceiptType(1);
         order.setState(1);
         order.setRemark(remarkTextView.getText().toString());
-        final ProgressDialogUtil dialog = new ProgressDialogUtil(mContext);
+        final ProgressDialogUtil dialog = new ProgressDialogUtil(this);
         dialog.showDialog(R.string.submitting_order);
         order.saveInBackground(new DroiCallback<Boolean>() {
             @Override
             public void result(Boolean aBoolean, DroiError droiError) {
                 dialog.dismissDialog();
                 if (aBoolean) {
-                    ShoppingCartManager.getInstance(mContext).clearOrder();
-                    Intent intent = new Intent(mContext, OrderDetailActivity.class);
+                    ShoppingCartManager.getInstance(OrderConfirmActivity.this).clearOrder();
+                    Intent intent = new Intent(OrderConfirmActivity.this, OrderDetailActivity.class);
                     intent.putExtra(OrderDetailActivity.ORDER, order);
-                    mContext.startActivity(intent);
+                    startActivity(intent);
                     finish();
                 } else {
-                    Toast.makeText(mContext, R.string.submit_order_fail, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.submit_order_fail, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -91,7 +89,6 @@ public class OrderConfirmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_confirm);
         ButterKnife.bind(this);
-        mContext = this;
         String gson = getIntent().getStringExtra(ORDER);
         cartItems = new ArrayList<>();
         cartItems.addAll(ShoppingCartManager.getInstance(this).getOrderList(gson));
@@ -108,8 +105,8 @@ public class OrderConfirmActivity extends AppCompatActivity {
         addressSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, AddressListActivity.class);
-                intent.putExtra(AddressListActivity.ADDRESS,0);
+                Intent intent = new Intent(OrderConfirmActivity.this, AddressListActivity.class);
+                intent.putExtra(AddressListActivity.ADDRESS, 0);
                 startActivityForResult(intent, ADDRESS_REQUEST_CODE);
             }
         });
@@ -117,7 +114,7 @@ public class OrderConfirmActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(wrapper);
         initToolbar();
         String totalText = String.format(
-                mContext.getResources().getString(R.string.total_price),
+                getResources().getString(R.string.total_price),
                 computeTotal());
         mTotalTextView.setText(totalText);
     }

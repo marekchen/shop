@@ -1,6 +1,5 @@
 package com.droi.shop.activity;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -40,14 +39,12 @@ public class ChangePasswordActivity extends AppCompatActivity {
     ImageButton backArrowButton;
 
     private Toast mToast = null;
-    private Context mContext;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
         ButterKnife.bind(this);
-        mContext = this;
         initUI();
     }
 
@@ -112,7 +109,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (mToast == null) {
-                    mToast = Toast.makeText(mContext.getApplicationContext(),
+                    mToast = Toast.makeText(getApplicationContext(),
                             msg, Toast.LENGTH_SHORT);
                 } else {
                     mToast.setText(msg);

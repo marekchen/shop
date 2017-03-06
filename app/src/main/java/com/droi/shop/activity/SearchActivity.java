@@ -144,6 +144,7 @@ public class SearchActivity extends AppCompatActivity {
         saveSearchHistory(searchContent);
         Intent intent = new Intent(this, ItemsActivity.class);
         intent.putExtra(ItemListFragment.ITEM_NAME, searchContent);
+        intent.putExtra(ItemListFragment.TYPE, ItemListFragment.TYPE_SEARCH);
         startActivity(intent);
     }
 

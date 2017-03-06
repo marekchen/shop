@@ -190,7 +190,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     private void uploadData() {
         ArrayList<Item> list = new ArrayList<>();
-        Item item1 = new Item();
+/*        Item item1 = new Item();
         item1.setName("Name1");
         item1.setCommentCount(1);
         item1.setPraiseCount(1);
@@ -266,7 +266,54 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         item8.setDescription("描述8");
         item8.setUrl("https://www.baidu.com");
         item8.setImages(images);
-        list.add(item8);
+        list.add(item8);*/
+        Item item1 = new Item();
+        item1.setName("恒源祥女士羊毛衫2016秋冬新款套头衫高领打底衫纯羊毛女装中长款女毛衣针织衫 黑色 均码(90-140斤内均可)");
+        item1.setCommentCount(1);
+        item1.setPraiseCount(1);
+        item1.setPrice(298.0f);
+        item1.setDescription("描述");
+        item1.setType("女装");
+        item1.setUrl("https://m.baidu.com");
+        ArrayList<String> images = new ArrayList<>();
+        images.add("https://m.360buyimg.com/n12/jfs/t2164/363/1770041290/91237/b19a0d13/56725bf1Na8be775b.jpg!q70.jpg");
+        images.add("https://m.360buyimg.com/n12/jfs/t2164/23/1825203012/123215/dcb6c42a/56725c14Nf705af7f.jpg!q70.jpg");
+        images.add("https://m.360buyimg.com/n12/jfs/t2443/197/1081169549/103698/941cd25f/56725c16Na51d1a14.jpg!q70.jpg");
+        images.add("https://m.360buyimg.com/n12/jfs/t2065/287/1752350881/96545/2b94e4a1/56725c18N85b36eba.jpg!q70.jpg");
+        item1.setImages(images);
+        list.add(item1);
+
+        Item item2 = new Item();
+        item2.setName("绅范棉衣男 2016秋冬新款韩版休闲加厚连帽男士棉上衣修身棉服外套 黑色 XL");
+        item2.setCommentCount(1);
+        item2.setPraiseCount(1);
+        item2.setPrice(158.0f);
+        item2.setDescription("描述");
+        item2.setType("男装");
+        item2.setUrl("https://m.baidu.com");
+        ArrayList<String> images2 = new ArrayList<>();
+        images2.add("https://m.360buyimg.com/n12/jfs/t3175/196/5027079316/383290/17aa9745/585e699aNec500831.jpg!q70.jpg");
+        images2.add("https://m.360buyimg.com/n12/jfs/t3286/81/5234098502/362043/a32703b7/585e69e6Ncc7d09f9.jpg!q70.jpg");
+        images2.add("https://m.360buyimg.com/n12/jfs/t4108/363/822663031/366290/4e28d53a/585e69e9N5baf4c75.jpg!q70.jpg");
+        images2.add("https://m.360buyimg.com/n12/jfs/t3916/16/813051896/483248/a11a3d64/585e69ebN92706f5b.jpg!q70.jpg");
+        item2.setImages(images2);
+        list.add(item2);
+
+        Item item3 = new Item();
+        item3.setName("Java编程思想（第4版） ");
+        item3.setCommentCount(1);
+        item3.setPraiseCount(1);
+        item3.setPrice(86.40f);
+        item3.setDescription("描述");
+        item3.setType("图书");
+        item3.setUrl("https://m.baidu.com");
+        ArrayList<String> images3 = new ArrayList<>();
+        images3.add("https://m.360buyimg.com/n12/jfs/t2191/111/699154754/198998/32d7bfe0/5624b582Nbc01af5b.jpg!q70.jpg");
+        images3.add("https://m.360buyimg.com/n12/17094/9c2d8955-0f3e-423d-92c3-a5982fe0595b.jpg!q70.jpg");
+        images3.add("https://m.360buyimg.com/n12/jfs/t1969/74/1911288203/150301/3b81882c/5680a9a8Nc0d5ae59.jpg!q70.jpg");
+        item3.setImages(images3);
+        list.add(item3);
+
         DroiObject.saveAllInBackground(list, new DroiCallback<Boolean>() {
             @Override
             public void result(Boolean aBoolean, DroiError droiError) {

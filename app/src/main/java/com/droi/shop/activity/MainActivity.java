@@ -1,5 +1,6 @@
 package com.droi.shop.activity;
 
+import android.Manifest;
 import android.os.Bundle;
 
 import com.droi.shop.R;
@@ -16,6 +17,13 @@ import com.droi.shop.fragment.ItemListFragment;
 import com.droi.shop.fragment.MainFragment;
 import com.droi.shop.fragment.MineFragment;
 import com.droi.shop.fragment.ShoppingCartFragment;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     public static final String MAIN_TAB_INDEX = "index";
@@ -25,6 +33,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Dexter.withActivity(this).withPermissions(
+                Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {/* ... */}
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {/* ... */}
+                }).check();
         DroiUpdate.update(this);
         initTab();
     }

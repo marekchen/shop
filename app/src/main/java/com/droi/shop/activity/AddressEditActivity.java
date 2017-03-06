@@ -1,11 +1,9 @@
 package com.droi.shop.activity;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -30,7 +28,6 @@ public class AddressEditActivity extends AppCompatActivity {
     private Address mAddress;
     public static final String ADDRESS = "ADDRESS";
 
-    Context mContext;
     @BindView(R.id.name_text)
     EditText mNameEditText;
     @BindView(R.id.phone_text)
@@ -73,7 +70,7 @@ public class AddressEditActivity extends AppCompatActivity {
             address.setLocation(location);
             address.setAddress(addressText);
         }
-        final ProgressDialogUtil dialog = new ProgressDialogUtil(mContext);
+        final ProgressDialogUtil dialog = new ProgressDialogUtil(this);
         dialog.showDialog(R.string.saving);
         address.saveInBackground(new DroiCallback<Boolean>() {
             @Override
@@ -94,7 +91,6 @@ public class AddressEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_edit);
         ButterKnife.bind(this);
-        mContext = this;
         mAddress = getIntent().getParcelableExtra(ADDRESS);
         initToolbar();
     }

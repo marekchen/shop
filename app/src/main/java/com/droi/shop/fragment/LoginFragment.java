@@ -1,6 +1,5 @@
 package com.droi.shop.fragment;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -38,13 +37,10 @@ public class LoginFragment extends Fragment {
     @BindView(R.id.password)
     EditText mPasswordView;
     ProgressDialog mProgressView;
-    private Activity activity;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = getActivity();
         this.getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
@@ -64,9 +60,9 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+        ButterKnife.bind(this, view);
         mProgressView = new ProgressDialog(getActivity());
         mProgressView.setMessage("Login...");
-        ButterKnife.bind(this, view);
         return view;
     }
 
@@ -184,7 +180,7 @@ public class LoginFragment extends Fragment {
             showProgress(false);
             if (droiError.isOk()) {
                 Toast.makeText(getActivity(), R.string.login_success, Toast.LENGTH_SHORT).show();
-                activity.finish();
+                getActivity().finish();
             } else {
                 if (droiError.getCode() == DroiError.USER_NOT_EXISTS) {
                     mUserNameView.setError(getString(R.string.error_user_not_exists));

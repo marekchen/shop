@@ -135,25 +135,27 @@ public class ShoppingCartManager {
         putValue(KEY, cartList);
     }
 
-    public void removeFromCart(String id, boolean isAll) {
+    public void removeFromCart(String id) {
         CartList cartList = getValue(KEY, CartList.class);
         if (cartList == null) {
             return;
         }
         List<CartItem> items = cartList.getList();
+        List<CartItem> items2 = new ArrayList<>();
+        CartList cartList2 = new CartList();
+
         for (CartItem item : items) {
             if (item.getId().equals(id)) {
-                if (isAll) {
-                    items.remove(item);
-                } else {
-                    item.setNum(item.getNum() - 1);
-                    if (item.getNum() == 0) {
-                        items.remove(item);
-                    }
+                item.setNum(item.getNum() - 1);
+                if (item.getNum() != 0) {
+                    items2.add(item);
                 }
+            }else{
+                items2.add(item);
             }
         }
-        putValue(KEY, cartList);
+        cartList2.setList(items2);
+        putValue(KEY, cartList2);
     }
 
     public void setNum(String id, int num) {
@@ -252,13 +254,17 @@ public class ShoppingCartManager {
             return;
         }
         List<CartItem> items = cartList.getList();
+        List<CartItem> items2 = new ArrayList<>();
+
+        CartList cartList2 = new CartList();
 
         for (CartItem cartItem : items) {
-            if (cartItem.isChecked()) {
-                items.remove(cartItem);
+            if (!cartItem.isChecked()) {
+                items2.add(cartItem);
             }
         }
-        putValue(KEY, cartList);
+        cartList2.setList(items2);
+        putValue(KEY, cartList2);
     }
 
     public void clear() {

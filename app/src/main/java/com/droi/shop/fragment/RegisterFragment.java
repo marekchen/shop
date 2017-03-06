@@ -1,6 +1,5 @@
 package com.droi.shop.fragment;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -43,12 +42,10 @@ public class RegisterFragment extends Fragment {
     EditText mConfirmPasswordView;
 
     private ProgressDialog mProgressView;
-    private Activity activity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = getActivity();
         this.getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
@@ -190,7 +187,7 @@ public class RegisterFragment extends Fragment {
             showProgress(false);
             Log.i("test", "error" + droiError.toString());
             if (droiError.isOk()) {
-                activity.finish();
+                getActivity().finish();
             } else {
                 if (droiError.getCode() == DroiError.USER_ALREADY_EXISTS) {
                     mUserNameView.setError(getString(R.string.error_user_already_exists));

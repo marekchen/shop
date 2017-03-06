@@ -1,6 +1,5 @@
 package com.droi.shop.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -49,7 +48,7 @@ public class DetailActivity extends AppCompatActivity {
     @OnClick(R.id.add_cart)
     void clickAdd() {
         ShoppingCartManager.getInstance(getApplicationContext()).addToCart(item);
-        Toast.makeText(this, "添加成功", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "添加成功", Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.shopping_cart)
@@ -59,7 +58,6 @@ public class DetailActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    Context mContext;
     Item item;
     public static final String ITEM_ENTRY = "ITEM_ENTRY";
 
@@ -68,7 +66,6 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
         ButterKnife.bind(this);
-        mContext = this;
         item = getIntent().getParcelableExtra(ITEM_ENTRY);
         mViewPager.setAdapter(new ImageNormalAdapter(this, mViewPager, item));
         mWebView.loadUrl(item.getUrl());
@@ -76,7 +73,7 @@ public class DetailActivity extends AppCompatActivity {
         mDescTextView.setText(item.getDescription());
 
         String priceText = String.format(
-                mContext.getResources().getString(R.string.item_price),
+                this.getResources().getString(R.string.item_price),
                 item.getPrice());
         mPriceTextView.setText(priceText);
         initToolbar();
@@ -94,5 +91,20 @@ public class DetailActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        destroyWebView();
+    }
+
+    private void destroyWebView() {
+        if (mWebView != null) {
+            mWebView.pauseTimers();
+            mWebView.removeAllViews();
+            mWebView.destroy();
+            mWebView = null;
+        }
     }
 }

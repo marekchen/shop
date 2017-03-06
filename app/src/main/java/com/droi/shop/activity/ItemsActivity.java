@@ -22,9 +22,8 @@ public class ItemsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_items);
         ButterKnife.bind(this);
         Intent intent = getIntent();
-        String name = intent.getStringExtra(ItemListFragment.ITEM_NAME);
         FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = ItemListFragment.newInstance(ItemListFragment.TYPE_SEARCH, name);
+        Fragment fragment = ItemListFragment.newInstance(intent);
         fm.beginTransaction().add(R.id.frame, fragment).commit();
     }
 }

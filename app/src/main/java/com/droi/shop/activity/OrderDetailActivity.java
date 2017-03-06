@@ -38,7 +38,6 @@ public class OrderDetailActivity extends AppCompatActivity {
     public static final String ORDER = "ORDER";
     private List<CartItem> cartItems;
     private Order order;
-    Context mContext;
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
@@ -117,7 +116,7 @@ public class OrderDetailActivity extends AppCompatActivity {
                 orderState.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final ProgressDialogUtil dialog = new ProgressDialogUtil(mContext);
+                        final ProgressDialogUtil dialog = new ProgressDialogUtil(OrderDetailActivity.this);
                         dialog.showDialog(R.string.order_paying);
                         order.setState(3);
                         order.saveInBackground(new DroiCallback<Boolean>() {
@@ -127,7 +126,7 @@ public class OrderDetailActivity extends AppCompatActivity {
                                     mPayButton.setVisibility(View.GONE);
                                     orderState.setText(R.string.order_state_3);
                                 } else {
-                                    Toast.makeText(mContext, R.string.order_pay_fail, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), R.string.order_pay_fail, Toast.LENGTH_SHORT).show();
                                 }
                                 dialog.dismissDialog();
                             }
@@ -146,7 +145,6 @@ public class OrderDetailActivity extends AppCompatActivity {
         }
         orderState.setText(orderStateNum);
         wrapper.addHeaderView(headView);
-        mContext = this;
         mRecyclerView.setAdapter(wrapper);
 
         switch (order.getState()) {
@@ -154,7 +152,7 @@ public class OrderDetailActivity extends AppCompatActivity {
                 mPayButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final ProgressDialogUtil dialog = new ProgressDialogUtil(mContext);
+                        final ProgressDialogUtil dialog = new ProgressDialogUtil(OrderDetailActivity.this);
                         dialog.showDialog(R.string.order_paying);
                         order.setState(2);
                         order.saveInBackground(new DroiCallback<Boolean>() {
@@ -164,7 +162,7 @@ public class OrderDetailActivity extends AppCompatActivity {
                                 if (aBoolean) {
                                     finish();
                                 } else {
-                                    Toast.makeText(mContext, R.string.order_pay_fail, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), R.string.order_pay_fail, Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });

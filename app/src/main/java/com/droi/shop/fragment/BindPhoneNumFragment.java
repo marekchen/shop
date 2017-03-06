@@ -31,7 +31,6 @@ public class BindPhoneNumFragment extends BackHandledFragment {
     @BindView(R.id.country_code)
     TextView countryCodeEditText;
     ProgressDialog mProgressDialog;
-    Context mContext;
 
     public BindPhoneNumFragment() {
         // Required empty public constructor
@@ -45,8 +44,7 @@ public class BindPhoneNumFragment extends BackHandledFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mProgressDialog = new ProgressDialog(this.getActivity());
-        mContext = getActivity();
+        mProgressDialog = new ProgressDialog(getActivity());
     }
 
     @Override

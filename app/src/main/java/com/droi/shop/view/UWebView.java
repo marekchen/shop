@@ -11,14 +11,13 @@ import android.webkit.WebViewClient;
 public class UWebView extends WebView {
 
     public UWebView(final Context context) {
-        this(context, null);
+        this(context.getApplicationContext(), null);
     }
 
     public UWebView(final Context context, AttributeSet attrs) {
-        super(context, attrs);
+        super(context.getApplicationContext(), attrs);
         getSettings().setJavaScriptEnabled(true);
         getSettings().setDefaultTextEncodingName("UTF-8");
-        addJavascriptInterface(new JsInterface(context), "app");
         setWebViewClient(new WebViewClient() {
 
             @Override
@@ -34,19 +33,4 @@ public class UWebView extends WebView {
             }
         });
     }
-
-    private class JsInterface {
-
-        private Context context;
-
-        public JsInterface(Context context) {
-            this.context = context;
-        }
-
-        @JavascriptInterface
-        public void displayImg(String url) {
-
-        }
-    }
-
 }

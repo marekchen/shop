@@ -63,7 +63,6 @@ public class AddressListActivity extends AppCompatActivity {
         mAdapter.setOnItemClickListener(new MyItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Log.i("chenpei", "type:" + type);
                 if (type == 0) {
                     Intent intent = new Intent();
                     intent.putExtra(ADDRESS, mAddressList.get(position));

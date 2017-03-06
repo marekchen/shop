@@ -1,6 +1,7 @@
 package com.droi.shop.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -40,6 +41,7 @@ public class ItemListFragment extends Fragment {
     public final static String TYPE = "TYPE";
     public final static int TYPE_SEARCH = 1;
     public final static int TYPE_TYPE = 2;
+    public final static int TYPE_NONE = 0;
 
     Context mContext;
     @BindView(R.id.recycler_view)
@@ -49,7 +51,7 @@ public class ItemListFragment extends Fragment {
     @BindView(R.id.empty_layout)
     LinearLayout emptyLayout;
     List<Item> mItems;
-    String name;
+    String itemName;
     int type;
     RecyclerView.Adapter mAdapter;
     boolean isRefreshing = false;
@@ -59,11 +61,11 @@ public class ItemListFragment extends Fragment {
     public ItemListFragment() {
     }
 
-    public static ItemListFragment newInstance(int type, String name) {
+    public static ItemListFragment newInstance(Intent intent) {
         ItemListFragment fragment = new ItemListFragment();
         Bundle args = new Bundle();
-        args.putInt(TYPE, type);
-        args.putString(ITEM_NAME, name);
+        args.putInt(TYPE, intent.getIntExtra(TYPE, TYPE_NONE));
+        args.putString(ITEM_NAME, intent.getStringExtra(ITEM_NAME));
         fragment.setArguments(args);
         return fragment;
     }
@@ -73,7 +75,7 @@ public class ItemListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             type = getArguments().getInt(TYPE);
-            name = getArguments().getString(ITEM_NAME);
+            itemName = getArguments().getString(ITEM_NAME);
         }
     }
 
@@ -146,10 +148,20 @@ public class ItemListFragment extends Fragment {
                     getActivity().finish();
                 }
             });
+        } else if (type == TYPE_TYPE) {
+            toolbar.setTitle(itemName);
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().finish();
+                }
+            });
         } else {
-            toolbar.setTitle(R.string.activity_main_tab_category);
+            toolbar.setTitle(R.string.item_list_title);
         }
-
     }
 
     void fetchItems() {
@@ -160,11 +172,13 @@ public class ItemListFragment extends Fragment {
         isRefreshing = true;
         DroiQuery query;
         if (type == TYPE_SEARCH) {
-            DroiCondition cond = DroiCondition.cond("name", DroiCondition.Type.CONTAINS, name);
-            DroiCondition cond1 = DroiCondition.cond("description", DroiCondition.Type.CONTAINS, name);
+            DroiCondition cond = DroiCondition.cond("name", DroiCondition.Type.CONTAINS, itemName);
+            DroiCondition cond1 = DroiCondition.cond("description", DroiCondition.Type.CONTAINS, itemName);
             query = DroiQuery.Builder.newBuilder().where(cond.or(cond1)).offset(offset).limit(10).query(Item.class).build();
+        } else if (type == TYPE_TYPE) {
+            DroiCondition cond = DroiCondition.cond("type", DroiCondition.Type.EQ, itemName);
+            query = DroiQuery.Builder.newBuilder().where(cond).offset(offset).limit(10).query(Item.class).build();
         } else {
-            //DroiCondition cond = DroiCondition.cond("type", DroiCondition.Type.EQ, type);
             query = DroiQuery.Builder.newBuilder().offset(offset).limit(10).query(Item.class).build();
         }
         query.runQueryInBackground(new DroiQueryCallback<Item>() {
