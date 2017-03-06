@@ -29,19 +29,12 @@ import com.squareup.leakcanary.RefWatcher;
 public class MyApplication extends Application {
     private static final String TAG = "MyApplication";
 
-    public static RefWatcher getRefWatcher(Context context) {
-        MyApplication application = (MyApplication) context.getApplicationContext();
-        return application.refWatcher;
-    }
-
-    private RefWatcher refWatcher;
-
     @Override public void onCreate() {
         super.onCreate();
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return;
         }
-        refWatcher = LeakCanary.install(this);
+        LeakCanary.install(this);
 
         TypefaceProvider.registerDefaultIconSets();
         Core.initialize(this);

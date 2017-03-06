@@ -66,12 +66,12 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/mine_frag_follow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/view_ripple"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/mine_follow_icon"
@@ -169,8 +169,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/mine_address_icon"
             android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/mine_address_icon"
             android:text="@string/fragment_mine_address"
             android:textColor="@color/normal_font_color"
             android:textSize="18sp" />
@@ -252,8 +252,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/mine_update_icon"
             android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/mine_update_icon"
             android:text="@string/fragment_mine_updating"
             android:textColor="@color/normal_font_color"
             android:textSize="18sp" />
@@ -281,8 +281,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/mine_push_icon"
             android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/mine_push_icon"
             android:text="@string/fragment_mine_push"
             android:textColor="@color/normal_font_color"
             android:textSize="18sp" />
@@ -356,6 +356,7 @@
         android:gravity="center_vertical"
         android:text="上传"
         android:textColor="@color/normal_font_color"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:visibility="gone" />
 
 </LinearLayout>

@@ -34,7 +34,6 @@ public class BindConfirmPinFragment extends BackHandledFragment {
     @BindView(R.id.timer)
     TextView timerTextView;
     ProgressDialog mProgressDialog;
-    Context mContext;
 
     public BindConfirmPinFragment() {
         // Required empty public constructor
@@ -48,7 +47,6 @@ public class BindConfirmPinFragment extends BackHandledFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mProgressDialog = new ProgressDialog(this.getActivity());
-        mContext = getActivity();
     }
 
     @Override

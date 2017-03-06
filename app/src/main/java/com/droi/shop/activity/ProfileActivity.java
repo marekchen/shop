@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.core.DroiFile;
@@ -132,7 +133,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 bindMobileTextView.setText(getString(R.string.bind));
             }
             if (user.getAvatar() != null) {
-                user.getAvatar().getInBackground(new DroiCallback<byte[]>() {
+                /*user.getAvatar().getInBackground(new DroiCallback<byte[]>() {
                     @Override
                     public void result(byte[] bytes, DroiError error) {
                         if (error.isOk()) {
@@ -144,7 +145,15 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                             }
                         }
                     }
-                }, null);
+                }, null);*/
+                user.getAvatar().getUriInBackground(new DroiCallback<Uri>() {
+                    @Override
+                    public void result(Uri uri, DroiError droiError) {
+                        if (droiError.isOk()) {
+                            Glide.with(ProfileActivity.this).load(uri).into(headImageView);
+                        }
+                    }
+                });
             }
         } else {
             headImageView.setImageResource(R.drawable.default_avatar);

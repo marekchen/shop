@@ -25,7 +25,6 @@ import butterknife.ButterKnife;
  */
 public class BindEmailActivity extends AppCompatActivity implements OnFragmentInteractionListener, BackHandlerInterface {
     static FragmentManager fm;
-    static Context context;
     private BackHandledFragment mBackHandedFragment;
 
     @BindView(R.id.top_bar_title)
@@ -36,7 +35,6 @@ public class BindEmailActivity extends AppCompatActivity implements OnFragmentIn
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = this;
         setContentView(R.layout.activity_bind);
         ButterKnife.bind(this);
         topBarTitle.setText(getString(R.string.email_bind));

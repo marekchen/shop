@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.analytics.DroiAnalytics;
@@ -43,8 +45,8 @@ import butterknife.ButterKnife;
  * Created by chenpei on 2016/5/12.
  */
 public class MineFragment extends Fragment implements View.OnClickListener {
+
     private static String TAG = "MineFragment";
-    private Context mContext;
     @BindView(R.id.head_icon)
     CircleImageView titleImg;
     @BindView(R.id.user_name)
@@ -54,7 +56,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        mContext = getActivity();
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
         ButterKnife.bind(this, view);
         initUI(view);
@@ -82,7 +83,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         if (user != null && user.isAuthorized() && !user.isAnonymous()) {
             nameTextView.setText(user.getUserId());
             if (user.getAvatar() != null) {
-                user.getAvatar().getInBackground(new DroiCallback<byte[]>() {
+                /*user.getAvatar().getInBackground(new DroiCallback<byte[]>() {
                     @Override
                     public void result(byte[] bytes, DroiError error) {
                         if (error.isOk()) {
@@ -94,7 +95,15 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                             }
                         }
                     }
-                }, null);
+                }, null);*/
+                user.getAvatar().getUriInBackground(new DroiCallback<Uri>() {
+                    @Override
+                    public void result(Uri uri, DroiError droiError) {
+                        if (droiError.isOk()) {
+                            Glide.with(getActivity()).load(uri).into(titleImg);
+                        }
+                    }
+                });
             }
         } else {
             titleImg.setImageResource(R.drawable.default_avatar);
@@ -113,11 +122,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.mine_about_us).setOnClickListener(this);
         view.findViewById(R.id.head_icon).setOnClickListener(this);
         view.findViewById(R.id.right_layout).setOnClickListener(this);
-        pushSwitch.setChecked(DroiPush.getPushEnabled(mContext));
+        pushSwitch.setChecked(DroiPush.getPushEnabled(getActivity()));
         pushSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                DroiPush.setPushEnabled(mContext, isChecked);
+                DroiPush.setPushEnabled(getActivity(), isChecked);
             }
         });
     }
@@ -150,7 +159,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.mine_frag_update:
                 //手动更新
-                DroiUpdate.manualUpdate(mContext);
+                DroiUpdate.manualUpdate(getActivity());
                 break;
             case R.id.mine_frag_feedback:
                 //自定义部分颜色
@@ -158,7 +167,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 DroiFeedback.setSendButtonColor(getResources().getColor(R.color.colorPrimaryDark),
                         getResources().getColor(R.color.colorPrimary));
                 //打开反馈页面
-                DroiFeedback.callFeedback(mContext);
+                DroiFeedback.callFeedback(getActivity());
                 break;
             case R.id.mine_about_us:
                 Intent aboutUsIntent = new Intent(getActivity(), AboutUsActivity.class);
@@ -176,7 +185,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
      * 转到登录页面
      */
     private void toLogin() {
-        Intent loginIntent = new Intent(mContext, LoginActivity.class);
+        Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
         startActivity(loginIntent);
     }
 
@@ -184,7 +193,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
      * 转到个人信息页面
      */
     private void toProfile() {
-        Intent profileIntent = new Intent(mContext, ProfileActivity.class);
+        Intent profileIntent = new Intent(getActivity(), ProfileActivity.class);
         startActivity(profileIntent);
     }
 

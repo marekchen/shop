@@ -28,7 +28,6 @@ public class BindEmailFragment extends BackHandledFragment {
     @BindView(R.id.email_et)
     EditText emailEditText;
     ProgressDialog mProgressDialog;
-    Context mContext;
 
     public BindEmailFragment() {
         // Required empty public constructor
@@ -42,7 +41,6 @@ public class BindEmailFragment extends BackHandledFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mProgressDialog = new ProgressDialog(this.getActivity());
-        mContext = getActivity();
     }
 
     @Override

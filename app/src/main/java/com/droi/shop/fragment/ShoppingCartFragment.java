@@ -55,7 +55,6 @@ public class ShoppingCartFragment extends Fragment {
     @BindView(R.id.bottom_layout)
     LinearLayout mBottomLayout;
 
-    Context mContext;
     List<CartItem> list = new ArrayList<>();
     RecyclerView.Adapter mAdapter;
 
@@ -82,10 +81,9 @@ public class ShoppingCartFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mContext = getActivity();
         View view = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
         ButterKnife.bind(this, view);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mContext);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new CartItemAdapter(list, mTotalPrice, mCheckBox, mCheckoutButton, mEmptyLayout);
         mRecyclerView.setAdapter(mAdapter);
@@ -106,10 +104,10 @@ public class ShoppingCartFragment extends Fragment {
                     Toast.makeText(getActivity(), R.string.login_first, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Intent intent = new Intent(mContext, OrderConfirmActivity.class);
-                String gson = ShoppingCartManager.getInstance(mContext).getOrderJson();
+                Intent intent = new Intent(getActivity(), OrderConfirmActivity.class);
+                String gson = ShoppingCartManager.getInstance(getActivity()).getOrderJson();
                 if (gson == null) {
-                    Toast.makeText(mContext, R.string.no_select_item, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.no_select_item, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 intent.putExtra(OrderConfirmActivity.ORDER, gson);
@@ -164,12 +162,12 @@ public class ShoppingCartFragment extends Fragment {
 
     public void changeTotal() {
         String checkoutText = String.format(
-                mContext.getResources().getString(R.string.checkout),
+                getActivity().getResources().getString(R.string.checkout),
                 ShoppingCartManager.getInstance(getActivity().getApplicationContext()).getCheckNum());
         mCheckoutButton.setText(checkoutText);
         mCheckBox.setChecked(ShoppingCartManager.getInstance(getActivity().getApplicationContext()).isAllChecked());
         String priceText = String.format(
-                mContext.getResources().getString(R.string.total_price),
+                getActivity().getResources().getString(R.string.total_price),
                 ShoppingCartManager.getInstance(getActivity().getApplicationContext()).computeSum());
         mTotalPrice.setText(priceText);
     }

@@ -49,7 +49,6 @@ import butterknife.OnClick;
  * Created by chenpei on 2016/5/11.
  */
 public class MainFragment extends Fragment {
-    private Context mContext;
 
     List<Item> mItems;
     List<Banner> mBanners;
@@ -68,13 +67,12 @@ public class MainFragment extends Fragment {
 
     @OnClick(R.id.toolbar_search)
     void clickSearch() {
-        Intent intent = new Intent(mContext, SearchActivity.class);
+        Intent intent = new Intent(getActivity(), SearchActivity.class);
         startActivity(intent);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mContext = getActivity();
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_main, container, false);
             ButterKnife.bind(this, view);
@@ -91,7 +89,7 @@ public class MainFragment extends Fragment {
             View headView = inflater.inflate(R.layout.view_head_main, null);
             RollPagerView rollPagerView = (RollPagerView) headView.findViewById(R.id.view_pager);
             GridView gridView = (GridView) headView.findViewById(R.id.grid_view);
-            mItemTypeAdapter = new ItemTypeAdapter(mContext, mItemTypes);
+            mItemTypeAdapter = new ItemTypeAdapter(getActivity(), mItemTypes);
             gridView.setAdapter(mItemTypeAdapter);
 
             mBannerAdapter = new MainBannerAdapter(getActivity(), rollPagerView, mBanners);

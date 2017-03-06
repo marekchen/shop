@@ -43,7 +43,6 @@ public class ItemListFragment extends Fragment {
     public final static int TYPE_TYPE = 2;
     public final static int TYPE_NONE = 0;
 
-    Context mContext;
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
     @BindView(R.id.swipe_refresh_layout)
@@ -82,11 +81,10 @@ public class ItemListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mContext = getActivity();
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_item_list, container, false);
             ButterKnife.bind(this, view);
-            final LinearLayoutManager mLayoutManager = new LinearLayoutManager(mContext);
+            final LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
             mRecyclerView.setLayoutManager(mLayoutManager);
             mItems = new ArrayList<>();
             mAdapter = new ItemAdapter(mItems, 0);
