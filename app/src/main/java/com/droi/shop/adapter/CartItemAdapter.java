@@ -139,7 +139,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ItemVi
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ShoppingCartManager.getInstance(mContext.getApplicationContext()).removeFromCart(id);
+                        ShoppingCartManager.getInstance(mContext.getApplicationContext()).removeFromCart(id, true);
                         refresh();
                     }
                 });

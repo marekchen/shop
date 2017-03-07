@@ -1,9 +1,6 @@
 package com.droi.shop.fragment;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,7 +33,6 @@ import com.droi.shop.model.ShopUser;
 import com.droi.shop.view.CircleImageView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,7 +42,7 @@ import butterknife.ButterKnife;
  */
 public class MineFragment extends Fragment implements View.OnClickListener {
 
-    private static String TAG = "MineFragment";
+    private static final String TAG = "MineFragment";
     @BindView(R.id.head_icon)
     CircleImageView titleImg;
     @BindView(R.id.user_name)
@@ -66,13 +62,13 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         refreshView();
-        DroiAnalytics.onFragmentStart(getActivity(), "MineFragment");
+        DroiAnalytics.onFragmentStart(getActivity(), TAG);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        DroiAnalytics.onFragmentEnd(getActivity(), "MineFragment");
+        DroiAnalytics.onFragmentEnd(getActivity(), TAG);
     }
 
     /**

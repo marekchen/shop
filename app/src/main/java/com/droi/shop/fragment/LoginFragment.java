@@ -29,7 +29,7 @@ import butterknife.OnClick;
 
 public class LoginFragment extends Fragment {
 
-    private static String TAG = "LoginFragment";
+    private static final String TAG = "LoginFragment";
     private UserLoginTask mAuthTask = null;
 
     @BindView(R.id.user_name)
@@ -47,13 +47,13 @@ public class LoginFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        DroiAnalytics.onFragmentStart(getActivity(), "LoginFragment");
+        DroiAnalytics.onFragmentStart(getActivity(), TAG);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        DroiAnalytics.onFragmentEnd(getActivity(), "LoginFragment");
+        DroiAnalytics.onFragmentEnd(getActivity(), TAG);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.droi.shop.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,7 +35,7 @@ import butterknife.ButterKnife;
  */
 
 public class ItemListFragment extends Fragment {
-
+    private static final String TAG = "ItemListFragment";
     public final static String ITEM_NAME = "ITEM_NAME";
     public final static String TYPE = "TYPE";
     public final static int TYPE_SEARCH = 1;
@@ -81,45 +80,44 @@ public class ItemListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (view == null) {
-            view = inflater.inflate(R.layout.fragment_item_list, container, false);
-            ButterKnife.bind(this, view);
-            final LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-            mRecyclerView.setLayoutManager(mLayoutManager);
-            mItems = new ArrayList<>();
-            mAdapter = new ItemAdapter(mItems, 0);
-            mRecyclerView.setAdapter(mAdapter);
-            mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    offset = 0;
-                    fetchItems();
-                }
-            });
+        view = inflater.inflate(R.layout.fragment_item_list, container, false);
+        ButterKnife.bind(this, view);
+        initToolbar(view);
+        offset = 0;
+        fetchItems();
+        final LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mItems = new ArrayList<>();
+        mAdapter = new ItemAdapter(mItems, 0);
+        mRecyclerView.setAdapter(mAdapter);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                offset = 0;
+                fetchItems();
+            }
+        });
 
-            mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
-                @Override
-                public void onScrollStateChanged(RecyclerView recyclerView,
-                                                 int newState) {
-                    super.onScrollStateChanged(recyclerView, newState);
-                    if (newState == RecyclerView.SCROLL_STATE_IDLE
-                            && mLayoutManager.findLastVisibleItemPosition() + 1
-                            == mItems.size()) {
-                        if (mItems.size() != 0 && mItems.size() >= 10) {
-                            fetchItems();
-                        }
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView,
+                                             int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE
+                        && mLayoutManager.findLastVisibleItemPosition() + 1
+                        == mItems.size()) {
+                    if (mItems.size() != 0 && mItems.size() >= 10) {
+                        fetchItems();
                     }
                 }
+            }
 
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                    super.onScrolled(recyclerView, dx, dy);
-                }
-            });
-            initToolbar(view);
-            fetchItems();
-        }
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
         ViewGroup parent = (ViewGroup) view.getParent();
         if (parent != null) {
             parent.removeView(view);
@@ -191,7 +189,9 @@ public class ItemListFragment extends Fragment {
                     offset = mItems.size();
                     emptyLayout.setVisibility(View.GONE);
                 } else {
-                    emptyLayout.setVisibility(View.VISIBLE);
+                    if (mItems.size() == 0) {
+                        emptyLayout.setVisibility(View.VISIBLE);
+                    }
                 }
                 setRefreshing(false);
                 isRefreshing = false;
@@ -211,13 +211,13 @@ public class ItemListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        DroiAnalytics.onFragmentStart(getActivity(), "ItemListFragment");
+        DroiAnalytics.onFragmentStart(getActivity(), TAG);
 
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        DroiAnalytics.onFragmentEnd(getActivity(), "ItemListFragment");
+        DroiAnalytics.onFragmentEnd(getActivity(), TAG);
     }
 }

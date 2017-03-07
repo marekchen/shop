@@ -160,6 +160,8 @@ public class OrderDetailActivity extends AppCompatActivity {
                             public void result(Boolean aBoolean, DroiError droiError) {
                                 dialog.dismissDialog();
                                 if (aBoolean) {
+                                    Intent intent = new Intent(OrderDetailActivity.this, PaySuccessActivity.class);
+                                    startActivity(intent);
                                     finish();
                                 } else {
                                     Toast.makeText(getApplicationContext(), R.string.order_pay_fail, Toast.LENGTH_SHORT).show();

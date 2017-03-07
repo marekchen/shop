@@ -1,16 +1,13 @@
 package com.droi.shop.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
-import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiQuery;
@@ -33,12 +29,10 @@ import com.droi.shop.adapter.MainBannerAdapter;
 import com.droi.shop.model.Banner;
 import com.droi.shop.model.Item;
 import com.droi.shop.model.ItemType;
-import com.droi.shop.model.Test;
 import com.jude.rollviewpager.RollPagerView;
 import com.zhy.adapter.recyclerview.wrapper.HeaderAndFooterWrapper;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -49,7 +43,7 @@ import butterknife.OnClick;
  * Created by chenpei on 2016/5/11.
  */
 public class MainFragment extends Fragment {
-
+    private static final String TAG = "MainFragment";
     List<Item> mItems;
     List<Banner> mBanners;
     List<ItemType> mItemTypes;
@@ -140,14 +134,14 @@ public class MainFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        DroiAnalytics.onFragmentStart(getActivity(), "MainFragment");
+        DroiAnalytics.onFragmentStart(getActivity(), TAG);
 
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        DroiAnalytics.onFragmentEnd(getActivity(), "MainFragment");
+        DroiAnalytics.onFragmentEnd(getActivity(), TAG);
     }
 
     void initData() {

@@ -13,6 +13,7 @@ import com.droi.sdk.DroiError;
 import com.droi.sdk.core.DroiUser;
 import com.droi.shop.R;
 import com.droi.shop.model.Address;
+import com.droi.shop.util.CommonUtils;
 import com.droi.shop.util.ProgressDialogUtil;
 
 import butterknife.BindView;
@@ -47,9 +48,15 @@ public class AddressEditActivity extends AppCompatActivity {
         if (name.isEmpty()) {
             Toast.makeText(this, "收件人不能为空", Toast.LENGTH_SHORT).show();
             return;
+        } else if (name.length() > 10) {
+            Toast.makeText(this, "收件人姓名过长", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (phone.isEmpty()) {
             Toast.makeText(this, "手机号码不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (!CommonUtils.isPhoneNumberValid(phone)) {
+            Toast.makeText(this, "手机号码非法", Toast.LENGTH_SHORT).show();
             return;
         }
         if (location.isEmpty()) {

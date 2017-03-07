@@ -135,7 +135,7 @@ public class ShoppingCartManager {
         putValue(KEY, cartList);
     }
 
-    public void removeFromCart(String id) {
+    public void removeFromCart(String id, boolean isAll) {
         CartList cartList = getValue(KEY, CartList.class);
         if (cartList == null) {
             return;
@@ -146,11 +146,13 @@ public class ShoppingCartManager {
 
         for (CartItem item : items) {
             if (item.getId().equals(id)) {
-                item.setNum(item.getNum() - 1);
-                if (item.getNum() != 0) {
-                    items2.add(item);
+                if (!isAll) {
+                    item.setNum(item.getNum() - 1);
+                    if (item.getNum() != 0) {
+                        items2.add(item);
+                    }
                 }
-            }else{
+            } else {
                 items2.add(item);
             }
         }

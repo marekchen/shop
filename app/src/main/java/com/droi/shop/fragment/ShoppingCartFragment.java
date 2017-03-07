@@ -1,6 +1,5 @@
 package com.droi.shop.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -40,6 +39,8 @@ import butterknife.ButterKnife;
 
 public class ShoppingCartFragment extends Fragment {
 
+    private static final String TAG = "ShoppingCartFragment";
+
     public static final String TYPE = "TYPE";
     int type = 0;
     @BindView(R.id.recycler_view)
@@ -57,10 +58,6 @@ public class ShoppingCartFragment extends Fragment {
 
     List<CartItem> list = new ArrayList<>();
     RecyclerView.Adapter mAdapter;
-
-    public ShoppingCartFragment() {
-
-    }
 
     public static ShoppingCartFragment newInstance(int type) {
         ShoppingCartFragment fragment = new ShoppingCartFragment();
@@ -135,19 +132,19 @@ public class ShoppingCartFragment extends Fragment {
     }
 
 
-
     @Override
     public void onResume() {
         super.onResume();
-        DroiAnalytics.onFragmentStart(getActivity(), "ItemListFragment");
+        DroiAnalytics.onFragmentStart(getActivity(), TAG);
         refresh();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        DroiAnalytics.onFragmentEnd(getActivity(), "ItemListFragment");
+        DroiAnalytics.onFragmentEnd(getActivity(), TAG);
     }
+
     void refresh() {
         list.clear();
         list.addAll(ShoppingCartManager.getInstance(getActivity().getApplicationContext()).getList());

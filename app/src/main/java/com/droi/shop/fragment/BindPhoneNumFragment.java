@@ -16,6 +16,7 @@ import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiUser;
 import com.droi.shop.R;
 import com.droi.shop.interfaces.OnFragmentInteractionListener;
+import com.droi.shop.util.CommonUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,6 +66,10 @@ public class BindPhoneNumFragment extends BackHandledFragment {
         final DroiUser user = DroiUser.getCurrentUser();
         String countryCode = countryCodeEditText.getText().toString();
         String phoneNum = phoneNumEditText.getText().toString();
+        if (!CommonUtils.isPhoneNumberValid(phoneNum)) {
+            Toast.makeText(getActivity(), "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
+            return;
+        }
         user.setPhoneNumber(countryCode + phoneNum);
         showInValidationProgress();
         user.saveInBackground(new DroiCallback<Boolean>() {
@@ -79,6 +84,8 @@ public class BindPhoneNumFragment extends BackHandledFragment {
                                 if (mListener != null) {
                                     mListener.onFragmentInteraction(1);
                                 }
+                            } else if (droiError.getCode() == DroiError.USER_CONTACT_HAD_VERIFIED) {
+                                Toast.makeText(getActivity(), "该手机号已验证", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getActivity(), "失败", Toast.LENGTH_SHORT).show();
                             }
@@ -129,13 +136,13 @@ public class BindPhoneNumFragment extends BackHandledFragment {
     @Override
     public void onResume() {
         super.onResume();
-        DroiAnalytics.onFragmentStart(getActivity(), "BindPhoneNumFragment");
+        DroiAnalytics.onFragmentStart(getActivity(), TAG);
 
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        DroiAnalytics.onFragmentEnd(getActivity(), "BindPhoneNumFragment");
+        DroiAnalytics.onFragmentEnd(getActivity(), TAG);
     }
 }

@@ -27,7 +27,7 @@ import butterknife.OnClick;
 
 public class ResetPasswordFragment extends Fragment {
 
-    private static String TAG = "ResetPasswordFragment";
+    private static final String TAG = "ResetPasswordFragment";
     private ConfirmTask mAuthTask = null;
     private RestTask mResetTask = null;
 
@@ -49,13 +49,13 @@ public class ResetPasswordFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        DroiAnalytics.onFragmentStart(getActivity(), "ResetPasswordFragment");
+        DroiAnalytics.onFragmentStart(getActivity(), TAG);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        DroiAnalytics.onFragmentEnd(getActivity(), "ResetPasswordFragment");
+        DroiAnalytics.onFragmentEnd(getActivity(), TAG);
     }
 
     @Override

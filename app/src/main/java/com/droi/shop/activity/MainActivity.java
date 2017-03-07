@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {/* ... */}
                 }).check();
-        DroiUpdate.update(this);
+        DroiUpdate.update(this.getApplicationContext());
         initTab();
     }
 

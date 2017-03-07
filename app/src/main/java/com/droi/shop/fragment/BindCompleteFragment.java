@@ -15,7 +15,7 @@ import butterknife.OnClick;
 
 public class BindCompleteFragment extends BackHandledFragment {
 
-    private static final String TAG = "BindConfirmPinFragment";
+    private static final String TAG = "BindCompleteFragment";
     private OnFragmentInteractionListener mListener;
 
     public BindCompleteFragment() {
@@ -82,13 +82,13 @@ public class BindCompleteFragment extends BackHandledFragment {
     @Override
     public void onResume() {
         super.onResume();
-        DroiAnalytics.onFragmentStart(getActivity(), "BindCompleteFragment");
+        DroiAnalytics.onFragmentStart(getActivity(), TAG);
 
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        DroiAnalytics.onFragmentEnd(getActivity(), "BindCompleteFragment");
+        DroiAnalytics.onFragmentEnd(getActivity(), TAG);
     }
 }

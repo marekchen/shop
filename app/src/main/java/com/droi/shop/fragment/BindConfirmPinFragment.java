@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -147,9 +146,9 @@ public class BindConfirmPinFragment extends BackHandledFragment {
                     DroiUser user = DroiUser.getCurrentUser();
                     DroiError error = user.validatePhoneNumber();
                     if (error.isOk()) {
-                        Log.i(TAG, "sendPinCode:success");
+                        Toast.makeText(getActivity(),"获取验证码成功",Toast.LENGTH_SHORT).show();
                     } else {
-                        Log.i(TAG, "sendPinCode:failed:" + error.toString());
+                        Toast.makeText(getActivity(),"获取验证码失败",Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -159,14 +158,14 @@ public class BindConfirmPinFragment extends BackHandledFragment {
     @Override
     public void onResume() {
         super.onResume();
-        DroiAnalytics.onFragmentStart(getActivity(), "ConfirmPinFragment");
+        DroiAnalytics.onFragmentStart(getActivity(), TAG);
 
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        DroiAnalytics.onFragmentEnd(getActivity(), "ConfirmPinFragment");
+        DroiAnalytics.onFragmentEnd(getActivity(), TAG);
     }
 
     public void showInValidationProgress() {

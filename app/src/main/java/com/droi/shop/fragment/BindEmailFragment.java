@@ -15,6 +15,7 @@ import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiUser;
 import com.droi.shop.R;
 import com.droi.shop.interfaces.OnFragmentInteractionListener;
+import com.droi.shop.util.CommonUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,6 +61,10 @@ public class BindEmailFragment extends BackHandledFragment {
     void onConfirmButtonPressed() {
         final DroiUser user = DroiUser.getCurrentUser();
         String email = emailEditText.getText().toString();
+        if (!CommonUtils.isEmail(email)) {
+            Toast.makeText(getActivity(), "请输入正确的邮箱", Toast.LENGTH_SHORT).show();
+            return;
+        }
         user.setEmail(email);
         showInValidationProgress();
         user.saveInBackground(new DroiCallback<Boolean>() {
@@ -74,6 +79,8 @@ public class BindEmailFragment extends BackHandledFragment {
                                 if (mListener != null) {
                                     mListener.onFragmentInteraction(1);
                                 }
+                            } else if (droiError.getCode() == DroiError.USER_CONTACT_HAD_VERIFIED) {
+                                Toast.makeText(getActivity(), "该邮箱已验证", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getActivity(), "失败", Toast.LENGTH_SHORT).show();
                             }
@@ -124,13 +131,13 @@ public class BindEmailFragment extends BackHandledFragment {
     @Override
     public void onResume() {
         super.onResume();
-        DroiAnalytics.onFragmentStart(getActivity(), "BindEmailFragment");
+        DroiAnalytics.onFragmentStart(getActivity(), TAG);
 
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        DroiAnalytics.onFragmentEnd(getActivity(), "BindEmailFragment");
+        DroiAnalytics.onFragmentEnd(getActivity(), TAG);
     }
 }
