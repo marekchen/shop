@@ -104,7 +104,7 @@ public class ResetPasswordFragment extends Fragment {
         if (cancel) {
             focusView.requestFocus();
         } else {
-            mProgressView.setMessage("Sending...");
+            mProgressView.setMessage(getString(R.string.changing));
             showProgress(true);
             mResetTask = new RestTask(userName);
             mResetTask.execute((Void) null);
@@ -147,7 +147,7 @@ public class ResetPasswordFragment extends Fragment {
         if (cancel) {
             focusView.requestFocus();
         } else {
-            mProgressView.setMessage("Changing...");
+            mProgressView.setMessage(getString(R.string.changing));
             showProgress(true);
             mAuthTask = new ConfirmTask(userName, pincode, password);
             mAuthTask.execute((Void) null);

@@ -48,7 +48,7 @@ public class DetailActivity extends AppCompatActivity {
     @OnClick(R.id.add_cart)
     void clickAdd() {
         ShoppingCartManager.getInstance(getApplicationContext()).addToCart(item);
-        Toast.makeText(getApplicationContext(), "添加成功", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), R.string.add_cart_success, Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.shopping_cart)

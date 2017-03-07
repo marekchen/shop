@@ -46,25 +46,25 @@ public class AddressEditActivity extends AppCompatActivity {
         String location = mLocationEditText.getText().toString();
         String addressText = mAddressEditText.getText().toString();
         if (name.isEmpty()) {
-            Toast.makeText(this, "收件人不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.name_not_empty, Toast.LENGTH_SHORT).show();
             return;
         } else if (name.length() > 10) {
-            Toast.makeText(this, "收件人姓名过长", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.name_too_long, Toast.LENGTH_SHORT).show();
             return;
         }
         if (phone.isEmpty()) {
-            Toast.makeText(this, "手机号码不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.phone_not_empty, Toast.LENGTH_SHORT).show();
             return;
         } else if (!CommonUtils.isPhoneNumberValid(phone)) {
-            Toast.makeText(this, "手机号码非法", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.phone_invalid, Toast.LENGTH_SHORT).show();
             return;
         }
         if (location.isEmpty()) {
-            Toast.makeText(this, "所在地区不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.location_not_empty, Toast.LENGTH_SHORT).show();
             return;
         }
         if (addressText.isEmpty()) {
-            Toast.makeText(this, "详细地址不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.address_not_empty, Toast.LENGTH_SHORT).show();
             return;
         }
         Address address;

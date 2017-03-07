@@ -3,7 +3,6 @@ package com.droi.shop.util;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.droi.shop.model.CartItem;
 import com.google.gson.Gson;
@@ -21,7 +20,7 @@ public class ShoppingCartManager {
 
     private static final String CART = "cart";
     private static final String KEY = "items";
-    static ShoppingCartManager shoppingCartManager;
+    private static ShoppingCartManager shoppingCartManager;
     private SharedPreferences sp = null;
     private SharedPreferences.Editor edit = null;
     private static Gson GSON = new Gson();

@@ -69,7 +69,7 @@ public class SearchActivity extends AppCompatActivity {
                     if (!searchContent.isEmpty()) {
                         performSearch(searchContent);
                     } else {
-                        Toast.makeText(SearchActivity.this, "搜索内容不能为空", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SearchActivity.this, R.string.search_content_not_empty, Toast.LENGTH_SHORT).show();
                     }
                     return true;
                 }
@@ -102,7 +102,7 @@ public class SearchActivity extends AppCompatActivity {
                     if (!searchContent.isEmpty()) {
                         performSearch(searchContent);
                     } else {
-                        Toast.makeText(SearchActivity.this, "搜索内容不能为空", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SearchActivity.this, R.string.search_content_not_empty, Toast.LENGTH_SHORT).show();
                     }
                 }
                 return true;

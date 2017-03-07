@@ -79,19 +79,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         if (user != null && user.isAuthorized() && !user.isAnonymous()) {
             nameTextView.setText(user.getUserId());
             if (user.getAvatar() != null) {
-                /*user.getAvatar().getInBackground(new DroiCallback<byte[]>() {
-                    @Override
-                    public void result(byte[] bytes, DroiError error) {
-                        if (error.isOk()) {
-                            if (bytes == null) {
-                                Log.i(TAG, "bytes == null");
-                            } else {
-                                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                                titleImg.setImageBitmap(bitmap);
-                            }
-                        }
-                    }
-                }, null);*/
                 user.getAvatar().getUriInBackground(new DroiCallback<Uri>() {
                     @Override
                     public void result(Uri uri, DroiError droiError) {

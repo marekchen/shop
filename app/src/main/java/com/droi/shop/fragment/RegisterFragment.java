@@ -186,7 +186,6 @@ public class RegisterFragment extends Fragment {
         protected void onPostExecute(final DroiError droiError) {
             mAuthTask = null;
             showProgress(false);
-            Log.i("test", "error" + droiError.toString());
             if (droiError.isOk()) {
                 getActivity().finish();
             } else {
@@ -194,7 +193,7 @@ public class RegisterFragment extends Fragment {
                     mUserNameView.setError(getString(R.string.error_user_already_exists));
                     mUserNameView.requestFocus();
                 } else {
-                    Toast.makeText(getActivity(), getString(R.string.error_network), Toast.LENGTH_SHORT);
+                    Toast.makeText(getActivity(), getString(R.string.error_network), Toast.LENGTH_SHORT).show();
                 }
             }
         }

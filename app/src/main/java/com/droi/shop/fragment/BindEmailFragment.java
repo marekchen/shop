@@ -62,7 +62,7 @@ public class BindEmailFragment extends BackHandledFragment {
         final DroiUser user = DroiUser.getCurrentUser();
         String email = emailEditText.getText().toString();
         if (!CommonUtils.isEmail(email)) {
-            Toast.makeText(getActivity(), "请输入正确的邮箱", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.input_correct_email, Toast.LENGTH_SHORT).show();
             return;
         }
         user.setEmail(email);
@@ -80,15 +80,15 @@ public class BindEmailFragment extends BackHandledFragment {
                                     mListener.onFragmentInteraction(1);
                                 }
                             } else if (droiError.getCode() == DroiError.USER_CONTACT_HAD_VERIFIED) {
-                                Toast.makeText(getActivity(), "该邮箱已验证", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), R.string.email_had_verified, Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(getActivity(), "失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), R.string.verify_failed, Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
                 } else {
                     hideInValidationProgress();
-                    Toast.makeText(getActivity(), "失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.verify_failed, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -119,7 +119,7 @@ public class BindEmailFragment extends BackHandledFragment {
     public void showInValidationProgress() {
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.setTitle(null);
-        mProgressDialog.setMessage("验证中");
+        mProgressDialog.setMessage(getString(R.string.verifying));
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.show();
     }

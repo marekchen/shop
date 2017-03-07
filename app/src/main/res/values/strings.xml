@@ -143,5 +143,33 @@
     <string name="activity_search_empty">没有搜索到</string>
     <string name="scan">二维码</string>
     <string name="activity_search_search">搜索</string>
+    <string name="pay_success">支付成功</string>
+    <string name="name_not_empty">收件人不能为空</string>
+    <string name="name_too_long">收件人姓名过长</string>
+    <string name="phone_not_empty">手机号码不能为空</string>
+    <string name="phone_invalid">手机号码非法</string>
+    <string name="location_not_empty">所在地区不能为空</string>
+    <string name="address_not_empty">详细地址不能为空</string>
+    <string name="add_cart_success">添加成功</string>
+    <string name="get_photo_failed">获取图片失败</string>
+    <string name="upload_failed">上传失败</string>
+    <string name="upload_success">上传成功</string>
+    <string name="get_no_info">没有查询到信息</string>
+    <string name="open_camera_failed">打开相机出错</string>
+    <string name="search_content_not_empty">搜索内容不能为空</string>
+    <string name="pin_code_length_incorrect">验证码长度不正确</string>
+    <string name="bind_success">绑定成功</string>
+    <string name="bind_failed">绑定失败</string>
+    <string name="bind_too_frequently">绑定操作过于频繁，请稍后再试</string>
+    <string name="get_pin_code_again">重新获取验证码</string>
+    <string name="get_pin_code_success">获取验证码成功</string>
+    <string name="get_pin_code_failed">获取验证码失败</string>
+    <string name="verifying">验证中</string>
+    <string name="email_had_verified">该邮箱已验证</string>
+    <string name="verify_failed">失败</string>
+    <string name="input_correct_email">请输入正确的邮箱</string>
+    <string name="input_correct_phone">请输入正确的手机号码</string>
+    <string name="phone_had_verified">该手机号已验证</string>
+    <string name="changing">修改中…</string>
 
 </resources>

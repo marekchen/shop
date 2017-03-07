@@ -133,19 +133,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 bindMobileTextView.setText(getString(R.string.bind));
             }
             if (user.getAvatar() != null) {
-                /*user.getAvatar().getInBackground(new DroiCallback<byte[]>() {
-                    @Override
-                    public void result(byte[] bytes, DroiError error) {
-                        if (error.isOk()) {
-                            if (bytes == null) {
-                                Log.i(TAG, "bytes == null");
-                            } else {
-                                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                                headImageView.setImageBitmap(bitmap);
-                            }
-                        }
-                    }
-                }, null);*/
                 user.getAvatar().getUriInBackground(new DroiCallback<Uri>() {
                     @Override
                     public void result(Uri uri, DroiError droiError) {
@@ -249,8 +236,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_OK) {
-            Log.i(TAG, "resultCode != RESULT_OK");
-            Toast.makeText(getApplicationContext(), "获取图片失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.get_photo_failed, Toast.LENGTH_SHORT).show();
             return;
         }
         progressBar.setVisibility(View.VISIBLE);
@@ -258,9 +244,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         if (data != null) {
             upload(data);
         } else {
-            Toast.makeText(getApplicationContext(), "上传失败", Toast.LENGTH_SHORT).show();
-            progressBar.setVisibility(View.GONE);
-            selectPic.setVisibility(View.GONE);
+            uploadSuccess();
         }
     }
 
@@ -273,9 +257,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 if (image != null) {
                     String path = CommonUtils.getPath(this, mImageCaptureUri);
                     if (path == null) {
-                        Toast.makeText(getApplicationContext(), "上传失败", Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility(View.GONE);
-                        selectPic.setVisibility(View.GONE);
+                        uploadFailed();
                         return;
                     }
                     DroiFile headIcon = new DroiFile(new File(path));
@@ -285,24 +267,18 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         @Override
                         public void result(Boolean aBoolean, DroiError droiError) {
                             if (aBoolean) {
-                                Toast.makeText(getApplicationContext(), "上传成功", Toast.LENGTH_SHORT).show();
+                                uploadSuccess();
                             } else {
-                                Toast.makeText(getApplicationContext(), "上传失败", Toast.LENGTH_SHORT).show();
+                                uploadFailed();
                             }
-                            progressBar.setVisibility(View.GONE);
-                            selectPic.setVisibility(View.GONE);
                         }
                     });
                 } else {
-                    Toast.makeText(getApplicationContext(), "上传失败", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                    selectPic.setVisibility(View.GONE);
+                    uploadFailed();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "上传失败", Toast.LENGTH_SHORT).show();
-                progressBar.setVisibility(View.GONE);
-                selectPic.setVisibility(View.GONE);
+                uploadFailed();
             }
         } else {
             Bundle extras = data.getExtras();
@@ -319,24 +295,30 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         @Override
                         public void result(Boolean aBoolean, DroiError droiError) {
                             if (aBoolean) {
-                                Toast.makeText(getApplicationContext(), "上传成功", Toast.LENGTH_SHORT).show();
+                                uploadSuccess();
                             } else {
-                                Toast.makeText(getApplicationContext(), "上传失败", Toast.LENGTH_SHORT).show();
+                                uploadFailed();
                             }
-                            progressBar.setVisibility(View.GONE);
-                            selectPic.setVisibility(View.GONE);
                         }
                     });
                 } else {
-                    Toast.makeText(getApplicationContext(), "上传失败", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                    selectPic.setVisibility(View.GONE);
+                    uploadFailed();
                 }
             } else {
-                Toast.makeText(getApplicationContext(), "上传失败", Toast.LENGTH_SHORT).show();
-                progressBar.setVisibility(View.GONE);
-                selectPic.setVisibility(View.GONE);
+                uploadFailed();
             }
         }
+    }
+
+    void uploadSuccess(){
+        Toast.makeText(getApplicationContext(), R.string.upload_success, Toast.LENGTH_SHORT).show();
+        progressBar.setVisibility(View.GONE);
+        selectPic.setVisibility(View.GONE);
+    }
+
+    void uploadFailed(){
+        Toast.makeText(getApplicationContext(), R.string.upload_failed, Toast.LENGTH_SHORT).show();
+        progressBar.setVisibility(View.GONE);
+        selectPic.setVisibility(View.GONE);
     }
 }

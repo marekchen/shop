@@ -74,7 +74,7 @@ public class BindConfirmPinFragment extends BackHandledFragment {
         DroiUser user = DroiUser.getCurrentUser();
         String pinCode = pinCodeEditText.getText().toString();
         if (pinCode.length() != 6) {
-            Toast.makeText(getActivity(), "验证码长度不正确", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.pin_code_length_incorrect, Toast.LENGTH_SHORT).show();
         }
         showInValidationProgress();
         user.confirmPhoneNumberPinCodeInBackground(pinCode, new DroiCallback<Boolean>() {
@@ -82,16 +82,16 @@ public class BindConfirmPinFragment extends BackHandledFragment {
             public void result(Boolean aBoolean, DroiError droiError) {
                 hideInValidationProgress();
                 if (droiError.isOk()) {
-                    Toast.makeText(getActivity(), "绑定成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.bind_success, Toast.LENGTH_SHORT).show();
                     if (mListener != null) {
                         //成功 回到ProfileActivity
                         mListener.onFragmentInteraction(2);
                     }
                 } else {
                     if (droiError.getCode() == 1040018) {
-                        Toast.makeText(getActivity(), "绑定操作过于频繁，请稍后再试", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.bind_too_frequently, Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getActivity(), "绑定失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.bind_failed, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -135,7 +135,7 @@ public class BindConfirmPinFragment extends BackHandledFragment {
 
         @Override
         public void onFinish() {
-            timerTextView.setText("重新获取验证码");
+            timerTextView.setText(R.string.get_pin_code_again);
             timerTextView.setClickable(true);//重新获得点击
             timerTextView.setTextColor(getResources().getColor(R.color.text_blue));
             timerTextView.setOnClickListener(new View.OnClickListener() {
@@ -146,9 +146,9 @@ public class BindConfirmPinFragment extends BackHandledFragment {
                     DroiUser user = DroiUser.getCurrentUser();
                     DroiError error = user.validatePhoneNumber();
                     if (error.isOk()) {
-                        Toast.makeText(getActivity(),"获取验证码成功",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.get_pin_code_success,Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getActivity(),"获取验证码失败",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.get_pin_code_failed,Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -171,7 +171,7 @@ public class BindConfirmPinFragment extends BackHandledFragment {
     public void showInValidationProgress() {
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.setTitle(null);
-        mProgressDialog.setMessage("验证中");
+        mProgressDialog.setMessage(getString(R.string.verifying));
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.show();
     }

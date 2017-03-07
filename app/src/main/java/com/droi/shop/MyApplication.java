@@ -1,7 +1,6 @@
 package com.droi.shop;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 import com.droi.sdk.analytics.DroiAnalytics;

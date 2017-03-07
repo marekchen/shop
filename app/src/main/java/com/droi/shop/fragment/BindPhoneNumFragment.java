@@ -67,7 +67,7 @@ public class BindPhoneNumFragment extends BackHandledFragment {
         String countryCode = countryCodeEditText.getText().toString();
         String phoneNum = phoneNumEditText.getText().toString();
         if (!CommonUtils.isPhoneNumberValid(phoneNum)) {
-            Toast.makeText(getActivity(), "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.input_correct_phone, Toast.LENGTH_SHORT).show();
             return;
         }
         user.setPhoneNumber(countryCode + phoneNum);
@@ -85,15 +85,15 @@ public class BindPhoneNumFragment extends BackHandledFragment {
                                     mListener.onFragmentInteraction(1);
                                 }
                             } else if (droiError.getCode() == DroiError.USER_CONTACT_HAD_VERIFIED) {
-                                Toast.makeText(getActivity(), "该手机号已验证", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), R.string.phone_had_verified, Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(getActivity(), "失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), R.string.verify_failed, Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
                 } else {
                     hideInValidationProgress();
-                    Toast.makeText(getActivity(), "失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.verify_failed, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -102,7 +102,7 @@ public class BindPhoneNumFragment extends BackHandledFragment {
     public void showInValidationProgress() {
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.setTitle(null);
-        mProgressDialog.setMessage("验证中");
+        mProgressDialog.setMessage(getString(R.string.verifying));
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.show();
     }
