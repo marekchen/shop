@@ -34,7 +34,7 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.Item
 
     @Override
     public OrderItemAdapter.ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        mContext = parent.getContext();
+        mContext = parent.getContext().getApplicationContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_orderitem, parent, false);
         return new OrderItemAdapter.ItemViewHolder(view);
     }

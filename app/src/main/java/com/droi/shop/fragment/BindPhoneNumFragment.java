@@ -80,7 +80,7 @@ public class BindPhoneNumFragment extends BackHandledFragment {
                         @Override
                         public void result(Boolean aBoolean, DroiError droiError) {
                             hideInValidationProgress();
-                            if (droiError.isOk()) {
+                            /*if (droiError.isOk()) {
                                 if (mListener != null) {
                                     mListener.onFragmentInteraction(1);
                                 }
@@ -88,7 +88,7 @@ public class BindPhoneNumFragment extends BackHandledFragment {
                                 Toast.makeText(getActivity(), R.string.phone_had_verified, Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getActivity(), R.string.verify_failed, Toast.LENGTH_SHORT).show();
-                            }
+                            }*/
                         }
                     });
                 } else {

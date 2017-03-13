@@ -20,7 +20,6 @@ import com.droi.shop.model.Order;
 import com.droi.shop.model.ShopUser;
 import com.droi.shop.model.Test;
 import com.squareup.leakcanary.LeakCanary;
-import com.squareup.leakcanary.RefWatcher;
 
 /**
  * Created by chenpei on 2016/5/11.
@@ -28,7 +27,8 @@ import com.squareup.leakcanary.RefWatcher;
 public class MyApplication extends Application {
     private static final String TAG = "MyApplication";
 
-    @Override public void onCreate() {
+    @Override
+    public void onCreate() {
         super.onCreate();
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return;

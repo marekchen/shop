@@ -24,7 +24,7 @@ public class MainBannerAdapter extends LoopPagerAdapter {
 
     public MainBannerAdapter(Context context, RollPagerView viewPager, List<Banner> banners) {
         super(viewPager);
-        mContext = context;
+        mContext = context.getApplicationContext();
         mBanners = banners;
     }
 

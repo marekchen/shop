@@ -171,5 +171,6 @@
     <string name="input_correct_phone">请输入正确的手机号码</string>
     <string name="phone_had_verified">该手机号已验证</string>
     <string name="changing">修改中…</string>
+    <string name="no_address">还没有地址</string>
 
 </resources>

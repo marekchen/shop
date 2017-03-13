@@ -16,7 +16,7 @@ public class SimpleAdapter extends BaseAdapter {
     private ArrayList<String> mList;
 
     public SimpleAdapter(Context context, ArrayList<String> list) {
-        mContext = context;
+        mContext = context.getApplicationContext();
         mList = list;
     }
 

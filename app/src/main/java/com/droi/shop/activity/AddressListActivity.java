@@ -2,11 +2,13 @@ package com.droi.shop.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.droi.sdk.DroiError;
@@ -39,9 +41,14 @@ public class AddressListActivity extends AppCompatActivity {
 
     @BindView(R.id.recycler_view)
     public RecyclerView mRecyclerView;
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.empty_layout)
+    LinearLayout emptyLayout;
 
     List<Address> mAddressList;
     AddressAdapter mAdapter;
+    boolean isRefreshing = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,6 +64,12 @@ public class AddressListActivity extends AppCompatActivity {
                 .size(30)
                 .build();
         mRecyclerView.addItemDecoration(itemDecoration);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fetchAddress();
+            }
+        });
         mAddressList = new ArrayList<>();
         mAdapter = new AddressAdapter(mAddressList);
         mAdapter.setOnItemClickListener(new MyItemClickListener() {
@@ -107,20 +120,26 @@ public class AddressListActivity extends AppCompatActivity {
     }
 
     void fetchAddress() {
+        setRefreshing(true);
+        if (isRefreshing) {
+            return;
+        }
+        isRefreshing = true;
         DroiCondition cond = DroiCondition.cond("userObjectId", DroiCondition.Type.EQ, DroiUser.getCurrentUser().getObjectId());
         DroiQuery query = DroiQuery.Builder.newBuilder().where(cond).orderBy("_ModifiedTime", false).offset(0).query(Address.class).build();
         query.runQueryInBackground(new DroiQueryCallback<Address>() {
             @Override
             public void result(List<Address> list, DroiError droiError) {
-                if (droiError.isOk()) {
-                    if (list.size() > 0) {
-                        mAddressList.clear();
-                        mAddressList.addAll(list);
-                        mAdapter.notifyDataSetChanged();
-                    }
+                if (droiError.isOk() && list.size() > 0) {
+                    mAddressList.clear();
+                    mAddressList.addAll(list);
+                    mAdapter.notifyDataSetChanged();
+                    emptyLayout.setVisibility(View.GONE);
                 } else {
-                    //做请求失败处理
+                    emptyLayout.setVisibility(View.VISIBLE);
                 }
+                setRefreshing(false);
+                isRefreshing = false;
             }
         });
     }
@@ -129,5 +148,14 @@ public class AddressListActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         fetchAddress();
+    }
+
+    void setRefreshing(final boolean b) {
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(b);
+            }
+        });
     }
 }

@@ -25,7 +25,7 @@ public class ItemTypeAdapter extends BaseAdapter {
     private List<ItemType> mList;
 
     public ItemTypeAdapter(Context mContext, List<ItemType> mList) {
-        this.mContext = mContext;
+        this.mContext = mContext.getApplicationContext();
         this.mList = mList;
     }
 

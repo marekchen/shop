@@ -51,7 +51,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ItemVi
 
     @Override
     public CartItemAdapter.ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        mContext = parent.getContext();
+        mContext = parent.getContext().getApplicationContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cartitem, parent, false);
         return new CartItemAdapter.ItemViewHolder(view);
     }

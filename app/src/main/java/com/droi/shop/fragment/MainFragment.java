@@ -145,7 +145,7 @@ public class MainFragment extends Fragment {
     }
 
     void initData() {
-        DroiQuery query1 = DroiQuery.Builder.newBuilder().limit(10).query(Banner.class).build();
+        final DroiQuery query1 = DroiQuery.Builder.newBuilder().limit(10).query(Banner.class).build();
         query1.runQueryInBackground(new DroiQueryCallback<Banner>() {
             @Override
             public void result(List<Banner> list, DroiError droiError) {

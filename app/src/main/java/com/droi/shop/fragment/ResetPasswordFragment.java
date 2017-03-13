@@ -183,7 +183,8 @@ public class ResetPasswordFragment extends Fragment {
 
         @Override
         protected DroiError doInBackground(Void... params) {
-            return DroiUser.resetPassword(mEmail, DroiUser.ResetType.PHONE);
+            //return DroiUser.resetPassword(mEmail, DroiUser.ResetType.PHONE);
+            return null;
         }
 
         @Override
@@ -218,7 +219,8 @@ public class ResetPasswordFragment extends Fragment {
 
         @Override
         protected DroiError doInBackground(Void... params) {
-            return DroiUser.confirmResetPassword(mEmail, mPincode, mPassword);
+            //return DroiUser.confirmResetPassword(mEmail, mPincode, mPassword);
+            return null;
         }
 
         @Override

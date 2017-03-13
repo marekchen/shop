@@ -22,7 +22,7 @@ public class ImageNormalAdapter extends LoopPagerAdapter {
 
     public ImageNormalAdapter(Context context, RollPagerView viewPager, Item item) {
         super(viewPager);
-        mContext = context;
+        mContext = context.getApplicationContext();
         mItem =item;
     }
 

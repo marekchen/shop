@@ -35,6 +35,9 @@ repositories {
     maven {
         url "https://github.com/DroiBaaS/DroiBaaS-SDK-Android/raw/master/"
     }
+    maven {
+        url "http://gitlab.droi.com/DroiBaaS/DroiBaaS-SDK-Android/raw/master/"
+    }
 }
 
 dependencies {
@@ -48,7 +51,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support:design:25.1.0'
     //droi sdk
-    compile 'com.droi.sdk:Core:1.1.+'
+    compile 'com.droi.sdk:Core:1.1.3556'
     compile 'com.squareup.okhttp3:okhttp:3.5.0'
     compile 'com.droi.sdk:analytics:+'
     compile 'com.droi.sdk:feedback:+'
@@ -72,6 +75,9 @@ dependencies {
     compile 'cn.bingoogolapple:bga-zxing:1.1.7@aar'
 
     compile 'com.karumi:dexter:3.0.2'
+
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.0.6'
 
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
