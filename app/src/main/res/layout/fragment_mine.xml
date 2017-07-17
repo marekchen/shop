@@ -355,6 +355,7 @@
         android:clickable="true"
         android:gravity="center_vertical"
         android:text="上传"
+        android:visibility="gone"
         android:textColor="@color/normal_font_color"
         android:textSize="20sp" />
 

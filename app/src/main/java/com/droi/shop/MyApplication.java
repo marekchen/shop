@@ -49,13 +49,13 @@ public class MyApplication extends Application {
         /*DroiAnalytics.initialize(this);
         DroiAnalytics.enableActivityLifecycleCallbacks(this);*/
 
-        DroiUpdate.initialize(this);
+        DroiUpdate.initialize(this,"mW8nteifJFv_MU5ui76JAr94R4hTKj6-HQVsI8iq70-55sKdI7KTD-8z5pfpXP_C");
         DroiUpdate.setUpdateOnlyWifi(true);
         DroiUpdate.setUpdateUIStyle(UpdateUIStyle.STYLE_BOTH);
 
-        DroiPush.initialize(this);
+        DroiPush.initialize(this,"H3r6tth-5Sw7b3HhjBl_fcTHtx9MmcMGJ4LWjLPUJSswLfbz-vLawec7my7CTDXa");
 
-        DroiFeedback.initialize(this);
+        DroiFeedback.initialize(this,"G8oWbSfknWTXMOoeSBtzNk7g7Q2Z85acYO-rdk9FDCt8vJFwZjwOwnOeqdsc9V-p");
 
         DroiPermission permission = DroiPermission.getDefaultPermission();
         if (permission == null)

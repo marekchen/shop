@@ -105,11 +105,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.mine_about_us).setOnClickListener(this);
         view.findViewById(R.id.head_icon).setOnClickListener(this);
         view.findViewById(R.id.right_layout).setOnClickListener(this);
-        pushSwitch.setChecked(DroiPush.getPushEnabled(getActivity()));
+        pushSwitch.setChecked(DroiPush.getPushableState(getActivity()));
         pushSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                DroiPush.setPushEnabled(getActivity(), isChecked);
+                DroiPush.setPushableState(getActivity(), isChecked);
             }
         });
     }

@@ -17,13 +17,6 @@
         <meta-data
             android:name="com.droi.sdk.channel_name"
             android:value="DROI_CHANNEL1" />
-        <meta-data
-            android:name="com.droi.sdk.platform_key"
-            android:value="LfbFOaXJHE0B51rSpferdXrYVUxN-5SrdXrYVUxN" />
-        <!-- 推送消息加密秘钥，应用创建后由平台自动生成，以下内容为示例 -->
-        <meta-data
-            android:name="com.droi.sdk.secret_key"
-            android:value="h7v9z1oc" />
 
         <activity
             android:name=".activity.MainActivity"

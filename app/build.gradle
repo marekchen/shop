@@ -4,7 +4,7 @@ apply plugin: 'android-apt'
 android {
     //useLibrary 'org.apache.http.legacy'
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "com.droi.shop"
         minSdkVersion 16
@@ -12,6 +12,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [DROI_PUSH_APPID: 'i0uvmbzh2Sci5C6YTka9JMu6QimYw3WelQDlHYMT']
     }
     buildTypes {
         release {
@@ -47,11 +48,11 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
     //android support
-    compile 'com.android.support:support-v4:25.1.0'
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.android.support:design:25.1.0'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
     //droi sdk
-    compile 'com.droi.sdk:Core:1.1.3556'
+    compile 'com.droi.sdk:Core:1.1.+'
     compile 'com.squareup.okhttp3:okhttp:3.5.0'
     compile 'com.droi.sdk:analytics:+'
     compile 'com.droi.sdk:feedback:+'
